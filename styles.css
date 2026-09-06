@@ -1,0 +1,31 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Rubik', sans-serif; background: #F4F9FE; -webkit-font-smoothing: antialiased; }
+input, textarea, button, select { font-family: 'Rubik', sans-serif; }
+::placeholder { color: #9FB2C4; }
+a { color: #2E8FE0; }
+a:hover { color: #1E73C0; }
+@keyframes screenIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+@keyframes floatY { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-7px); } }
+@keyframes popIn { 0% { transform: scale(0.6); opacity: 0; } 60% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); } }
+@keyframes driftA { from { transform: translate(0,0); } to { transform: translate(-40px,20px); } }
+@keyframes driftB { from { transform: translate(0,0); } to { transform: translate(30px,-16px); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes windWashSweep { 0% { opacity: 0; transform: translateX(-15%); } 12% { opacity: 0.8; } 88% { opacity: 0.6; } 100% { opacity: 0; transform: translateX(15%); } }
+@keyframes windMistPath { 0% { transform: translate(-40px,-50px) rotate(-15deg) scale(0.6); opacity: 0; } 10% { transform: translate(-10px,-30px) rotate(20deg) scale(0.75); opacity: 0.75; } 22% { transform: translate(25px,5px) rotate(-18deg) scale(0.88); opacity: 0.85; } 34% { transform: translate(55px,-25px) rotate(22deg) scale(0.95); opacity: 0.9; } 46% { transform: translate(110px,10px) rotate(-14deg) scale(1); opacity: 0.9; } 58% { transform: translate(175px,-18px) rotate(18deg) scale(1.03); opacity: 0.85; } 70% { transform: translate(255px,8px) rotate(-10deg) scale(1.08); opacity: 0.7; } 84% { transform: translate(370px,-6px) rotate(12deg) scale(1.12); opacity: 0.4; } 100% { transform: translate(520px,-16px) rotate(8deg) scale(1.15); opacity: 0; } }
+@keyframes windSwirlDraw { 0% { stroke-dashoffset: 2200; } 55% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -900; } }
+@keyframes windSwirlSweep { 0% { transform: translate(-34%, 8%) scale(0.8) rotate(-8deg); opacity: 0; } 18% { opacity: 1; } 62% { transform: translate(-6%, 1%) scale(0.98) rotate(-1deg); opacity: 1; } 100% { transform: translate(4%, -1%) scale(1.02) rotate(1deg); opacity: 0; } }
+@keyframes windMistEddyA { 0% { transform: translate(0,0) rotate(0deg) scale(1); } 50% { transform: translate(14px,-10px) rotate(20deg) scale(1.12); } 100% { transform: translate(-6px,8px) rotate(-10deg) scale(0.95); } }
+@keyframes windMistEddyB { 0% { transform: translate(0,0) rotate(0deg) scale(1); } 50% { transform: translate(-16px,12px) rotate(-24deg) scale(0.9); } 100% { transform: translate(10px,-6px) rotate(12deg) scale(1.08); } }
+@keyframes windMistEddyC { 0% { transform: translate(0,0) rotate(0deg) scale(1); } 50% { transform: translate(10px,14px) rotate(16deg) scale(1.15); } 100% { transform: translate(-8px,-10px) rotate(-14deg) scale(0.92); } }
+@keyframes windBlowLogo { 0% { transform: translateX(0) translateY(0) rotate(0deg); opacity: 1; } 18% { transform: translateX(6px) translateY(0) rotate(1deg); opacity: 1; } 60% { transform: translateX(140px) translateY(-4px) rotate(6deg); opacity: 1; } 100% { transform: translateX(480px) translateY(-10px) rotate(13deg); opacity: 0; } }
+@keyframes windGustCloud2 { 0% { transform: translateX(0) translateY(0) rotate(0deg); opacity: 0.7; } 18% { opacity: 0.7; } 100% { transform: translateX(240%) translateY(-20px) rotate(10deg); opacity: 0; } }
+@keyframes windGustCloud2b { 0% { transform: translateX(0) translateY(0) rotate(0deg); opacity: 0.6; } 18% { opacity: 0.6; } 100% { transform: translateX(240%) translateY(-14px) rotate(8deg); opacity: 0; } }
+@media print {
+  body { background: #ffffff; }
+  #phone { display: none !important; }
+  .om-noprint { display: none !important; }
+  #printArea { position: static !important; padding: 0 !important; }
+}
