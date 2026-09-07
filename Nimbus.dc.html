@@ -32,13 +32,20 @@
   <div style="position:absolute; top:-40px; right:-60px; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle at 30% 30%, #ffffff, #CDE8FF 70%); opacity:0.7; filter:blur(2px); pointer-events:none; animation:{{cloudGustAnim}};"></div>
   <div style="position:absolute; top:120px; left:-50px; width:160px; height:160px; border-radius:50%; background:radial-gradient(circle at 40% 40%, #ffffff, #BEE0FF 70%); opacity:0.6; filter:blur(2px); animation:{{cloudGustAnim2}}; pointer-events:none;"></div>
 
+  <sc-if value="{{scrIntro}}" hint-placeholder-val="{{false}}">
+  <div onClick="{{onSkipIntro}}" style="position:relative; z-index:2; width:100%; height:100vh; background:#0B1E33; overflow:hidden; cursor:pointer;">
+    <video src="assets/openingVideo.mp4" autoPlay="{{true}}" muted="{{true}}" playsInline="{{true}}" onEnded="{{onIntroEnded}}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></video>
+    <div style="position:absolute; bottom:22px; left:0; right:0; text-align:center; font-size:12.5px; font-weight:600; color:rgba(255,255,255,0.75); letter-spacing:0.3px;">לדילוג — הקש במסך</div>
+  </div>
+  </sc-if>
+
   <sc-if value="{{scrLogin}}" hint-placeholder-val="{{true}}">
   <div style="position:relative; z-index:2; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:32px 28px; animation:screenIn 380ms cubic-bezier(.22,1,.36,1) both;">
     <div style="position:absolute; top:26px; left:24px; display:flex; direction:ltr; align-items:center; gap:10px;">
-      <img src="emblem-122.png" alt="סמל יחידה 122" style="height:46px; width:auto; object-fit:contain;">
-      <img src="emblem-shad.png" alt="סמל שה״ד" style="height:46px; width:auto; object-fit:contain;">
+      <img src="assets/emblem-122.png" alt="סמל יחידה 122" style="height:46px; width:auto; object-fit:contain;">
+      <img src="assets/emblem-shad.png" alt="סמל שה״ד" style="height:46px; width:auto; object-fit:contain;">
     </div>
-    <img src="emblem-iaf.png" alt="סמל חיל האוויר" style="position:absolute; top:22px; right:24px; height:54px; width:auto; object-fit:contain;">
+    <img src="assets/emblem-iaf.png" alt="סמל חיל האוויר" style="position:absolute; top:22px; right:24px; height:54px; width:auto; object-fit:contain;">
     <div style="position:relative; width:88px; height:64px; margin-bottom:22px; animation:{{loginCloudAnim}};">
       <div style="position:absolute; bottom:0; right:10px; width:70px; height:34px; border-radius:17px; background:linear-gradient(180deg,#7FC4FF,#4FAEFF);"></div>
       <div style="position:absolute; bottom:14px; right:0; width:38px; height:38px; border-radius:50%; background:linear-gradient(180deg,#8FD0FF,#5AB6FF);"></div>
@@ -1441,7 +1448,7 @@ const BACK_MAP = {
 
 class Component extends DCLogic {
   state = {
-    role: null, screen: 'login', navHistory: [], loading: false, msLoading:false,
+    role: null, screen: 'intro', navHistory: [], loading: false, msLoading:false,
     currentTraineeId: 1,
     selectedTraineeId: null, viewingFeedbackId: null, evalForm:null,
     searchQuery:'', filterCourse:'all', filterStatus:'all', filterUserRole:'all', filterPopulation:'all',
@@ -1470,6 +1477,9 @@ class Component extends DCLogic {
     });
   }
   onBack=()=>this.back();
+
+  onIntroEnded=()=>{ if(this.state.screen==='intro') this.setState({screen:'login'}); };
+  onSkipIntro=()=>{ if(this.state.screen==='intro') this.setState({screen:'login'}); };
 
   onMsLogin=()=>{
     this.setState({msLoading:true});
@@ -1844,8 +1854,9 @@ class Component extends DCLogic {
   renderVals(){
     const s = this.state;
     const role = s.role;
+    const scrIntro = s.screen==='intro';
     const scrLogin = s.screen==='login';
-    const scrApp = !scrLogin;
+    const scrApp = !scrIntro && !scrLogin;
     const feedbacks = s.feedbacks;
 
     const TITLES = {iDash:'נימבוס', iTrainees:'חניכים', iFeed:'דפיות', iTraineeDetail:'פרופיל חניך', iNewFeedback:'דפית חדשה', iEval:'טופס דפית',
@@ -1854,6 +1865,7 @@ class Component extends DCLogic {
     const NO_BACK = ['iDash','tDash','sDash'];
 
     let out = {
+      scrIntro, onIntroEnded:this.onIntroEnded, onSkipIntro:this.onSkipIntro,
       scrLogin, scrApp, msLoading:s.msLoading, msNotLoading: !s.msLoading,
       showLoginCard: s.loginStage!=='welcome', showWelcomeCard: s.loginStage==='welcome',
       welcomeGreeting: (s.hasLoggedInBefore?'שלום':'ברוך הבא')+', קריסי!',
