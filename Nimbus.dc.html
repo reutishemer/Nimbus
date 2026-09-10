@@ -26,6 +26,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="supabaseClient.js"></script>
+<script src="auth.js"></script>
 </helmet>
 <div id="phone" style="position:relative; width:100%; max-width:480px; min-height:100vh; margin:0 auto; background:#F4F9FE; overflow-x:hidden; font-family:'Rubik',sans-serif;" dir="rtl">
 
@@ -54,6 +58,46 @@
     </div>
     <div style="font-size:30px; font-weight:800; color:#123A5E; letter-spacing:0.5px;">נימבוס</div>
     <div style="font-size:15px; color:#5C7A96; margin-top:6px; margin-bottom:36px;">מערכת דפיות לחניכים וטייסים</div>
+
+    <sc-if value="{{showAuthGatePending}}" hint-placeholder-val="{{false}}">
+    <div style="width:100%; background:#ffffff; border-radius:24px; padding:26px 20px; box-shadow:0 16px 40px rgba(30,90,140,0.10); text-align:center; margin-bottom:14px;">
+      <div style="font-size:17px; font-weight:800; color:#123A5E; margin-bottom:8px;">החשבון שלך ממתין לאישור</div>
+      <div style="font-size:13.5px; color:#6B8399; margin-bottom:20px; line-height:1.6;">סמ"ט צריך לאשר את החשבון ולהקצות לך תפקיד לפני שתוכל/י להיכנס למערכת.</div>
+      <button onClick="{{onAuthSignOut}}" style="width:100%; padding:14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; color:#5C7A96; font-weight:700; font-size:14px; cursor:pointer;">התנתקות</button>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{showAuthGateDisabled}}" hint-placeholder-val="{{false}}">
+    <div style="width:100%; background:#ffffff; border-radius:24px; padding:26px 20px; box-shadow:0 16px 40px rgba(30,90,140,0.10); text-align:center; margin-bottom:14px;">
+      <div style="font-size:17px; font-weight:800; color:#D14A38; margin-bottom:8px;">החשבון הושבת</div>
+      <div style="font-size:13.5px; color:#6B8399; margin-bottom:20px; line-height:1.6;">לפרטים ולחזרה לפעילות יש לפנות לסמ"ט.</div>
+      <button onClick="{{onAuthSignOut}}" style="width:100%; padding:14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; color:#5C7A96; font-weight:700; font-size:14px; cursor:pointer;">התנתקות</button>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{showLoginCard}}" hint-placeholder-val="{{true}}">
+    <div style="width:100%; background:#ffffff; border-radius:24px; padding:22px 20px; box-shadow:0 16px 40px rgba(30,90,140,0.10); margin-bottom:14px;">
+      <sc-if value="{{hasAuthError}}" hint-placeholder-val="{{false}}">
+        <div style="background:#FDEAE7; color:#D14A38; border-radius:12px; padding:10px 12px; font-size:13px; font-weight:600; margin-bottom:14px; text-align:center;">{{authError}}</div>
+      </sc-if>
+      <sc-if value="{{isSignUpMode}}" hint-placeholder-val="{{false}}">
+        <input value="{{authFullName}}" onChange="{{onAuthFullNameChange}}" placeholder="שם מלא" style="width:100%; padding:13px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:15px; color:#123A5E; outline:none; margin-bottom:10px;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);">
+      </sc-if>
+      <input value="{{authUsername}}" onChange="{{onAuthUsernameChange}}" placeholder="שם משתמש" style="width:100%; padding:13px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:15px; color:#123A5E; outline:none; margin-bottom:10px;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);">
+      <input type="password" value="{{authPassword}}" onChange="{{onAuthPasswordChange}}" placeholder="סיסמה" style="width:100%; padding:13px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:15px; color:#123A5E; outline:none; margin-bottom:14px;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);">
+      <button onClick="{{onAuthSubmit}}" style="width:100%; padding:15px; border:none; border-radius:14px; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-size:15px; font-weight:700; cursor:pointer; box-shadow:0 10px 22px rgba(46,143,224,0.3); transition:transform 180ms;" style-active="transform:scale(0.97);">
+        <sc-if value="{{authLoading}}" hint-placeholder-val="{{false}}"><span>מעבד...</span></sc-if>
+        <sc-if value="{{authNotLoading}}" hint-placeholder-val="{{true}}">
+          <sc-if value="{{isSignUpMode}}" hint-placeholder-val="{{false}}"><span>הרשמה</span></sc-if>
+          <sc-if value="{{isSignInMode}}" hint-placeholder-val="{{true}}"><span>התחברות</span></sc-if>
+        </sc-if>
+      </button>
+      <div onClick="{{onToggleAuthMode}}" style="text-align:center; margin-top:14px; font-size:13px; color:#2E8FE0; font-weight:700; cursor:pointer;">
+        <sc-if value="{{isSignInMode}}" hint-placeholder-val="{{true}}"><span>אין לך חשבון? הרשמה</span></sc-if>
+        <sc-if value="{{isSignUpMode}}" hint-placeholder-val="{{false}}"><span>יש לך כבר חשבון? התחברות</span></sc-if>
+      </div>
+    </div>
+    </sc-if>
 
     <sc-if value="{{showLoginCard}}" hint-placeholder-val="{{true}}">
     <div style="width:100%; background:#ffffff; border-radius:24px; padding:22px 20px; box-shadow:0 16px 40px rgba(30,90,140,0.10);">
@@ -942,6 +986,10 @@
           </div>
         </div>
 
+        <sc-if value="{{canManageUsers}}" hint-placeholder-val="{{true}}">
+          <button onClick="{{onOpenAccounts}}" style="width:100%; padding:14px; border:1.5px solid #DCEBFA; border-radius:16px; background:#F7FBFF; color:#2E6FA8; font-weight:700; font-size:14px; cursor:pointer; margin-bottom:18px; transition:transform 180ms;" style-active="transform:scale(0.97);">ניהול חשבונות משתמשים</button>
+        </sc-if>
+
         <div style="font-size:16px; font-weight:700; color:#123A5E; margin-bottom:10px;">{{pendingHeading}}</div>
         <sc-if value="{{smatPendingEmpty}}" hint-placeholder-val="{{false}}">
           <div style="text-align:center; padding:30px 20px; color:#8CA3B8; font-size:13.5px; background:#ffffff; border-radius:18px;">אין כרגע טפסים הממתינים לאישור</div>
@@ -1062,6 +1110,74 @@
       </div>
     </sc-if>
 
+    <!-- SMAT ACCOUNTS (real Supabase auth accounts, via profiles) -->
+    <sc-if value="{{scrSAccounts}}" hint-placeholder-val="{{false}}">
+      <div style="animation:slideUp 340ms cubic-bezier(.22,1,.36,1) both;">
+        <sc-if value="{{hasAccountsError}}" hint-placeholder-val="{{false}}">
+          <div style="background:#FDEAE7; color:#D14A38; border-radius:12px; padding:10px 12px; font-size:13px; font-weight:600; margin-bottom:14px; text-align:center;">{{accountsError}}</div>
+        </sc-if>
+        <sc-if value="{{accountsLoading}}" hint-placeholder-val="{{false}}">
+          <div style="text-align:center; padding:30px 20px; color:#8CA3B8; font-size:13.5px;">טוען משתמשים...</div>
+        </sc-if>
+        <sc-for list="{{accountRows}}" as="a" hint-placeholder-count="4">
+          <div style="background:#ffffff; border-radius:18px; padding:14px 16px; margin-bottom:10px; box-shadow:0 8px 18px rgba(30,90,140,0.07);">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; gap:8px;">
+              <div style="min-width:0;">
+                <div style="font-size:14.5px; font-weight:700; color:#123A5E;">{{a.name}}</div>
+                <div style="font-size:12px; color:#6B8399; margin-top:1px;">{{a.username}} · {{a.roleLabel}}</div>
+              </div>
+              <div style="font-size:11.5px; font-weight:700; padding:5px 10px; border-radius:999px; background:{{a.statusBg}}; color:{{a.statusFg}}; white-space:nowrap; flex-shrink:0;">{{a.statusLabel}}</div>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <sc-if value="{{a.isPending}}" hint-placeholder-val="{{false}}">
+                <div onClick="{{a.onApprove}}" style="padding:9px 14px; border-radius:10px; background:#E4F8ED; color:#1FA86A; font-weight:700; font-size:12.5px; cursor:pointer;">אישור ובחירת תפקיד</div>
+              </sc-if>
+              <sc-if value="{{a.isApproved}}" hint-placeholder-val="{{false}}">
+                <div onClick="{{a.onChangeRole}}" style="padding:9px 14px; border-radius:10px; background:#F2F8FE; color:#2E6FA8; font-weight:700; font-size:12.5px; cursor:pointer;">שינוי תפקיד</div>
+              </sc-if>
+              <sc-if value="{{a.isApproved}}" hint-placeholder-val="{{false}}">
+                <div onClick="{{a.onDisable}}" style="padding:9px 14px; border-radius:10px; background:#FDEAE7; color:#D14A38; font-weight:700; font-size:12.5px; cursor:pointer;">השבתה</div>
+              </sc-if>
+              <sc-if value="{{a.isDisabled}}" hint-placeholder-val="{{false}}">
+                <div onClick="{{a.onReactivate}}" style="padding:9px 14px; border-radius:10px; background:#E4F8ED; color:#1FA86A; font-weight:700; font-size:12.5px; cursor:pointer;">הפעלה מחדש</div>
+              </sc-if>
+              <sc-if value="{{a.canResetPw}}" hint-placeholder-val="{{false}}">
+                <div onClick="{{a.onResetPassword}}" style="padding:9px 14px; border-radius:10px; background:#F2F8FE; color:#2E6FA8; font-weight:700; font-size:12.5px; cursor:pointer;">איפוס סיסמה</div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-for>
+
+        <div style="font-size:16px; font-weight:700; color:#123A5E; margin:22px 0 10px;">שיוך מדריך↔חניך</div>
+        <sc-if value="{{hasLinksError}}" hint-placeholder-val="{{false}}">
+          <div style="background:#FDEAE7; color:#D14A38; border-radius:12px; padding:10px 12px; font-size:13px; font-weight:600; margin-bottom:12px; text-align:center;">{{linksError}}</div>
+        </sc-if>
+        <div style="background:#ffffff; border-radius:18px; padding:16px; margin-bottom:14px; box-shadow:0 8px 18px rgba(30,90,140,0.07);">
+          <div style="font-size:11.5px; color:#8CA3B8; margin-bottom:4px;">מדריך</div>
+          <select value="{{linkInstructorId}}" onChange="{{onLinkInstructorChange}}" style="width:100%; padding:11px 12px; border-radius:12px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:13.5px; color:#123A5E; outline:none; margin-bottom:10px;">
+            <option value="">בחירת מדריך</option>
+            <sc-for list="{{linkInstructorOptions}}" as="lo" hint-placeholder-count="3">
+              <option value="{{lo.value}}">{{lo.label}}</option>
+            </sc-for>
+          </select>
+          <div style="font-size:11.5px; color:#8CA3B8; margin-bottom:4px;">חניך</div>
+          <select value="{{linkTraineeId}}" onChange="{{onLinkTraineeChange}}" style="width:100%; padding:11px 12px; border-radius:12px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:13.5px; color:#123A5E; outline:none; margin-bottom:14px;">
+            <option value="">בחירת חניך</option>
+            <sc-for list="{{linkTraineeOptions}}" as="lo" hint-placeholder-count="3">
+              <option value="{{lo.value}}">{{lo.label}}</option>
+            </sc-for>
+          </select>
+          <button onClick="{{onAddLink}}" style="width:100%; padding:13px; border:none; border-radius:14px; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-weight:700; font-size:14px; cursor:pointer;">שיוך</button>
+        </div>
+        <sc-for list="{{linkRows}}" as="lr" hint-placeholder-count="3">
+          <div style="background:#ffffff; border-radius:14px; padding:12px 14px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 6px 14px rgba(30,90,140,0.06);">
+            <div style="font-size:13px; color:#123A5E; font-weight:600;">{{lr.instructorName}} → {{lr.traineeName}}</div>
+            <div onClick="{{lr.onRemove}}" style="width:30px; height:30px; border-radius:9px; background:#FDEAE7; display:flex; align-items:center; justify-content:center; font-size:13px; color:#D14A38; cursor:pointer; flex-shrink:0;">🗑</div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
     </sc-if>
     </div>
 
@@ -1175,6 +1291,64 @@
         <div style="display:flex; gap:10px;">
           <button onClick="{{confirmDialog.onCancel}}" style="flex:1; padding:13px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; color:#5C7A96; font-weight:700; font-size:14px; cursor:pointer;">ביטול</button>
           <button onClick="{{confirmDialog.onConfirm}}" style="flex:1; padding:13px; border-radius:14px; border:none; background:#D14A38; color:white; font-weight:700; font-size:14px; cursor:pointer;">מחיקה</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{roleModal}}" hint-placeholder-val="{{false}}">
+    <div style="position:absolute; inset:0; z-index:30; background:rgba(18,58,94,0.35); display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeIn 180ms both;">
+      <div style="width:100%; max-height:85vh; overflow-y:auto; background:#ffffff; border-radius:22px; padding:24px 20px; box-shadow:0 24px 50px rgba(0,0,0,0.2); animation:popIn 260ms cubic-bezier(.22,1,.36,1) both;">
+        <div style="font-size:16px; font-weight:800; color:#123A5E; margin-bottom:4px;">{{roleModal.title}}</div>
+        <div style="font-size:13px; color:#6B8399; margin-bottom:16px;">{{roleModal.targetName}}</div>
+        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">
+          <sc-for list="{{roleModal.roleOptions}}" as="ro" hint-placeholder-count="4">
+            <div onClick="{{ro.onClick}}" style="{{ro.style}}">{{ro.label}}</div>
+          </sc-for>
+        </div>
+        <sc-if value="{{roleModal.showTraineeFields}}" hint-placeholder-val="{{false}}">
+          <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">קורס</div>
+          <input value="{{roleModal.course}}" onChange="{{roleModal.onCourseChange}}" placeholder="לדוגמה: הסבת ט&quot;מ שביט" style="width:100%; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:14px; color:#123A5E; outline:none; margin-bottom:12px;">
+          <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">אוכלוסייה</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+            <sc-for list="{{roleModal.populationOptions}}" as="po" hint-placeholder-count="3">
+              <div onClick="{{po.onClick}}" style="{{po.style}}">{{po.label}}</div>
+            </sc-for>
+          </div>
+          <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">מחזור</div>
+          <input value="{{roleModal.traineeClass}}" onChange="{{roleModal.onClassChange}}" placeholder="לדוגמה: מחזור 112" style="width:100%; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:14px; color:#123A5E; outline:none; margin-bottom:12px;">
+        </sc-if>
+        <sc-if value="{{roleModal.showInstructorFields}}" hint-placeholder-val="{{false}}">
+          <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">אוכלוסיות באחריות המדריך</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+            <sc-for list="{{roleModal.instructorPopulationOptions}}" as="po" hint-placeholder-count="3">
+              <div onClick="{{po.onClick}}" style="{{po.style}}">{{po.label}}</div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{roleModal.hasError}}" hint-placeholder-val="{{false}}">
+          <div style="color:#D14A38; font-size:12.5px; font-weight:600; margin-bottom:10px; text-align:center;">{{roleModal.error}}</div>
+        </sc-if>
+        <div style="display:flex; gap:10px;">
+          <button onClick="{{roleModal.onCancel}}" style="flex:1; padding:13px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; color:#5C7A96; font-weight:700; font-size:14px; cursor:pointer;">ביטול</button>
+          <button onClick="{{roleModal.onConfirm}}" style="flex:1; padding:13px; border-radius:14px; border:none; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-weight:700; font-size:14px; cursor:pointer;">אישור</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{resetPwModal}}" hint-placeholder-val="{{false}}">
+    <div style="position:absolute; inset:0; z-index:30; background:rgba(18,58,94,0.35); display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeIn 180ms both;">
+      <div style="width:100%; background:#ffffff; border-radius:22px; padding:24px 20px; box-shadow:0 24px 50px rgba(0,0,0,0.2); animation:popIn 260ms cubic-bezier(.22,1,.36,1) both;">
+        <div style="font-size:16px; font-weight:800; color:#123A5E; margin-bottom:4px;">איפוס סיסמה</div>
+        <div style="font-size:13px; color:#6B8399; margin-bottom:16px;">{{resetPwModal.targetName}}</div>
+        <input type="password" value="{{resetPwModal.password}}" onChange="{{resetPwModal.onPasswordChange}}" placeholder="סיסמה חדשה" style="width:100%; padding:13px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:15px; color:#123A5E; outline:none; margin-bottom:10px;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);">
+        <sc-if value="{{resetPwModal.hasError}}" hint-placeholder-val="{{false}}">
+          <div style="color:#D14A38; font-size:12.5px; font-weight:600; margin-bottom:10px; text-align:center;">{{resetPwModal.error}}</div>
+        </sc-if>
+        <div style="display:flex; gap:10px;">
+          <button onClick="{{resetPwModal.onCancel}}" style="flex:1; padding:13px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; color:#5C7A96; font-weight:700; font-size:14px; cursor:pointer;">ביטול</button>
+          <button onClick="{{resetPwModal.onConfirm}}" style="flex:1; padding:13px; border-radius:14px; border:none; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-weight:700; font-size:14px; cursor:pointer;">איפוס</button>
         </div>
       </div>
     </div>
@@ -1443,8 +1617,15 @@ function syllabusStatusFor(hist, course){
 const LOADING_SCREENS = ['iDash','iTrainees','iFeed','tDash','tFeedback','tStats','sDash','sFeedbacks','sUsers'];
 const BACK_MAP = {
   iTrainees:'iDash', iTraineeDetail:'iTrainees', iNewFeedback:'iDash', iEval:'iNewFeedback', iFeed:'iDash', feedbackView:'iFeed',
-  tFeedback:'tDash', tStats:'tDash', sFeedbacks:'sDash', sUsers:'sDash', sUserForm:'sUsers'
+  tFeedback:'tDash', tStats:'tDash', sFeedbacks:'sDash', sUsers:'sDash', sUserForm:'sUsers', sAccounts:'sDash'
 };
+const ACCOUNT_ROLE_OPTIONS = [{key:'smat',label:'סמ"ט'},{key:'instructor',label:'מדריך'},{key:'trainee',label:'חניך'},{key:'kahad',label:'קה"ד'}];
+function accountRoleLabel(r){ return (ACCOUNT_ROLE_OPTIONS.find(x=>x.key===r)||{}).label || '—'; }
+function accountStatusInfo(st){
+  if(st==='approved') return {label:'מאושר', bg:'#E4F8ED', fg:'#1FA86A'};
+  if(st==='disabled') return {label:'מושבת', bg:'#FDEAE7', fg:'#D14A38'};
+  return {label:'ממתין לאישור', bg:'#FFF1DA', fg:'#B8791F'};
+}
 
 class Component extends DCLogic {
   state = {
@@ -1459,7 +1640,26 @@ class Component extends DCLogic {
     feedbacks: FEEDBACKS.map(f=>({...f, scores:{...f.scores}})),
     showSuccess:false, successMsg:'', confirmDialog:null, showWindTransition:false, showAddToHome:false,
     loginStage:'idle', hasLoggedInBefore:false,
-    infoModal:null, printJob:null, printFrom:'', printTo:''
+    infoModal:null, printJob:null, printFrom:'', printTo:'',
+    authMode:'signin', authUsername:'', authPassword:'', authFullName:'', authError:'', authLoading:false, authGate:null,
+    accounts:[], accountsLoading:false, accountsError:'', roleModal:null, resetPwModal:null,
+    links:[], linksLoading:false, linksError:'', linkInstructorId:'', linkTraineeId:''
+  };
+
+  componentDidMount(){
+    this.bootstrapAuth();
+    this._authSub = window.NimbusAuth.onAuthStateChange(()=>{ this.bootstrapAuth(); });
+  }
+  componentWillUnmount(){
+    const sub = this._authSub && this._authSub.data && this._authSub.data.subscription;
+    if(sub) sub.unsubscribe();
+  }
+  bootstrapAuth=async()=>{
+    const {session, profile} = await window.NimbusAuth.getSessionProfile();
+    if(!session || !profile){ this.setState({authGate:null}); return; }
+    if(profile.status==='approved' && profile.role){ this.loginAs(profile.role); this.setState({authGate:null}); return; }
+    if(profile.status==='disabled'){ this.setState({authGate:'disabled'}); return; }
+    this.setState({authGate:'pending'});
   };
 
   speedMul(){ const m = this.props.animationIntensity || 'normal'; return m==='subtle'?1.25 : m==='playful'?0.75 : 1; }
@@ -1507,7 +1707,31 @@ class Component extends DCLogic {
     this.setState({role, screen:home, navHistory:[], loading:(this.props.skeletonLoading ?? true), currentTraineeId:1});
     if(this.props.skeletonLoading ?? true) setTimeout(()=>this.setState({loading:false}), 480*this.speedMul());
   }
-  onLogout=()=>this.setState({role:null, screen:'login', navHistory:[], showAddToHome:false});
+  onLogout=async()=>{
+    try{ await window.NimbusAuth.signOut(); }catch(e){}
+    this.setState({role:null, screen:'login', navHistory:[], showAddToHome:false,
+      authGate:null, authMode:'signin', authUsername:'', authPassword:'', authFullName:'', authError:''});
+  };
+  onAuthUsernameChange=(e)=>this.setState({authUsername:e.target.value, authError:''});
+  onAuthPasswordChange=(e)=>this.setState({authPassword:e.target.value, authError:''});
+  onAuthFullNameChange=(e)=>this.setState({authFullName:e.target.value, authError:''});
+  onToggleAuthMode=()=>this.setState(s=>({authMode: s.authMode==='signin'?'signup':'signin', authError:''}));
+  onAuthSubmit=async()=>{
+    const s=this.state;
+    if(s.authLoading) return;
+    if(s.authMode==='signup' && !s.authFullName.trim()){ this.setState({authError:'נא למלא שם מלא.'}); return; }
+    this.setState({authLoading:true, authError:''});
+    const res = s.authMode==='signup'
+      ? await window.NimbusAuth.signUp(s.authUsername, s.authPassword, s.authFullName)
+      : await window.NimbusAuth.signIn(s.authUsername, s.authPassword);
+    if(res.error){ this.setState({authLoading:false, authError:res.error}); return; }
+    await this.bootstrapAuth();
+    this.setState({authLoading:false});
+  };
+  onAuthSignOut=async()=>{
+    try{ await window.NimbusAuth.signOut(); }catch(e){}
+    this.setState({authGate:null, authMode:'signin', authUsername:'', authPassword:'', authError:''});
+  };
   onOpenAddToHome=()=>this.setState({showAddToHome:true});
   onOpenCourseInfo=()=>this.setState({infoModal:{title:'נושאי הקורס', body:'', rows:[], groups:TOPIC_REFERENCE}});
   onOpenRatingInfo=()=>this.setState({infoModal:{title:RATING_INFO_TITLE, body:RATING_INFO_BODY, rows:CONTROLLER_LEVEL_DEFS, groups:[]}});
@@ -1836,6 +2060,152 @@ class Component extends DCLogic {
       onConfirm:()=>{ this.setState(s=>({users:s.users.filter(x=>x.id!==u.id), confirmDialog:null})); this.showSuccessThenBack('המשתמש נמחק', 'sUsers', {}); } }});
   }
 
+  async invokeAdminFn(name, body){
+    const { data, error } = await window.nimbusSupabase.functions.invoke(name, { body });
+    if(error){
+      let msg = error.message || 'שגיאה לא ידועה';
+      try{
+        if(error.context && typeof error.context.json === 'function'){
+          const j = await error.context.json();
+          if(j && (j.error || j.warning)) msg = j.error || j.warning;
+        }
+      }catch(e){}
+      return {error: msg};
+    }
+    return {data};
+  }
+
+  onOpenAccounts=()=>{
+    if(this.state.role!=='smat') return;
+    this.navigate('sAccounts', {});
+    this.loadAccounts();
+    this.loadLinks();
+  };
+  loadAccounts=async()=>{
+    if(this.state.role!=='smat') return;
+    this.setState({accountsLoading:true, accountsError:''});
+    const { data, error } = await window.nimbusSupabase.from('profiles').select('id, full_name, username, role, status').order('created_at', {ascending:true});
+    if(error){ this.setState({accountsLoading:false, accounts:[], accountsError:'שגיאה בטעינת המשתמשים: '+error.message}); return; }
+    this.setState({accountsLoading:false, accounts:data||[]});
+  };
+  loadLinks=async()=>{
+    if(this.state.role!=='smat') return;
+    this.setState({linksLoading:true, linksError:''});
+    const { data, error } = await window.nimbusSupabase.from('instructor_trainees').select('instructor_id, trainee_id, created_at');
+    if(error){ this.setState({linksLoading:false, links:[], linksError:'שגיאה בטעינת השיוכים: '+error.message}); return; }
+    this.setState({linksLoading:false, links:data||[]});
+  };
+  onOpenRoleModal(u, mode){
+    if(this.state.role!=='smat') return;
+    this.setState({roleModal:{targetId:u.id, targetName:u.full_name||u.username, mode, selectedRole: mode==='change'? u.role : null,
+      course:'', population:'', traineeClass:'', instructorPopulations:[], error:'', saving:false}});
+  }
+  onCloseRoleModal=()=>this.setState({roleModal:null});
+  onPickRole(roleKey){ this.setState(s=>({roleModal:{...s.roleModal, selectedRole:roleKey, error:''}})); }
+  onRoleModalCourseChange=(e)=>this.setState(s=>({roleModal:{...s.roleModal, course:e.target.value, error:''}}));
+  onRoleModalClassChange=(e)=>this.setState(s=>({roleModal:{...s.roleModal, traineeClass:e.target.value, error:''}}));
+  onPickRoleModalPopulation(popKey){ this.setState(s=>({roleModal:{...s.roleModal, population:popKey, error:''}})); }
+  onToggleRoleModalInstructorPopulation(popKey){
+    this.setState(s=>{
+      const cur = s.roleModal.instructorPopulations||[];
+      const next = cur.includes(popKey)? cur.filter(x=>x!==popKey) : [...cur, popKey];
+      return {roleModal:{...s.roleModal, instructorPopulations:next, error:''}};
+    });
+  }
+  onConfirmRoleModal=async()=>{
+    if(this.state.role!=='smat') return;
+    const m = this.state.roleModal;
+    if(!m || !m.selectedRole){ this.setState(s=>({roleModal:{...s.roleModal, error:'יש לבחור תפקיד'}})); return; }
+    if(m.mode==='approve' && m.selectedRole==='trainee' && (!m.course.trim() || !m.population || !m.traineeClass.trim())){
+      this.setState(s=>({roleModal:{...s.roleModal, error:'יש למלא קורס, אוכלוסייה ומחזור'}})); return;
+    }
+    if(m.mode==='approve' && m.selectedRole==='instructor' && !(m.instructorPopulations||[]).length){
+      this.setState(s=>({roleModal:{...s.roleModal, error:'יש לבחור לפחות אוכלוסייה אחת'}})); return;
+    }
+    this.setState(s=>({roleModal:{...s.roleModal, saving:true, error:''}}));
+    const patch = m.mode==='approve' ? {role:m.selectedRole, status:'approved'} : {role:m.selectedRole};
+    const { error } = await window.nimbusSupabase.from('profiles').update(patch).eq('id', m.targetId);
+    if(error){ this.setState(s=>({roleModal:{...s.roleModal, saving:false, error:error.message}})); return; }
+    if(m.mode==='approve' && m.selectedRole==='trainee'){
+      const { error: tErr } = await window.nimbusSupabase.from('trainee_profiles').insert({profile_id:m.targetId, course:m.course.trim(), population:m.population, class:m.traineeClass.trim()});
+      if(tErr){ this.setState(s=>({roleModal:{...s.roleModal, saving:false, error:'הפרופיל אושר אך יצירת פרטי החניך נכשלה: '+tErr.message}})); await this.loadAccounts(); return; }
+    }
+    if(m.mode==='approve' && m.selectedRole==='instructor'){
+      const { error: iErr } = await window.nimbusSupabase.from('instructor_profiles').insert({profile_id:m.targetId, populations:m.instructorPopulations});
+      if(iErr){ this.setState(s=>({roleModal:{...s.roleModal, saving:false, error:'הפרופיל אושר אך יצירת פרטי המדריך נכשלה: '+iErr.message}})); await this.loadAccounts(); return; }
+    }
+    this.setState({roleModal:null, showSuccess:true, successMsg:'העדכון בוצע בהצלחה'});
+    setTimeout(()=>this.setState({showSuccess:false}), 1000*this.speedMul());
+    await this.loadAccounts();
+  };
+  askDisableAccount(u){
+    if(this.state.role!=='smat') return;
+    this.setState({confirmDialog:{ message:'האם להשבית את המשתמש "'+(u.full_name||u.username)+'"?',
+      onCancel:()=>this.setState({confirmDialog:null}),
+      onConfirm: async ()=>{
+        this.setState({confirmDialog:null});
+        const res = await this.invokeAdminFn('admin-set-user-status', {target_user_id:u.id, status:'disabled'});
+        if(res.error){ this.setState({accountsError:'שגיאה בהשבתה: '+res.error}); return; }
+        this.setState({showSuccess:true, successMsg:'המשתמש הושבת'});
+        setTimeout(()=>this.setState({showSuccess:false}), 1000*this.speedMul());
+        await this.loadAccounts();
+      } }});
+  }
+  askReactivateAccount(u){
+    if(this.state.role!=='smat') return;
+    this.setState({confirmDialog:{ message:'האם להפעיל מחדש את המשתמש "'+(u.full_name||u.username)+'"?',
+      onCancel:()=>this.setState({confirmDialog:null}),
+      onConfirm: async ()=>{
+        this.setState({confirmDialog:null});
+        const res = await this.invokeAdminFn('admin-set-user-status', {target_user_id:u.id, status:'approved'});
+        if(res.error){ this.setState({accountsError:'שגיאה בהפעלה מחדש: '+res.error}); return; }
+        this.setState({showSuccess:true, successMsg:'המשתמש הופעל מחדש'});
+        setTimeout(()=>this.setState({showSuccess:false}), 1000*this.speedMul());
+        await this.loadAccounts();
+      } }});
+  }
+  onOpenResetPwModal(u){
+    if(this.state.role!=='smat') return;
+    this.setState({resetPwModal:{targetId:u.id, targetName:u.full_name||u.username, password:'', error:'', saving:false}});
+  }
+  onCloseResetPwModal=()=>this.setState({resetPwModal:null});
+  onResetPwChange=(e)=>this.setState(s=>({resetPwModal:{...s.resetPwModal, password:e.target.value, error:''}}));
+  onConfirmResetPw=async()=>{
+    if(this.state.role!=='smat') return;
+    const m = this.state.resetPwModal;
+    if(!m) return;
+    const pwErr = window.NimbusAuth.validatePassword(m.password);
+    if(pwErr){ this.setState(s=>({resetPwModal:{...s.resetPwModal, error:pwErr}})); return; }
+    this.setState(s=>({resetPwModal:{...s.resetPwModal, saving:true, error:''}}));
+    const res = await this.invokeAdminFn('admin-reset-password', {target_user_id:m.targetId, new_password:m.password});
+    if(res.error){ this.setState(s=>({resetPwModal:{...s.resetPwModal, saving:false, error:res.error}})); return; }
+    this.setState({resetPwModal:null, showSuccess:true, successMsg:'הסיסמה אופסה בהצלחה'});
+    setTimeout(()=>this.setState({showSuccess:false}), 1000*this.speedMul());
+  };
+  onLinkInstructorChange=(e)=>this.setState({linkInstructorId:e.target.value, linksError:''});
+  onLinkTraineeChange=(e)=>this.setState({linkTraineeId:e.target.value, linksError:''});
+  onAddLink=async()=>{
+    if(this.state.role!=='smat') return;
+    const {linkInstructorId, linkTraineeId} = this.state;
+    if(!linkInstructorId || !linkTraineeId){ this.setState({linksError:'יש לבחור גם מדריך וגם חניך'}); return; }
+    this.setState({linksLoading:true, linksError:''});
+    const { error } = await window.nimbusSupabase.from('instructor_trainees').insert({instructor_id:linkInstructorId, trainee_id:linkTraineeId});
+    if(error){ this.setState({linksLoading:false, linksError:'שגיאה בשיוך: '+error.message}); return; }
+    this.setState({linkInstructorId:'', linkTraineeId:''});
+    await this.loadLinks();
+  };
+  onRemoveLink(l){
+    if(this.state.role!=='smat') return;
+    this.setState({confirmDialog:{ message:'האם להסיר את השיוך בין '+l.instructorName+' ל-'+l.traineeName+'?',
+      onCancel:()=>this.setState({confirmDialog:null}),
+      onConfirm: async ()=>{
+        this.setState({confirmDialog:null});
+        const { error } = await window.nimbusSupabase.from('instructor_trainees').delete().eq('instructor_id', l.instructor_id).eq('trainee_id', l.trainee_id);
+        if(error){ this.setState({linksError:'שגיאה בהסרת שיוך: '+error.message}); return; }
+        await this.loadLinks();
+      } }});
+  }
+
   myApprovedFeedbacks(){ return this.state.feedbacks.filter(f=>f.traineeId===this.state.currentTraineeId && f.status==='approved').sort((a,b)=>a.date<b.date?1:-1); }
 
   scoreOptionsFor(cats, scores, setFn){
@@ -1861,16 +2231,21 @@ class Component extends DCLogic {
 
     const TITLES = {iDash:'נימבוס', iTrainees:'חניכים', iFeed:'דפיות', iTraineeDetail:'פרופיל חניך', iNewFeedback:'דפית חדשה', iEval:'טופס דפית',
       feedbackView:'צפייה בדפית', tDash:'נימבוס', tFeedback:'הדפיות שלי', tStats:'סטטיסטיקה', sDash:'נימבוס', sFeedbacks:'כל הדפיות',
-      sUsers:'ניהול משתמשים', sUserForm:'משתמש', scrProfile:'פרופיל'};
+      sUsers:'ניהול משתמשים', sUserForm:'משתמש', scrProfile:'פרופיל', sAccounts:'ניהול חשבונות'};
     const NO_BACK = ['iDash','tDash','sDash'];
 
     let out = {
       scrIntro, onIntroEnded:this.onIntroEnded, onSkipIntro:this.onSkipIntro,
       scrLogin, scrApp, msLoading:s.msLoading, msNotLoading: !s.msLoading,
-      showLoginCard: s.loginStage!=='welcome', showWelcomeCard: s.loginStage==='welcome',
+      showLoginCard: s.loginStage!=='welcome' && !s.authGate, showWelcomeCard: s.loginStage==='welcome' && !s.authGate,
       welcomeGreeting: (s.hasLoggedInBefore?'שלום':'ברוך הבא')+', קריסי!',
       googleInitial:'ק', googleEmail:'krissy@iaf.idf.il', onWelcomeEnter:this.onWelcomeEnter,
       onMsLogin:this.onMsLogin, onDemoInstructor:this.onDemoInstructor, onDemoTrainee:this.onDemoTrainee, onDemoSmat:this.onDemoSmat, onDemoKahad:this.onDemoKahad,
+      showAuthGatePending: s.authGate==='pending', showAuthGateDisabled: s.authGate==='disabled', onAuthSignOut:this.onAuthSignOut,
+      isSignInMode: s.authMode==='signin', isSignUpMode: s.authMode==='signup', onToggleAuthMode:this.onToggleAuthMode,
+      authUsername:s.authUsername, authPassword:s.authPassword, authFullName:s.authFullName,
+      onAuthUsernameChange:this.onAuthUsernameChange, onAuthPasswordChange:this.onAuthPasswordChange, onAuthFullNameChange:this.onAuthFullNameChange,
+      authError:s.authError, hasAuthError: !!s.authError, authLoading:s.authLoading, authNotLoading: !s.authLoading, onAuthSubmit:this.onAuthSubmit,
       showWindTransition: s.showWindTransition,
       loginCloudAnim: s.showWindTransition ? 'windBlowLogo 1150ms cubic-bezier(.4,0,.2,1) 250ms both' : 'floatY 5s ease-in-out infinite',
       cloudGustAnim2: s.showWindTransition ? 'windGustCloud2b 1400ms cubic-bezier(.4,0,.2,1) both' : 'driftB 18s ease-in-out infinite alternate',
@@ -1887,7 +2262,7 @@ class Component extends DCLogic {
       canManageUsers: canManage(role),
       scrIDash:false, scrITrainees:false, scrIFeed:false, scrITraineeDetail:false, scrINewFeedback:false, scrIEval:false,
       scrFeedbackView:false, scrProfile:false, scrTDash:false, scrTFeedback:false, scrTStats:false,
-      scrSDash:false, scrSFeedbacks:false, scrSUsers:false, scrSUserForm:false
+      scrSDash:false, scrSFeedbacks:false, scrSUsers:false, scrSUserForm:false, scrSAccounts:false
     };
     if(!scrApp) { out.navItems = []; return out; }
 
@@ -1897,7 +2272,7 @@ class Component extends DCLogic {
     const navBase = role==='instructor'? instructorNav : (role==='smat'||role==='kahad')? smatNav : traineeNav;
     const activeGroup = {iDash:'iDash',iTrainees:'iTrainees',iFeed:'iFeed',iTraineeDetail: (role==='smat'||role==='kahad')?'sFeedbacks':'iTrainees',iNewFeedback:'iTrainees',iEval:'iTrainees',feedbackView:role==='instructor'?'iFeed':(role==='smat'||role==='kahad')?'sFeedbacks':'tFeedback',
       profile:'profile', tDash:'tDash', tFeedback:'tFeedback', tStats:'tStats',
-      sDash:'sDash', sFeedbacks:'sFeedbacks', sUsers:'sUsers', sUserForm:'sUsers'}[s.screen];
+      sDash:'sDash', sFeedbacks:'sFeedbacks', sUsers:'sUsers', sUserForm:'sUsers', sAccounts:'sDash'}[s.screen];
     out.navItems = navBase.map(n=>{
       const active = n.key===activeGroup;
       const isHome = ['iDash','tDash','sDash'].includes(n.key);
@@ -2204,6 +2579,67 @@ class Component extends DCLogic {
         onEdit:()=>this.editUser(u), onDelete:()=>this.askDeleteUser(u)
       }));
       out.onAddUser = this.onAddUser;
+
+      out.scrSAccounts = s.screen==='sAccounts';
+      if(role==='smat'){
+        out.onOpenAccounts = this.onOpenAccounts;
+        out.accountsLoading = s.accountsLoading;
+        out.hasAccountsError = !!s.accountsError; out.accountsError = s.accountsError;
+        out.accountRows = s.accounts.map(a=>{
+          const st = accountStatusInfo(a.status);
+          return {
+            id:a.id, name:a.full_name||'(ללא שם)', username:a.username||'—', roleLabel: accountRoleLabel(a.role),
+            statusLabel:st.label, statusBg:st.bg, statusFg:st.fg,
+            isPending: a.status==='pending', isApproved: a.status==='approved', isDisabled: a.status==='disabled',
+            canResetPw: a.status==='approved' || a.status==='disabled',
+            onApprove: ()=>this.onOpenRoleModal(a,'approve'),
+            onChangeRole: ()=>this.onOpenRoleModal(a,'change'),
+            onDisable: ()=>this.askDisableAccount(a),
+            onReactivate: ()=>this.askReactivateAccount(a),
+            onResetPassword: ()=>this.onOpenResetPwModal(a)
+          };
+        });
+        if(s.roleModal){
+          const showTraineeFields = s.roleModal.mode==='approve' && s.roleModal.selectedRole==='trainee';
+          const showInstructorFields = s.roleModal.mode==='approve' && s.roleModal.selectedRole==='instructor';
+          const selPops = s.roleModal.instructorPopulations||[];
+          out.roleModal = {...s.roleModal,
+            title: s.roleModal.mode==='approve' ? 'אישור משתמש ובחירת תפקיד' : 'שינוי תפקיד',
+            hasError: !!s.roleModal.error, showTraineeFields, showInstructorFields,
+            roleOptions: ACCOUNT_ROLE_OPTIONS.map(ro=>{
+              const selected = s.roleModal.selectedRole===ro.key;
+              return {label:ro.label, onClick:()=>this.onPickRole(ro.key),
+                style:`padding:13px 16px; border-radius:14px; font-weight:700; font-size:14px; cursor:pointer; transition:all 180ms; ${selected?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; box-shadow:0 6px 14px rgba(46,143,224,0.3);':'background:#F2F8FE; color:#2E6FA8;'}`};
+            }),
+            onCourseChange:this.onRoleModalCourseChange, onClassChange:this.onRoleModalClassChange,
+            populationOptions: POPULATIONS.map(p=>{
+              const selected = s.roleModal.population===p.key;
+              return {label:p.label, onClick:()=>this.onPickRoleModalPopulation(p.key),
+                style:`padding:10px 16px; border-radius:999px; font-size:13px; font-weight:700; cursor:pointer; transition:all 180ms; ${selected?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#F2F8FE; color:#2E6FA8;'}`};
+            }),
+            instructorPopulationOptions: POPULATIONS.map(p=>{
+              const on = selPops.includes(p.key);
+              return {label:p.label, onClick:()=>this.onToggleRoleModalInstructorPopulation(p.key),
+                style:`padding:10px 16px; border-radius:999px; font-size:13px; font-weight:700; cursor:pointer; transition:all 180ms; ${on?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#ffffff; color:#5C7A96; border:1.5px solid #E3EEF8;'}`};
+            }),
+            onCancel:this.onCloseRoleModal, onConfirm:this.onConfirmRoleModal};
+        }
+        if(s.resetPwModal){
+          out.resetPwModal = {...s.resetPwModal, hasError: !!s.resetPwModal.error, onPasswordChange:this.onResetPwChange, onCancel:this.onCloseResetPwModal, onConfirm:this.onConfirmResetPw};
+        }
+        out.linksLoading = s.linksLoading; out.hasLinksError = !!s.linksError; out.linksError = s.linksError;
+        out.linkInstructorId = s.linkInstructorId; out.linkTraineeId = s.linkTraineeId;
+        out.onLinkInstructorChange = this.onLinkInstructorChange; out.onLinkTraineeChange = this.onLinkTraineeChange; out.onAddLink = this.onAddLink;
+        out.linkInstructorOptions = s.accounts.filter(a=>a.role==='instructor' && a.status==='approved').map(a=>({value:a.id, label:a.full_name||a.username}));
+        out.linkTraineeOptions = s.accounts.filter(a=>a.role==='trainee' && a.status==='approved').map(a=>({value:a.id, label:a.full_name||a.username}));
+        out.linkRows = s.links.map(l=>{
+          const ins = s.accounts.find(a=>a.id===l.instructor_id);
+          const tr = s.accounts.find(a=>a.id===l.trainee_id);
+          const instructorName = ins? (ins.full_name||ins.username) : '—';
+          const traineeName = tr? (tr.full_name||tr.username) : '—';
+          return { instructorName, traineeName, onRemove: ()=>this.onRemoveLink({instructor_id:l.instructor_id, trainee_id:l.trainee_id, instructorName, traineeName}) };
+        });
+      }
 
       if(s.userForm){
         const selPops = s.userForm.populations || [];

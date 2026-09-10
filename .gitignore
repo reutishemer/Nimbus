@@ -1,0 +1,9 @@
+# Supabase local config — contains the real Project URL / Publishable Key.
+# Copy supabase-config.example.js to supabase-config.js and fill in your values.
+supabase-config.js
+
+# Env files — this project has no build step yet, kept ignored for safety
+# in case it migrates to a bundler (Vite) later.
+.env
+.env.local
+.env.*.local
