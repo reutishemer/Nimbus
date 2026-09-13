@@ -39,7 +39,7 @@
   <sc-if value="{{scrIntro}}" hint-placeholder-val="{{false}}">
   <div onClick="{{onSkipIntro}}" style="position:relative; z-index:2; width:100%; height:100vh; background:#0B1E33; overflow:hidden; cursor:pointer;">
     <video src="assets/openingVideo.mp4" autoPlay="{{true}}" muted="{{true}}" playsInline="{{true}}" onEnded="{{onIntroEnded}}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></video>
-    <div style="position:absolute; bottom:22px; left:0; right:0; text-align:center; font-size:12.5px; font-weight:600; color:rgba(255,255,255,0.75); letter-spacing:0.3px;">לדילוג — הקש במסך</div>
+    <div style="position:absolute; bottom:22px; left:0; right:0; text-align:center; font-size:12.5px; font-weight:600; color:rgba(255,255,255,0.75); letter-spacing:0.3px;">לדילוג - הקש במסך</div>
   </div>
   </sc-if>
 
@@ -57,7 +57,7 @@
       <div style="position:absolute; bottom:14px; right:58px; width:32px; height:32px; border-radius:50%; background:linear-gradient(180deg,#8FD0FF,#5AB6FF);"></div>
     </div>
     <div style="font-size:30px; font-weight:800; color:#123A5E; letter-spacing:0.5px;">נימבוס</div>
-    <div style="font-size:15px; color:#5C7A96; margin-top:6px; margin-bottom:36px;">מערכת דפיות לחניכים וטייסים</div>
+    <div style="font-size:15px; color:#5C7A96; margin-top:6px; margin-bottom:36px;">מערכת דפיות תחקור </div>
 
     <sc-if value="{{showAuthGatePending}}" hint-placeholder-val="{{false}}">
     <div style="width:100%; background:#ffffff; border-radius:24px; padding:26px 20px; box-shadow:0 16px 40px rgba(30,90,140,0.10); text-align:center; margin-bottom:14px;">
@@ -111,7 +111,7 @@
         </sc-if>
       </button>
 
-      <div style="text-align:center; font-size:12.5px; color:#9FB2C4; font-weight:500; margin:18px 0 10px;">— כניסה מהירה להדגמה —</div>
+      <div style="text-align:center; font-size:12.5px; color:#9FB2C4; font-weight:500; margin:18px 0 10px;">- כניסה מהירה להדגמה -</div>
       <div style="display:flex; flex-direction:column; gap:8px;">
         <button onClick="{{onDemoInstructor}}" style="width:100%; padding:12px; border-radius:14px; border:1.5px solid #DCEBFA; background:#F7FBFF; color:#2E6FA8; font-weight:700; font-size:13.5px; cursor:pointer; transition:transform 180ms;" style-active="transform:scale(0.96);">כניסה כמדריך</button>
         <button onClick="{{onDemoTrainee}}" style="width:100%; padding:12px; border-radius:14px; border:1.5px solid #DCEBFA; background:#F7FBFF; color:#2E6FA8; font-weight:700; font-size:13.5px; cursor:pointer; transition:transform 180ms;" style-active="transform:scale(0.96);">כניסה כחניך</button>
@@ -130,7 +130,7 @@
     </div>
     </sc-if>
 
-    <div style="position:absolute; bottom:26px; left:28px; right:28px; text-align:center; font-size:10.5px; line-height:1.75; color:#93A9BC; text-wrap:pretty;">כל הזכויות שמורות ליחידת שה״ד<br>צוות תכנות — רב״ט עלמה ויקטור ריבלין, רב״ט רעות שמר<br>רת״ח AI ופיתוח — ניר לוי | מפקד גף אנימציה — סגן בר עם שלם<br>מפקד היחידה — ליאור אדלר</div>
+    <div style="position:absolute; bottom:26px; left:28px; right:28px; text-align:center; font-size:10.5px; line-height:1.75; color:#93A9BC; text-wrap:pretty;">כל הזכויות שמורות ליחידת שה״ד<br>צוות תכנות - רב״ט עלמה ויקטור ריבלין, רב״ט רעות שמר<br>רת״ח AI ופיתוח - ניר לוי | מפקד גף אנימציה - סגן בר עם שלם<br>מפקד היחידה - ליאור אדלר</div>
   </div>
   </sc-if>
 
@@ -191,6 +191,12 @@
         <button onClick="{{onOpenNewFeedback}}" style="width:100%; padding:15px; border:none; border-radius:16px; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-size:15px; font-weight:700; cursor:pointer; box-shadow:0 10px 22px rgba(46,143,224,0.3); margin-bottom:20px; transition:transform 200ms;" style-active="transform:scale(0.97);">+ דפית חדשה</button>
 
         <div style="font-size:16px; font-weight:700; color:#123A5E; margin-bottom:10px;">חניכים משויכים</div>
+        <sc-if value="{{traineesLoading}}" hint-placeholder-val="{{false}}">
+          <div style="text-align:center; padding:16px; color:#8CA3B8; font-size:13px;">טוען...</div>
+        </sc-if>
+        <sc-if value="{{noTrainees}}" hint-placeholder-val="{{false}}">
+          <div style="text-align:center; padding:16px; color:#8CA3B8; font-size:13px; background:#ffffff; border-radius:16px;">אין עדיין חניכים המשויכים אליך</div>
+        </sc-if>
         <div style="display:flex; gap:10px; overflow-x:auto; padding-bottom:6px;">
           <sc-for list="{{recentTrainees}}" as="t" hint-placeholder-count="3">
             <div onClick="{{t.onClick}}" style="min-width:88px; background:#ffffff; border-radius:16px; padding:12px 8px; text-align:center; box-shadow:0 8px 18px rgba(30,90,140,0.07); cursor:pointer; transition:transform 180ms;" style-active="transform:scale(0.94);">
@@ -201,6 +207,12 @@
         </div>
 
         <div style="font-size:16px; font-weight:700; color:#123A5E; margin:20px 0 10px;">דפיות אחרונות</div>
+        <sc-if value="{{feedbacksLoading}}" hint-placeholder-val="{{false}}">
+          <div style="text-align:center; padding:16px; color:#8CA3B8; font-size:13px;">טוען...</div>
+        </sc-if>
+        <sc-if value="{{noFeedbacks}}" hint-placeholder-val="{{false}}">
+          <div style="text-align:center; padding:16px; color:#8CA3B8; font-size:13px; background:#ffffff; border-radius:16px;">עדיין לא נשמרו דפיות</div>
+        </sc-if>
         <sc-for list="{{recentFeedbacks}}" as="f" hint-placeholder-count="3">
           <div onClick="{{f.onClick}}" style="background:#ffffff; border-radius:18px; padding:14px 16px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 8px 18px rgba(30,90,140,0.07); cursor:pointer; transition:transform 200ms;" style-active="transform:scale(0.97);">
             <div style="min-width:0;">
@@ -210,6 +222,27 @@
             <div style="font-size:11.5px; font-weight:700; padding:5px 10px; border-radius:999px; background:{{f.statusBg}}; color:{{f.statusFg}}; white-space:nowrap;">{{f.statusLabel}}</div>
           </div>
         </sc-for>
+
+        <div style="font-size:16px; font-weight:700; color:#123A5E; margin:20px 0 10px;">המשובים שלי ב-Supabase</div>
+        <sc-if value="{{hasFeedbackViewError}}" hint-placeholder-val="{{false}}">
+          <div style="background:#FDEAE7; color:#D14A38; border-radius:12px; padding:10px 12px; font-size:13px; font-weight:600; margin-bottom:12px; text-align:center;">{{feedbackViewError}}</div>
+        </sc-if>
+        <sc-if value="{{feedbacksLoading}}" hint-placeholder-val="{{false}}">
+          <div style="text-align:center; padding:16px; color:#8CA3B8; font-size:13px;">טוען...</div>
+        </sc-if>
+        <sc-if value="{{noFeedbacks}}" hint-placeholder-val="{{false}}">
+          <div style="text-align:center; padding:16px; color:#8CA3B8; font-size:13px; background:#ffffff; border-radius:16px;">עדיין לא נשמרו דפיות אמיתיות</div>
+        </sc-if>
+        <sc-for list="{{myFeedbacksRows}}" as="rf" hint-placeholder-count="0">
+          <div onClick="{{rf.onClick}}" style="background:#ffffff; border-radius:18px; padding:14px 16px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 8px 18px rgba(30,90,140,0.07); cursor:pointer; transition:transform 200ms;" style-active="transform:scale(0.97);">
+            <div style="min-width:0;">
+              <div style="font-size:14.5px; font-weight:700; color:#123A5E; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{rf.title}}</div>
+              <div style="font-size:12.5px; color:#6B8399; margin-top:2px;"><span onClick="{{rf.onTraineeClick}}" style="color:#2E8FE0; font-weight:700; cursor:pointer; text-decoration:underline; text-underline-offset:3px;">{{rf.traineeName}}</span> · {{rf.typeLabel}}</div>
+            </div>
+            <div style="font-size:11.5px; font-weight:700; padding:5px 10px; border-radius:999px; background:{{rf.statusBg}}; color:{{rf.statusFg}}; white-space:nowrap;">{{rf.statusLabel}}</div>
+          </div>
+        </sc-for>
+
         <div style="margin-top:18px; padding:12px 14px; border-top:1px solid #E3EEF8; font-size:10.5px; line-height:1.6; color:#93A9BC; text-align:center; text-wrap:pretty;">המידע באפליקציה הינו בלמ״ס, על כן אין לציין: פרטי יחידה, תפקיד, מקצוע, סוג שירות, דרגה או לצלם מסמכים ומסכים צה״ליים</div>
       </div>
     </sc-if>
@@ -223,6 +256,12 @@
             <div onClick="{{cf.onClick}}" style="{{cf.style}}">{{cf.label}}</div>
           </sc-for>
         </div>
+        <sc-if value="{{traineesLoading}}" hint-placeholder-val="{{false}}">
+          <div style="text-align:center; padding:16px; color:#8CA3B8; font-size:13px;">טוען...</div>
+        </sc-if>
+        <sc-if value="{{noTrainees}}" hint-placeholder-val="{{false}}">
+          <div style="text-align:center; padding:30px 20px; color:#8CA3B8; font-size:13.5px; background:#ffffff; border-radius:18px;">אין עדיין חניכים המשויכים אליך</div>
+        </sc-if>
         <sc-for list="{{traineeCards}}" as="t" hint-placeholder-count="6">
           <div onClick="{{t.onClick}}" style="background:#ffffff; border-radius:18px; padding:14px 16px; margin-bottom:10px; display:flex; align-items:center; gap:12px; box-shadow:0 8px 18px rgba(30,90,140,0.07); cursor:pointer; transition:transform 200ms;" style-active="transform:scale(0.97);">
             <div style="width:48px; height:48px; border-radius:50%; background:{{t.avatarBg}}; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:17px; flex-shrink:0;">{{t.initial}}</div>
@@ -262,6 +301,12 @@
     <!-- INSTRUCTOR TRAINEE DETAIL -->
     <sc-if value="{{scrITraineeDetail}}" hint-placeholder-val="{{false}}">
       <div style="animation:slideUp 340ms cubic-bezier(.22,1,.36,1) both;">
+        <sc-if value="{{hasTraineeDetailError}}" hint-placeholder-val="{{false}}">
+          <div style="background:#FDEAE7; color:#D14A38; border-radius:12px; padding:10px 12px; font-size:13px; font-weight:600; margin-bottom:12px; text-align:center;">{{traineeDetailError}}</div>
+        </sc-if>
+        <sc-if value="{{traineeDetailLoading}}" hint-placeholder-val="{{false}}">
+          <div style="text-align:center; padding:16px; color:#8CA3B8; font-size:13px;">טוען...</div>
+        </sc-if>
         <div style="background:#ffffff; border-radius:22px; padding:20px; text-align:center; box-shadow:0 10px 24px rgba(30,90,140,0.08); margin-bottom:18px;">
           <div style="width:72px; height:72px; border-radius:50%; background:{{detail.avatarBg}}; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:26px;">{{detail.initial}}</div>
           <div style="font-size:19px; font-weight:800; color:#123A5E;">{{detail.name}}</div>
@@ -375,8 +420,14 @@
       <div style="animation:slideUp 340ms cubic-bezier(.22,1,.36,1) both;">
         <sc-if value="{{draft.showTraineeSelect}}" hint-placeholder-val="{{false}}">
           <div style="font-size:14px; font-weight:600; color:#3A5977; margin-bottom:8px;">בחר/י חניך</div>
+          <sc-if value="{{traineesLoading}}" hint-placeholder-val="{{false}}">
+            <div style="font-size:13px; color:#8CA3B8; margin-bottom:12px;">טוען חניכים משויכים...</div>
+          </sc-if>
+          <sc-if value="{{noTrainees}}" hint-placeholder-val="{{false}}">
+            <div style="font-size:13px; color:#B8791F; background:#FFF6E2; border-radius:12px; padding:10px 12px; margin-bottom:12px;">אין עדיין חניכים המשויכים אליך. יש לפנות לסמ"ט לשיוך.</div>
+          </sc-if>
           <select value="{{draft.traineeId}}" onChange="{{onDraftTraineeChange}}" style="width:100%; padding:14px 16px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:15px; color:#123A5E; outline:none; margin-bottom:18px;">
-            <option value="">— בחר חניך —</option>
+            <option value="">- בחר חניך -</option>
             <sc-for list="{{assignedOptions}}" as="o" hint-placeholder-count="3">
               <option value="{{o.value}}">{{o.label}}</option>
             </sc-for>
@@ -439,7 +490,7 @@
             </div>
           </div>
           <sc-if value="{{evalForm.syllabusLocked}}" hint-placeholder-val="{{false}}">
-            <div style="font-size:11.5px; color:#B8791F; margin-top:10px; line-height:1.5;">הדפית אושרה על ידי הסמ"ט — שדות הסילבוס נעולים לעריכה</div>
+            <div style="font-size:11.5px; color:#B8791F; margin-top:10px; line-height:1.5;">הדפית אושרה על ידי הסמ"ט - שדות הסילבוס נעולים לעריכה</div>
           </sc-if>
         </div>
 
@@ -524,10 +575,10 @@
           <div style="font-size:16px; font-weight:700; color:#123A5E; margin-bottom:8px;">מה בוצע? (האם הסילבוס בוצע במלואו, אילו השלמות נדרשות)</div>
           <textarea value="{{evalForm.syllabusCompletion}}" onChange="{{onSyllabusCompletionChange}}" style="width:100%; min-height:70px; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:14.5px; color:#123A5E; outline:none; resize:vertical; margin-bottom:18px;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);"></textarea>
 
-          <div style="font-size:16px; font-weight:700; color:#123A5E; margin-bottom:8px;">הערות מרכזיות — לשיפור</div>
+          <div style="font-size:16px; font-weight:700; color:#123A5E; margin-bottom:8px;">הערות מרכזיות - לשיפור</div>
           <textarea value="{{evalForm.improveNotes}}" onChange="{{onImproveNotesChange}}" placeholder="כתיבה חופשית של הערות לשיפור" style="width:100%; min-height:88px; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:14.5px; color:#123A5E; outline:none; resize:vertical; margin-bottom:14px;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);"></textarea>
 
-          <div style="font-size:16px; font-weight:700; color:#123A5E; margin-bottom:8px;">הערות מרכזיות — לשימור</div>
+          <div style="font-size:16px; font-weight:700; color:#123A5E; margin-bottom:8px;">הערות מרכזיות - לשימור</div>
           <textarea value="{{evalForm.keepNotes}}" onChange="{{onKeepNotesChange}}" placeholder="כתיבה חופשית של הערות לשימור" style="width:100%; min-height:88px; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:14.5px; color:#123A5E; outline:none; resize:vertical; margin-bottom:14px;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);"></textarea>
 
           <div style="font-size:16px; font-weight:700; color:#123A5E; margin:18px 0 10px;">תצפית</div>
@@ -645,11 +696,17 @@
         <sc-if value="{{evalForm.validationMsg}}" hint-placeholder-val="{{false}}">
           <div style="background:#FDEAE7; border:1.5px solid #F6D5CF; border-radius:14px; padding:12px 14px; margin-bottom:12px; font-size:13px; font-weight:600; color:#C0453D; line-height:1.6;">{{evalForm.validationMsg}}</div>
         </sc-if>
-        <button onClick="{{onSaveEval}}" style="width:100%; padding:16px; border:none; border-radius:16px; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-size:16px; font-weight:700; cursor:pointer; box-shadow:0 10px 24px rgba(46,143,224,0.35); transition:transform 200ms;" style-active="transform:scale(0.96);">שמירת טופס</button>
+        <button onClick="{{onSaveEval}}" style="width:100%; padding:16px; border:none; border-radius:16px; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-size:16px; font-weight:700; cursor:pointer; box-shadow:0 10px 24px rgba(46,143,224,0.35); transition:transform 200ms;" style-active="transform:scale(0.96);">
+          <sc-if value="{{evalForm.saving}}" hint-placeholder-val="{{false}}"><span>שומר...</span></sc-if>
+          <sc-if value="{{evalForm.notSaving}}" hint-placeholder-val="{{true}}"><span>שמירת טופס</span></sc-if>
+        </button>
       </div>
     </sc-if>
 
-    <!-- READ-ONLY FEEDBACK VIEW (instructor approved / trainee tap-through) -->
+    <!-- FEEDBACK VIEW - view/edit/approve/reject/delete/export. Was two
+         parallel screens (a read-only demo one keyed by viewingFeedbackId,
+         and this one, Supabase-backed) during the migration; now unified
+         onto this one, the only feedback view/edit screen in the app. -->
     <sc-if value="{{scrFeedbackView}}" hint-placeholder-val="{{false}}">
       <div style="animation:slideUp 340ms cubic-bezier(.22,1,.36,1) both;">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px;">
@@ -669,7 +726,7 @@
             <div><div style="font-size:11.5px; color:#8CA3B8;">ציון</div><div style="font-size:13.5px; font-weight:700; color:#123A5E;">{{viewFb.scoreValue}}/9</div></div>
           </div>
 
-          <div style="font-size:13px; font-weight:700; color:#3A5977; margin-bottom:4px;">סילבוס — מה תורגל? אווירי / קרקעי</div>
+          <div style="font-size:13px; font-weight:700; color:#3A5977; margin-bottom:4px;">סילבוס - מה תורגל? אווירי / קרקעי</div>
           <div style="font-size:13.5px; color:#4A6479; line-height:1.6; margin-bottom:12px;">{{viewFb.syllabusContent}}</div>
 
           <div style="font-size:13px; font-weight:700; color:#3A5977; margin-bottom:4px;">השלמות שיש לבצע</div>
@@ -710,10 +767,10 @@
           <div style="font-size:13px; font-weight:700; color:#3A5977; margin-bottom:4px;">מה בוצע? (השלמות נדרשות)</div>
           <div style="font-size:13.5px; color:#4A6479; line-height:1.6; margin-bottom:14px;">{{viewFb.syllabusCompletion}}</div>
 
-          <div style="font-size:15px; font-weight:700; color:#123A5E; margin-bottom:6px;">הערות מרכזיות — לשיפור</div>
+          <div style="font-size:15px; font-weight:700; color:#123A5E; margin-bottom:6px;">הערות מרכזיות - לשיפור</div>
           <div style="font-size:13.5px; color:#4A6479; line-height:1.6; margin-bottom:14px; white-space:pre-wrap;">{{viewFb.improveNotes}}</div>
 
-          <div style="font-size:15px; font-weight:700; color:#123A5E; margin-bottom:6px;">הערות מרכזיות — לשימור</div>
+          <div style="font-size:15px; font-weight:700; color:#123A5E; margin-bottom:6px;">הערות מרכזיות - לשימור</div>
           <div style="font-size:13.5px; color:#4A6479; line-height:1.6; margin-bottom:14px; white-space:pre-wrap;">{{viewFb.keepNotes}}</div>
 
           <div style="font-size:13px; font-weight:700; color:#3A5977; margin-bottom:4px;">דגשים לטיסה הבאה</div>
@@ -724,7 +781,7 @@
 
           <div style="font-size:15px; font-weight:700; color:#123A5E; margin:16px 0 8px;">תצפית</div>
           <sc-for list="{{viewFb.observations}}" as="o" hint-placeholder-count="3">
-            <div style="margin-bottom:8px; font-size:13.5px; color:#4A6479; line-height:1.5;"><span style="font-weight:700; color:#3A5977;">{{o.time}} — {{o.topic}}:</span> {{o.description}}</div>
+            <div style="margin-bottom:8px; font-size:13.5px; color:#4A6479; line-height:1.5;"><span style="font-weight:700; color:#3A5977;">{{o.time}} - {{o.topic}}:</span> {{o.description}}</div>
           </sc-for>
         </sc-if>
 
@@ -801,17 +858,20 @@
 
         <button onClick="{{viewFb.onExport}}" style="width:100%; padding:14px; border:1.5px solid #DCEBFA; border-radius:14px; background:#ffffff; color:#2E6FA8; font-weight:700; font-size:14px; cursor:pointer; margin-bottom:12px; display:flex; align-items:center; justify-content:center; gap:8px; transition:transform 180ms;" style-active="transform:scale(0.97);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E6FA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"></path><path d="M8 10.5 12 14.5l4-4"></path><path d="M5 17v2.5c0 .8.7 1.5 1.5 1.5h11c.8 0 1.5-.7 1.5-1.5V17"></path></svg>
-          ייצוא ל-PDF / הדפסה
+          הורדה כ-PDF
         </button>
-        <sc-if value="{{viewFb.smatMode}}" hint-placeholder-val="{{false}}">
+
+        <sc-if value="{{viewFb.canApprove}}" hint-placeholder-val="{{false}}">
           <div style="display:flex; gap:8px; margin-bottom:10px;">
             <button onClick="{{viewFb.onApprove}}" style="flex:1; padding:13px; border:none; border-radius:14px; background:#1FA86A; color:white; font-weight:700; font-size:13.5px; cursor:pointer; transition:transform 180ms;" style-active="transform:scale(0.95);">אשר</button>
             <button onClick="{{viewFb.onReject}}" style="flex:1; padding:13px; border:none; border-radius:14px; background:#D14A38; color:white; font-weight:700; font-size:13.5px; cursor:pointer; transition:transform 180ms;" style-active="transform:scale(0.95);">דחה</button>
           </div>
-          <div style="display:flex; gap:8px;">
-            <button onClick="{{viewFb.onEdit}}" style="flex:1; padding:13px; border:1.5px solid #DCEBFA; border-radius:14px; background:#ffffff; color:#2E6FA8; font-weight:700; font-size:13.5px; cursor:pointer; transition:transform 180ms;" style-active="transform:scale(0.95);">עריכה</button>
-            <button onClick="{{viewFb.onDelete}}" style="flex:1; padding:13px; border:1.5px solid #F6D5CF; border-radius:14px; background:#ffffff; color:#D14A38; font-weight:700; font-size:13.5px; cursor:pointer; transition:transform 180ms;" style-active="transform:scale(0.95);">מחיקה</button>
-          </div>
+        </sc-if>
+        <sc-if value="{{viewFb.canEdit}}" hint-placeholder-val="{{false}}">
+          <button onClick="{{viewFb.onEdit}}" style="width:100%; padding:14px; border:1.5px solid #DCEBFA; border-radius:14px; background:#ffffff; color:#2E6FA8; font-weight:700; font-size:14px; cursor:pointer; transition:transform 180ms; margin-bottom:10px;" style-active="transform:scale(0.97);">עריכה</button>
+        </sc-if>
+        <sc-if value="{{viewFb.canDelete}}" hint-placeholder-val="{{false}}">
+          <button onClick="{{viewFb.onDelete}}" style="width:100%; padding:14px; border:1.5px solid #F6D5CF; border-radius:14px; background:#ffffff; color:#D14A38; font-weight:700; font-size:14px; cursor:pointer; transition:transform 180ms;" style-active="transform:scale(0.97);">מחיקת משוב</button>
         </sc-if>
       </div>
     </sc-if>
@@ -1003,6 +1063,24 @@
             <div style="font-size:11.5px; font-weight:700; padding:5px 10px; border-radius:999px; background:#FFF1DA; color:#B8791F; white-space:nowrap;">ממתין</div>
           </div>
         </sc-for>
+
+        <div style="font-size:16px; font-weight:700; color:#123A5E; margin:20px 0 10px;">דפיות ב-Supabase</div>
+        <sc-if value="{{allFeedbacksLoading}}" hint-placeholder-val="{{false}}">
+          <div style="text-align:center; padding:16px; color:#8CA3B8; font-size:13px;">טוען...</div>
+        </sc-if>
+        <sc-if value="{{noAllFeedbacks}}" hint-placeholder-val="{{false}}">
+          <div style="text-align:center; padding:16px; color:#8CA3B8; font-size:13px; background:#ffffff; border-radius:16px;">עדיין לא נשמרו דפיות אמיתיות</div>
+        </sc-if>
+        <sc-for list="{{allFeedbacksRows}}" as="rf" hint-placeholder-count="0">
+          <div onClick="{{rf.onClick}}" style="background:#ffffff; border-radius:18px; padding:14px 16px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 8px 18px rgba(30,90,140,0.07); cursor:pointer; transition:transform 200ms;" style-active="transform:scale(0.97);">
+            <div style="min-width:0;">
+              <div style="font-size:14.5px; font-weight:700; color:#123A5E; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{rf.title}}</div>
+              <div style="font-size:12.5px; color:#6B8399; margin-top:2px;">{{rf.traineeName}} · {{rf.dateLabel}}</div>
+            </div>
+            <div style="font-size:11.5px; font-weight:700; padding:5px 10px; border-radius:999px; background:{{rf.statusBg}}; color:{{rf.statusFg}}; white-space:nowrap;">{{rf.statusLabel}}</div>
+          </div>
+        </sc-for>
+
         <div style="margin-top:18px; padding:12px 14px; border-top:1px solid #E3EEF8; font-size:10.5px; line-height:1.6; color:#93A9BC; text-align:center; text-wrap:pretty;">המידע באפליקציה הינו בלמ״ס, על כן אין לציין: פרטי יחידה, תפקיד, מקצוע, סוג שירות, דרגה או לצלם מסמכים ומסכים צה״ליים</div>
       </div>
     </sc-if>
@@ -1027,88 +1105,6 @@
       </div>
     </sc-if>
 
-    <!-- SMAT USER MANAGEMENT -->
-    <sc-if value="{{scrSUsers}}" hint-placeholder-val="{{false}}">
-      <div style="animation:slideUp 340ms cubic-bezier(.22,1,.36,1) both;">
-        <sc-if value="{{canManageUsers}}" hint-placeholder-val="{{true}}">
-          <button onClick="{{onAddUser}}" style="width:100%; padding:15px; border:none; border-radius:16px; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-size:15px; font-weight:700; cursor:pointer; box-shadow:0 10px 22px rgba(46,143,224,0.3); margin-bottom:16px; transition:transform 200ms;" style-active="transform:scale(0.97);">+ הוספת משתמש</button>
-        </sc-if>
-        <div style="display:flex; gap:8px; overflow-x:auto; padding-bottom:10px;">
-          <sc-for list="{{roleFilters}}" as="rf" hint-placeholder-count="4">
-            <div onClick="{{rf.onClick}}" style="{{rf.style}}">{{rf.label}}</div>
-          </sc-for>
-        </div>
-        <div style="display:flex; gap:8px; padding-bottom:14px;">
-          <div style="flex:1;">
-            <div style="font-size:11.5px; color:#8CA3B8; margin-bottom:4px;">אוכלוסייה</div>
-            <select value="{{filterPopulation}}" onChange="{{onFilterPopulationChange}}" style="width:100%; padding:11px 12px; border-radius:12px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:13.5px; color:#123A5E; outline:none;">
-              <option value="all">הכל</option>
-              <sc-for list="{{populationOptions}}" as="po" hint-placeholder-count="3">
-                <option value="{{po.value}}">{{po.label}}</option>
-              </sc-for>
-            </select>
-          </div>
-          <div style="flex:1;">
-            <div style="font-size:11.5px; color:#8CA3B8; margin-bottom:4px;">קורס</div>
-            <select value="{{filterCourseSel}}" onChange="{{onFilterCourseSelChange}}" disabled="{{courseFilterDisabled}}" style="{{courseFilterStyle}}">
-              <option value="all">{{courseFilterPlaceholder}}</option>
-              <sc-for list="{{courseFilterOptions}}" as="co" hint-placeholder-count="5">
-                <option value="{{co.value}}">{{co.label}}</option>
-              </sc-for>
-            </select>
-          </div>
-        </div>
-        <sc-for list="{{userList}}" as="u" hint-placeholder-count="6">
-          <div style="background:#ffffff; border-radius:18px; padding:14px 16px; margin-bottom:10px; display:flex; align-items:center; gap:12px; box-shadow:0 8px 18px rgba(30,90,140,0.07);">
-            <div style="width:44px; height:44px; border-radius:50%; background:{{u.avatarBg}}; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:16px; flex-shrink:0;">{{u.initial}}</div>
-            <div onClick="{{u.onOpen}}" style="{{u.nameRowStyle}}">
-              <div style="font-size:14.5px; font-weight:700; color:{{u.nameColor}};">{{u.name}}</div>
-              <div style="font-size:12px; color:#6B8399; margin-top:1px;">{{u.roleLabel}}<sc-if value="{{u.hasCourse}}" hint-placeholder-val="{{false}}"> · {{u.course}}</sc-if></div>
-            </div>
-            <sc-if value="{{u.showActions}}" hint-placeholder-val="{{true}}">
-              <div onClick="{{u.onEdit}}" style="width:34px; height:34px; border-radius:10px; background:#F2F8FE; display:flex; align-items:center; justify-content:center; font-size:14px; color:#2E8FE0; cursor:pointer; flex-shrink:0; transition:transform 150ms;" style-active="transform:scale(0.9);">✎</div>
-            </sc-if>
-            <sc-if value="{{u.showActions}}" hint-placeholder-val="{{true}}">
-              <div onClick="{{u.onDelete}}" style="width:34px; height:34px; border-radius:10px; background:#FDEAE7; display:flex; align-items:center; justify-content:center; font-size:14px; color:#D14A38; cursor:pointer; flex-shrink:0; transition:transform 150ms;" style-active="transform:scale(0.9);">🗑</div>
-            </sc-if>
-          </div>
-        </sc-for>
-      </div>
-    </sc-if>
-
-    <!-- SMAT USER FORM (add/edit) -->
-    <sc-if value="{{scrSUserForm}}" hint-placeholder-val="{{false}}">
-      <div style="animation:slideUp 340ms cubic-bezier(.22,1,.36,1) both;">
-        <div style="background:#ffffff; border-radius:18px; padding:18px; box-shadow:0 8px 18px rgba(30,90,140,0.07);">
-          <div style="font-size:13px; font-weight:600; color:#3A5977; margin-bottom:6px;">שם מלא</div>
-          <input value="{{userForm.name}}" onChange="{{onUserNameChange}}" placeholder="שם המשתמש" style="width:100%; padding:13px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:15px; color:#123A5E; outline:none; margin-bottom:16px;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);">
-
-          <div style="font-size:13px; font-weight:600; color:#3A5977; margin-bottom:8px;">תפקיד</div>
-          <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px;">
-            <sc-for list="{{userRoleOptions}}" as="ro" hint-placeholder-count="3">
-              <div onClick="{{ro.onClick}}" style="{{ro.style}}">{{ro.label}}</div>
-            </sc-for>
-          </div>
-
-          <sc-if value="{{userForm.showPopulations}}" hint-placeholder-val="{{false}}">
-            <div style="font-size:13px; font-weight:600; color:#3A5977; margin-bottom:6px;">אוכלוסיות באחריות המדריך</div>
-            <div style="font-size:11.5px; color:#8CA3B8; margin-bottom:8px;">ניתן לבחור יותר מאוכלוסייה אחת</div>
-            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
-              <sc-for list="{{userForm.populationOptions}}" as="po" hint-placeholder-count="3">
-                <div onClick="{{po.onClick}}" style="{{po.style}}">{{po.label}}</div>
-              </sc-for>
-            </div>
-          </sc-if>
-
-          <sc-if value="{{userForm.showCourse}}" hint-placeholder-val="{{false}}">
-            <div style="font-size:13px; font-weight:600; color:#3A5977; margin-bottom:6px;">קורס / מחזור</div>
-            <input value="{{userForm.course}}" onChange="{{onUserCourseChange}}" placeholder="לדוגמה: מסלול טיס · מחזור 112" style="width:100%; padding:13px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:15px; color:#123A5E; outline:none; margin-bottom:16px;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);">
-          </sc-if>
-        </div>
-
-        <button onClick="{{onSaveUser}}" style="width:100%; margin-top:18px; padding:16px; border:none; border-radius:16px; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-size:16px; font-weight:700; cursor:pointer; box-shadow:0 10px 24px rgba(46,143,224,0.35); transition:transform 200ms;" style-active="transform:scale(0.96);">שמירה</button>
-      </div>
-    </sc-if>
 
     <!-- SMAT ACCOUNTS (real Supabase auth accounts, via profiles) -->
     <sc-if value="{{scrSAccounts}}" hint-placeholder-val="{{false}}">
@@ -1128,12 +1124,16 @@
               </div>
               <div style="font-size:11.5px; font-weight:700; padding:5px 10px; border-radius:999px; background:{{a.statusBg}}; color:{{a.statusFg}}; white-space:nowrap; flex-shrink:0;">{{a.statusLabel}}</div>
             </div>
+            <sc-if value="{{a.canManage}}" hint-placeholder-val="{{true}}">
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
               <sc-if value="{{a.isPending}}" hint-placeholder-val="{{false}}">
                 <div onClick="{{a.onApprove}}" style="padding:9px 14px; border-radius:10px; background:#E4F8ED; color:#1FA86A; font-weight:700; font-size:12.5px; cursor:pointer;">אישור ובחירת תפקיד</div>
               </sc-if>
               <sc-if value="{{a.isApproved}}" hint-placeholder-val="{{false}}">
                 <div onClick="{{a.onChangeRole}}" style="padding:9px 14px; border-radius:10px; background:#F2F8FE; color:#2E6FA8; font-weight:700; font-size:12.5px; cursor:pointer;">שינוי תפקיד</div>
+              </sc-if>
+              <sc-if value="{{a.missingProfile}}" hint-placeholder-val="{{false}}">
+                <div onClick="{{a.onCompleteProfile}}" style="padding:9px 14px; border-radius:10px; background:#FFF6E2; color:#B8791F; font-weight:700; font-size:12.5px; cursor:pointer;">השלמת פרטים חסרים</div>
               </sc-if>
               <sc-if value="{{a.isApproved}}" hint-placeholder-val="{{false}}">
                 <div onClick="{{a.onDisable}}" style="padding:9px 14px; border-radius:10px; background:#FDEAE7; color:#D14A38; font-weight:700; font-size:12.5px; cursor:pointer;">השבתה</div>
@@ -1144,10 +1144,15 @@
               <sc-if value="{{a.canResetPw}}" hint-placeholder-val="{{false}}">
                 <div onClick="{{a.onResetPassword}}" style="padding:9px 14px; border-radius:10px; background:#F2F8FE; color:#2E6FA8; font-weight:700; font-size:12.5px; cursor:pointer;">איפוס סיסמה</div>
               </sc-if>
+              <sc-if value="{{a.canDeleteAccount}}" hint-placeholder-val="{{false}}">
+                <div onClick="{{a.onDeleteAccount}}" style="padding:9px 14px; border-radius:10px; background:#FDEAE7; color:#D14A38; font-weight:700; font-size:12.5px; cursor:pointer; border:1px solid #F6D5CF;">מחיקת משתמש</div>
+              </sc-if>
             </div>
+            </sc-if>
           </div>
         </sc-for>
 
+        <sc-if value="{{canManageUsers}}" hint-placeholder-val="{{true}}">
         <div style="font-size:16px; font-weight:700; color:#123A5E; margin:22px 0 10px;">שיוך מדריך↔חניך</div>
         <sc-if value="{{hasLinksError}}" hint-placeholder-val="{{false}}">
           <div style="background:#FDEAE7; color:#D14A38; border-radius:12px; padding:10px 12px; font-size:13px; font-weight:600; margin-bottom:12px; text-align:center;">{{linksError}}</div>
@@ -1175,6 +1180,7 @@
             <div onClick="{{lr.onRemove}}" style="width:30px; height:30px; border-radius:9px; background:#FDEAE7; display:flex; align-items:center; justify-content:center; font-size:13px; color:#D14A38; cursor:pointer; flex-shrink:0;">🗑</div>
           </div>
         </sc-for>
+        </sc-if>
       </div>
     </sc-if>
 
@@ -1290,7 +1296,7 @@
         <div style="font-size:16px; font-weight:700; color:#123A5E; text-align:center; margin-bottom:20px; line-height:1.5;">{{confirmDialog.message}}</div>
         <div style="display:flex; gap:10px;">
           <button onClick="{{confirmDialog.onCancel}}" style="flex:1; padding:13px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; color:#5C7A96; font-weight:700; font-size:14px; cursor:pointer;">ביטול</button>
-          <button onClick="{{confirmDialog.onConfirm}}" style="flex:1; padding:13px; border-radius:14px; border:none; background:#D14A38; color:white; font-weight:700; font-size:14px; cursor:pointer;">מחיקה</button>
+          <button onClick="{{confirmDialog.onConfirm}}" style="flex:1; padding:13px; border-radius:14px; border:none; background:{{confirmDialog.confirmBg}}; color:white; font-weight:700; font-size:14px; cursor:pointer;">{{confirmDialog.confirmLabel}}</button>
         </div>
       </div>
     </div>
@@ -1301,11 +1307,13 @@
       <div style="width:100%; max-height:85vh; overflow-y:auto; background:#ffffff; border-radius:22px; padding:24px 20px; box-shadow:0 24px 50px rgba(0,0,0,0.2); animation:popIn 260ms cubic-bezier(.22,1,.36,1) both;">
         <div style="font-size:16px; font-weight:800; color:#123A5E; margin-bottom:4px;">{{roleModal.title}}</div>
         <div style="font-size:13px; color:#6B8399; margin-bottom:16px;">{{roleModal.targetName}}</div>
-        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">
-          <sc-for list="{{roleModal.roleOptions}}" as="ro" hint-placeholder-count="4">
-            <div onClick="{{ro.onClick}}" style="{{ro.style}}">{{ro.label}}</div>
-          </sc-for>
-        </div>
+        <sc-if value="{{roleModal.showRolePicker}}" hint-placeholder-val="{{true}}">
+          <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">
+            <sc-for list="{{roleModal.roleOptions}}" as="ro" hint-placeholder-count="4">
+              <div onClick="{{ro.onClick}}" style="{{ro.style}}">{{ro.label}}</div>
+            </sc-for>
+          </div>
+        </sc-if>
         <sc-if value="{{roleModal.showTraineeFields}}" hint-placeholder-val="{{false}}">
           <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">קורס</div>
           <input value="{{roleModal.course}}" onChange="{{roleModal.onCourseChange}}" placeholder="לדוגמה: הסבת ט&quot;מ שביט" style="width:100%; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:14px; color:#123A5E; outline:none; margin-bottom:12px;">
@@ -1349,6 +1357,23 @@
         <div style="display:flex; gap:10px;">
           <button onClick="{{resetPwModal.onCancel}}" style="flex:1; padding:13px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; color:#5C7A96; font-weight:700; font-size:14px; cursor:pointer;">ביטול</button>
           <button onClick="{{resetPwModal.onConfirm}}" style="flex:1; padding:13px; border-radius:14px; border:none; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-weight:700; font-size:14px; cursor:pointer;">איפוס</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{deleteUserModal}}" hint-placeholder-val="{{false}}">
+    <div style="position:absolute; inset:0; z-index:30; background:rgba(18,58,94,0.35); display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeIn 180ms both;">
+      <div style="width:100%; background:#ffffff; border-radius:22px; padding:24px 20px; box-shadow:0 24px 50px rgba(0,0,0,0.2); animation:popIn 260ms cubic-bezier(.22,1,.36,1) both;">
+        <div style="font-size:16px; font-weight:800; color:#D14A38; margin-bottom:4px;">מחיקת משתמש לצמיתות</div>
+        <div style="font-size:13px; color:#6B8399; margin-bottom:14px; line-height:1.6;">פעולה זו בלתי הפיכה. כדי לאשר, הקלד/י את שם המשתמש (username) של <strong>{{deleteUserModal.targetName}}</strong> בדיוק כפי שהוא: <strong>{{deleteUserModal.targetUsername}}</strong></div>
+        <input value="{{deleteUserModal.confirmText}}" onChange="{{deleteUserModal.onConfirmTextChange}}" placeholder="הקלד/י את שם המשתמש לאישור" style="width:100%; padding:13px 14px; border-radius:14px; border:1.5px solid #F6D5CF; background:#FFF8F7; font-size:15px; color:#123A5E; outline:none; margin-bottom:10px;" style-focus="border-color:#D14A38; box-shadow:0 0 0 4px rgba(209,74,56,0.12);">
+        <sc-if value="{{deleteUserModal.hasError}}" hint-placeholder-val="{{false}}">
+          <div style="color:#D14A38; font-size:12.5px; font-weight:600; margin-bottom:10px; text-align:center;">{{deleteUserModal.error}}</div>
+        </sc-if>
+        <div style="display:flex; gap:10px;">
+          <button onClick="{{deleteUserModal.onCancel}}" style="flex:1; padding:13px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; color:#5C7A96; font-weight:700; font-size:14px; cursor:pointer;">ביטול</button>
+          <button onClick="{{deleteUserModal.onConfirm}}" style="flex:1; padding:13px; border-radius:14px; border:none; background:#D14A38; color:white; font-weight:700; font-size:14px; cursor:pointer;">מחיקה לצמיתות</button>
         </div>
       </div>
     </div>
@@ -1409,7 +1434,7 @@ const SYLLABUS_SECTIONS = [
   {n:'5', name:'טיסות קבוצתיות'}, {n:'6', name:'נוהלי חירום'}, {n:'7', name:'טיסת לילה'}, {n:'8', name:'משימות מורכבות'},
   {n:'9', name:'הערכת מסכמת'}, {n:'10', name:'הסמכה סופית'}
 ];
-function syllabusSectionLabel(n){ const sec = SYLLABUS_SECTIONS.find(s=>s.n===String(n)); return sec? `${sec.n} - ${sec.name}` : '—'; }
+function syllabusSectionLabel(n){ const sec = SYLLABUS_SECTIONS.find(s=>s.n===String(n)); return sec? `${sec.n} - ${sec.name}` : '-'; }
 const COURSES = ['מצפן','קריסטל','אופק','פולאריס','מרום','וקטור','ליקוי'];
 const AIRCREW_COURSES = [
   {name:'הסבת ט"מ שביט', flights:30}, {name:'המרת G550', flights:20}, {name:'הכשרה לקברניטאות', flights:20},
@@ -1438,13 +1463,11 @@ function segmentsForCourse(course){
 function segmentLabelFor(n, course){
   const list = segmentsForCourse(course);
   const sec = list.find(s=>s.n===String(n));
-  if(!sec) return '—';
+  if(!sec) return '-';
   return aircrewCourse(course)? sec.name : sec.n+' - '+sec.name;
 }
 const POPULATIONS = [{key:'airCrew', label:'צוותי אוויר'}, {key:'controllers', label:'בקרים'}, {key:'scouts', label:'סיירים'}];
 function populationLabel(k){ const p = POPULATIONS.find(x=>x.key===k); return p? p.label : ''; }
-const PATTERN_KEYWORDS = ['נהלי חירום','קבלת החלטות','לחץ','ניווט','תקשורת','עומס','תעדוף','ביטחון עצמי','קריאת מפ','תיעוד','מודעות מצבית','עבודת צוות','גמישות','סדר','תחקיר'];
-const PATTERN_LABELS = {'קריאת מפ':'קריאת מפות','לחץ':'תפקוד בלחץ','סדר':'סדר וסדירות'};
 const RATING_INFO_TITLE = 'אופן מתן הציון (5–10)';
 const RATING_INFO_BODY = 'הציון משקף את רמת הביצוע ביחס לרמה האופיינית והנדרשת לשלב שבו נמצא החניך, ולא ביחס לחניכים אחרים. הציון ניתן על סמך רוב נושאי השיעור שהוגדרו לגיחה.';
 const COURSE_INFO_TITLE = 'שם הקורס';
@@ -1487,80 +1510,6 @@ const TRAINEES = [
 ];
 const INSTRUCTORS = [{id:1, name:INSTRUCTOR_NAME, populations:['airCrew','controllers']}, {id:2, name:'סרן עידו רם', populations:['airCrew']}];
 
-function sc(obj){ return obj; }
-const FEEDBACKS = [
-  {id:'f1', traineeId:1, instructorId:1, formType:'airCrew', title:'טיסת אימון בסיסית #1', date:'2026-06-02', status:'approved',
-   lessonNumber:'2', aircraftType:'שביט', syllabusFull:'כן',
-   syllabusContent:'תרגול ניווט אווירי בסיסי לאורך נתיב מוגדר, כולל זיהוי ציוני דרך ותיאום עם בקרה.', completionsNeeded:'אין השלמות נדרשות.',
-   remarks: sc({briefing:'תדרוך מסודר וברור לפני הטיסה, כולל סקירת מזג אוויר ונהלי חירום.', ground:'הכנה קרקעית תקינה ועמידה בלוחות הזמנים.', postFlight:'תחקיר לאחר טיסה מסודר עם מסקנות רלוונטיות.', aircraftHandling:'שליטה טובה בטיפוס ותיאום מהירויות תקין.', missionRoute:'שמירה על נתיב המשימה עם סטיות מזעריות.', takeoffLanding:'בסיס המראה תקין ובסיס נחיתה מדויק.', additional:'הפגין רוגע וקור רוח בזמן אמת.'}),
-   nextFlightNotes:'להתמקד בתרגילי קבלת החלטות מהירה תחת לחץ.', summaryRecommendations:'ביצוע יציב עם מגמת שיפור ברורה מהתרגיל הקודם. מומלץ להמשיך בתרגול החלטה מהירה בסימולטור.',
-   scores: sc({overall:8}), overallRating:'טוב מאוד',
-   strengths:'הפגין רוגע וקור רוח בזמן אמת.', improvements:'אין השלמות נדרשות.', summary:'ביצוע יציב עם מגמת שיפור ברורה מהתרגיל הקודם. מומלץ להמשיך בתרגול החלטה מהירה בסימולטור.', recommendations:'להתמקד בתרגילי קבלת החלטות מהירה תחת לחץ.'},
-  {id:'f2', traineeId:1, instructorId:1, formType:'airCrew', title:'תרגיל ניווט לילי', date:'2026-06-20', status:'approved',
-   lessonNumber:'3', aircraftType:'צים', syllabusFull:'כן',
-   syllabusContent:'ניווט לילי לאורך נתיב מורכב עם שינויי מסלול והתמודדות עם ראות נמוכה.', completionsNeeded:'אין השלמות נדרשות.',
-   remarks: sc({briefing:'תדרוך מקיף כולל דגשי בטיחות לטיסת לילה.', ground:'הכנה קרקעית מהירה ומדויקת.', postFlight:'תחקיר מעמיק עם ניתוח נתוני הטיסה.', aircraftHandling:'שליטה מצוינת גם בתנאי ראות מוגבלים.', missionRoute:'ניווט מדויק לאורך כל נתיב המשימה.', takeoffLanding:'בסיס המראה ובסיס נחיתה חלקים ומדויקים.', additional:'שיתוף פעולה מעולה עם הצוות ותקשורת ברורה.'}),
-   nextFlightNotes:'לשמור על אותה רמת תקשורת גם ברגעי לחץ נמוך.', summaryRecommendations:'התקדמות מרשימה, אחת ההצגות הטובות במחזור. מומלץ להמשיך באותה רמה ולקחת תפקיד הובלה בתרגיל הבא.',
-   scores: sc({overall:9}), overallRating:'מצוין',
-   strengths:'שיתוף פעולה מעולה עם הצוות ותקשורת ברורה.', improvements:'אין השלמות נדרשות.', summary:'התקדמות מרשימה, אחת ההצגות הטובות במחזור. מומלץ להמשיך באותה רמה ולקחת תפקיד הובלה בתרגיל הבא.', recommendations:'לשמור על אותה רמת תקשורת גם ברגעי לחץ נמוך.'},
-  {id:'f3', traineeId:1, instructorId:1, formType:'airCrew', title:'תדריך טרום טיסה', date:'2026-07-10', status:'pending',
-   lessonNumber:'7', aircraftType:'שביט', syllabusFull:'לא',
-   syllabusContent:'תדריך טרום טיסה - סקירת נהלי חירום ומשימת האימון.', completionsNeeded:'להשלים חזרה על נהלי חירום מלאה בטיסה הבאה.',
-   remarks: sc({briefing:'הגיע מוכן עם שאלות רלוונטיות.', ground:'עמידה סבירה בלוחות זמנים.', postFlight:'תחקיר קצר, נדרש פירוט נוסף.', aircraftHandling:'שליטה סבירה, נדרש תרגול נוסף.', missionRoute:'שמירה חלקית על נתיב המשימה.', takeoffLanding:'בסיס המראה ונחיתה תקינים.', additional:'להעמיק בהבנת נהלי חירום לפני התדריך הבא.'}),
-   nextFlightNotes:'לחזור על נהלי החירום העיקריים לפני הפעילות הבאה.', summaryRecommendations:'ביצוע סביר, נדרש חיזוק בהבנת הנהלים לפני הטיסה הבאה.',
-   scores: sc({overall:7}), overallRating:'טוב',
-   strengths:'הגיע מוכן עם שאלות רלוונטיות.', improvements:'להשלים חזרה על נהלי חירום מלאה בטיסה הבאה.', summary:'ביצוע סביר, נדרש חיזוק בהבנת הנהלים לפני הטיסה הבאה.', recommendations:'לחזור על נהלי החירום העיקריים לפני הפעילות הבאה.'},
-  {id:'f4', traineeId:2, instructorId:1, formType:'airCrew', title:'טיסת אימון בסיסית #1', date:'2026-05-28', status:'approved',
-   lessonNumber:'1', aircraftType:'אודן', syllabusFull:'כן',
-   syllabusContent:'טיסת אימון בסיסית ראשונה - תרגול נהלי טיסה בסיסיים והיכרות עם המטוס.', completionsNeeded:'אין השלמות נדרשות.',
-   remarks: sc({briefing:'תדרוך מדויק וממוקד.', ground:'הכנה קרקעית לדוגמה.', postFlight:'תחקיר יסודי עם תובנות ברורות.', aircraftHandling:'שליטה טכנית גבוהה מאוד לשלב זה.', missionRoute:'עמידה מלאה בנתיב המשימה.', takeoffLanding:'ביצוע חלק ומדויק.', additional:'אחד המצטיינים בקבוצה.'}),
-   nextFlightNotes:'לשפר תיעוד לאחר טיסה.', summaryRecommendations:'אחד המצטיינים בקבוצה. לשקול קידום קצב האימונים.',
-   scores: sc({overall:9}), overallRating:'מצוין',
-   strengths:'שליטה טכנית גבוהה מאוד לשלב זה.', improvements:'לשפר תיעוד לאחר טיסה.', summary:'אחד המצטיינים בקבוצה. לשקול קידום קצב האימונים.', recommendations:'לשפר תיעוד לאחר טיסה.'},
-  {id:'f5', traineeId:2, instructorId:1, formType:'airCrew', title:'ניווט קרקעי', date:'2026-06-25', status:'pending',
-   lessonNumber:'3', aircraftType:'צים', syllabusFull:'כן',
-   syllabusContent:'ניווט קרקעי - תרגול קריאת מפה וזיהוי ציוני דרך.', completionsNeeded:'אין השלמות נדרשות.',
-   remarks: sc({briefing:'תדרוך תקין.', ground:'עבודת צוות טובה בהכנה.', postFlight:'תחקיר סביר.', aircraftHandling:'שליטה תקינה.', missionRoute:'דיוק בקריאת מפה תחת לחץ זמן דורש שיפור.', takeoffLanding:'ביצוע תקין.', additional:'עבודת צוות טובה.'}),
-   nextFlightNotes:'תרגול נוסף בקריאת מפות בשטח.', summaryRecommendations:'ביצוע תקין עם מקום לשיפור בניווט.',
-   scores: sc({overall:7}), overallRating:'טוב',
-   strengths:'עבודת צוות טובה.', improvements:'אין השלמות נדרשות.', summary:'ביצוע תקין עם מקום לשיפור בניווט.', recommendations:'תרגול נוסף בקריאת מפות בשטח.'},
-  {id:'f6', traineeId:3, instructorId:1, formType:'controllers', title:'דפית הדרכה בקרים - משמרת יום', date:'2026-06-05', status:'approved',
-   courseName:'קורס בקרים 122', controllerSyllabus:'6', instructorFullName:'סרן דנה שגיא', flightType:'אימוני', flightName:'משמרת יום #4',
-   target1:'v', target2:'v', target3:'v', syllabusCompletion:'הסילבוס בוצע במלואו, ללא השלמות נדרשות.',
-   remarksImprove:[{topic:'תעדוף משימות', note:'לשפר תעדוף בעומס רגעי גבוה.'},{topic:'', note:''},{topic:'', note:''}],
-   remarksKeep:[{topic:'עבודת צוות', note:'הובלה טבעית וברורה של הצוות.'},{topic:'מודעות מצבית', note:'שמירה עקבית על תמונה מצבית מלאה.'}],
-   observations:[{time:'09:20', topic:'OSO', description:'זיהוי תקלת מערכת וטיפול נכון בזמן אמת.'},{time:'10:05', topic:'MC', description:'ניהול צוות תקין תחת עומס.'},{time:'', topic:'', description:''},{time:'', topic:'', description:''}],
-   scores: sc({overall:9}), overallRating:'טוב מאוד',
-   strengths:'עבודת צוות: הובלה טבעית וברורה של הצוות. | מודעות מצבית: שמירה עקבית על תמונה מצבית מלאה.', improvements:'תעדוף משימות: לשפר תעדוף בעומס רגעי גבוה.',
-   summary:'הסילבוס בוצע במלואו, ללא השלמות נדרשות.', recommendations:'תעדוף משימות: לשפר תעדוף בעומס רגעי גבוה.'},
-  {id:'f7', traineeId:3, instructorId:1, formType:'controllers', title:'דפית הדרכה בקרים - עומס גבוה', date:'2026-07-02', status:'rejected',
-   courseName:'קורס בקרים 122', controllerSyllabus:'8', instructorFullName:'סרן דנה שגיא', flightType:'מבצעי', flightName:'תרגיל עומס גבוה',
-   target1:'v', target2:'x', target3:'v', syllabusCompletion:'נדרשת השלמה בנושא ניהול עומס וריבוי משימות.',
-   remarksImprove:[{topic:'גמישות בתרחישים', note:'לשפר גמישות בתרחישים משתנים.'},{topic:'ניהול עומס', note:'להתמודד טוב יותר עם ריבוי משימות.'},{topic:'', note:''}],
-   remarksKeep:[{topic:'תקשורת צוותית', note:'תקשורת מצוינת מול שאר חברי הצוות.'},{topic:'', note:''}],
-   observations:[{time:'11:40', topic:'WD', description:'עומס תקשורת גבוה בזמן קצר.'},{time:'', topic:'', description:''},{time:'', topic:'', description:''},{time:'', topic:'', description:''}],
-   scores: sc({overall:'6/7'}), overallRating:'אופייני לוותק / הישג נדרש',
-   strengths:'תקשורת צוותית: תקשורת מצוינת מול שאר חברי הצוות.', improvements:'גמישות בתרחישים: לשפר גמישות בתרחישים משתנים. | ניהול עומס: להתמודד טוב יותר עם ריבוי משימות.',
-   summary:'נדרשת השלמה בנושא ניהול עומס וריבוי משימות.', recommendations:'לחשוף לתרחישים דינמיים יותר.'},
-  {id:'f8', traineeId:4, instructorId:1, formType:'airCrew', title:'טיסת אימון בסיסית #1', date:'2026-07-05', status:'pending',
-   lessonNumber:'1', aircraftType:'שביט', syllabusFull:'לא',
-   syllabusContent:'טיסת אימון בסיסית ראשונה - תרגול נהלי טיסה בסיסיים.', completionsNeeded:'לתרגל תרחישי לחץ נוספים ולחזור על נהלי קבלת החלטות.',
-   remarks: sc({briefing:'מגלה מוטיבציה ורצון ללמוד.', ground:'הכנה קרקעית איטית יחסית.', postFlight:'תחקיר בסיסי.', aircraftHandling:'קושי בשליטה בתנאי לחץ.', missionRoute:'סטיות מנתיב המשימה.', takeoffLanding:'ביצוע סביר.', additional:'קושי בקבלת החלטות מהירה ובניהול לחץ.'}),
-   nextFlightNotes:'להיפגש לשיחת חיזוק אישית ולתרגל תרחישי לחץ בסימולטור.', summaryRecommendations:'נדרש ליווי צמוד וחיזוק ביסודות.',
-   scores: sc({overall:6}), overallRating:'טעון שיפור',
-   strengths:'מגלה מוטיבציה ורצון ללמוד.', improvements:'לתרגל תרחישי לחץ נוספים ולחזור על נהלי קבלת החלטות.', summary:'נדרש ליווי צמוד וחיזוק ביסודות.', recommendations:'להיפגש לשיחת חיזוק אישית ולתרגל תרחישי לחץ בסימולטור.'},
-  {id:'f9', traineeId:5, instructorId:1, formType:'scouts', title:'תרגיל סיור שטח', date:'2026-06-18', status:'approved', syllabusSection:'4',
-   instructorFullName:'סרן דנה שגיא', mission:'סיור שטח צפון', contentNotes:'בוצעו כל התרגולים מלבד תיאום מעבר נתיבים שאמור לביצוע הבא.',
-   prepBriefingTransfer:'מעבר הדרכות יסודי ומסודר.', prepStationSetup:'התארגנות בעמדה מהירה.',
-   sysFamiliarity:'הכרה טובה של ייעוד המערכות והאינדיקציות.', sysIVA:'שימוש תקין.', sysMSDC:'הפעלה מדויקת.', sysLauncher:'אין תקלות.', sysFaults:'אין בלת"מים בגיחה זו.',
-   missionConnect:'חיבור מהיר למשימה.', missionSA:'ש"ע טוב לאורך המשימה.', missionSARoutes:'ש"ע סביר במעבר נתיבים.', missionSAFaults:'לא נדרש.',
-   teamExternal:'תקשורת ברורה מול גורמים חיצוניים.', teamMC:'תיאום טוב מול MC.', teamOSO:'תקשורת סבירה מול OSO.', teamRDO:'לא נדרש.', teamMPO:'לא נדרש.',
-   traitIndependence:'מפגין עצמאות בהחלטות שוטפות.', traitConfidence:'לחזק ביטחון עצמי בהצגת מידע.', traitPressure:'מתפקד טוב בעומס.', traitOrder:'עבודה מסודרת.', traitDebrief:'קולט הערות בצורה טובה.',
-   summaryRecommendations:'התקדמות טובה, נדרש חיזוק בביטחון עצמי. לתרגל הצגות תדריך מול קבוצה.',
-   scores: sc({overall:7}), overallRating:'טוב',
-   strengths:'הכנה יסודית ושאלות טובות.', improvements:'לחזק ביטחון עצמי בהצגת המידע.', summary:'התקדמות טובה, נדרש חיזוק בביטחון.', recommendations:'לתרגל הצגות תדריך מול קבוצה.'}
-];
-
 function num(v){ if(typeof v==='number') return v; if(v==='6/7') return 6.5; const p=parseFloat(v); return isNaN(p)? null : p; }
 function avg(scores){ const v=Object.values(scores||{}).map(num).filter(x=>x!==null); return v.length? v.reduce((a,b)=>a+b,0)/v.length : 0; }
 function fmtDate(d){ return new Date(d+'T00:00:00').toLocaleDateString('he-IL',{day:'numeric',month:'short'}); }
@@ -1581,15 +1530,6 @@ function traineeById(id){ return TRAINEES.find(t=>t.id===id); }
 function instructorById(id){ return (INSTRUCTORS.find(i=>i.id===id)||{}).name || ''; }
 function isViewer(role){ return role==='kahad'; }
 function canManage(role){ return role==='smat'; }
-function visibleTrainees(role, instructorId){
-  if(role==='instructor'){
-    const ins = INSTRUCTORS.find(i=>i.id===instructorId) || {};
-    const pops = ins.populations || [];
-    return TRAINEES.filter(t=>t.instructorId===instructorId && pops.includes(t.population));
-  }
-  return TRAINEES;
-}
-function canAccessTrainee(role, instructorId, traineeId){ return visibleTrainees(role, instructorId).some(t=>t.id===traineeId); }
 function sectionNumberOf(f){
   const v = f.segment || f.lessonNumber || f.syllabusSection || f.controllerSyllabus;
   if(!v) return null;
@@ -1598,52 +1538,76 @@ function sectionNumberOf(f){
   return byName? byName.n : null;
 }
 function segmentKey(formType, course, n){ return formType+'|'+course+'|'+String(n); }
-function segmentKeyOf(f){ const n = sectionNumberOf(f); return n? segmentKey(f.formType, courseOf(f), n) : null; }
-function segmentOf(f){ const n = sectionNumberOf(f); return n? segmentLabelFor(n, courseOf(f)) : '—'; }
-function courseOf(f){ if(f.course) return f.course; const t = traineeById(f.traineeId); return (t&&t.course)||'—'; }
-function patternText(f){
-  return [f.nextFlightNotes, f.improvements, f.summaryRecommendations, f.summary, f.completionsNeeded, f.improveNotes, f.syllabusCompletion].filter(Boolean).join(' ');
-}
-function recurringPatterns(hist){
-  return PATTERN_KEYWORDS.map(kw=>({kw, label: PATTERN_LABELS[kw]||kw, hits: hist.filter(f=>patternText(f).includes(kw))}))
-    .filter(p=>p.hits.length>=2).sort((a,b)=>b.hits.length-a.hits.length);
-}
+function segmentOf(f){ const n = sectionNumberOf(f); return n? segmentLabelFor(n, courseOf(f)) : '-'; }
+function courseOf(f){ if(f.course) return f.course; const t = traineeById(f.traineeId); return (t&&t.course)||'-'; }
 function syllabusStatusFor(hist, course){
   const done = {};
   hist.filter(f=>f.status==='approved' && courseOf(f)===course).forEach(f=>{ const n = sectionNumberOf(f); if(n) done[n] = true; });
   return segmentsForCourse(course).map(s=>({n:s.n, name:s.name, done: !!done[s.n], label: segmentLabelFor(s.n, course)}));
 }
 
-const LOADING_SCREENS = ['iDash','iTrainees','iFeed','tDash','tFeedback','tStats','sDash','sFeedbacks','sUsers'];
+const LOADING_SCREENS = ['iDash','iTrainees','iFeed','tDash','tFeedback','tStats','sDash','sFeedbacks','sAccounts'];
 const BACK_MAP = {
   iTrainees:'iDash', iTraineeDetail:'iTrainees', iNewFeedback:'iDash', iEval:'iNewFeedback', iFeed:'iDash', feedbackView:'iFeed',
-  tFeedback:'tDash', tStats:'tDash', sFeedbacks:'sDash', sUsers:'sDash', sUserForm:'sUsers', sAccounts:'sDash'
+  tFeedback:'tDash', tStats:'tDash', sFeedbacks:'sDash', sAccounts:'sDash'
 };
 const ACCOUNT_ROLE_OPTIONS = [{key:'smat',label:'סמ"ט'},{key:'instructor',label:'מדריך'},{key:'trainee',label:'חניך'},{key:'kahad',label:'קה"ד'}];
-function accountRoleLabel(r){ return (ACCOUNT_ROLE_OPTIONS.find(x=>x.key===r)||{}).label || '—'; }
+function accountRoleLabel(r){ return (ACCOUNT_ROLE_OPTIONS.find(x=>x.key===r)||{}).label || '-'; }
 function accountStatusInfo(st){
   if(st==='approved') return {label:'מאושר', bg:'#E4F8ED', fg:'#1FA86A'};
   if(st==='disabled') return {label:'מושבת', bg:'#FDEAE7', fg:'#D14A38'};
   return {label:'ממתין לאישור', bg:'#FFF1DA', fg:'#B8791F'};
+}
+// Fields that map to real, named columns on public.feedbacks - everything else
+// on the evalForm (type-specific fields like remarks/observations/sys*/team* etc.)
+// falls through into the `details` jsonb column automatically, so no field the
+// user filled in is ever dropped just because it lacks its own column.
+const FEEDBACK_COLUMN_FIELDS = ['feedbackId','status','traineeId','formType','segment','course','syllabusNumber','title','validationMsg',
+  'date','scores','overallRating','strengths','improvements','summary','recommendations','nextFlightNotes','summaryRecommendations'];
+function buildFeedbackDetails(f){
+  const details = {};
+  Object.keys(f).forEach(k=>{ if(!FEEDBACK_COLUMN_FIELDS.includes(k)) details[k] = f[k]; });
+  return details;
+}
+// Inverse of buildFeedbackDetails: turns a public.feedbacks row (snake_case
+// columns + details jsonb) back into the flat camelCase shape the UI expects
+// (same field names as evalForm/viewFb). Spreading `details` last means every
+// type-specific field the user filled in (remarks, observations, sys*, etc.)
+// lands back exactly where the display code already looks for it.
+function mapFeedbackRow(row){
+  const details = row.details || {};
+  return {
+    id: row.id, traineeId: row.trainee_id, instructorId: row.instructor_id,
+    formType: row.form_type, title: row.title, date: row.date, status: row.status,
+    course: row.course, segment: row.segment, scores: row.scores || {},
+    overallRating: row.overall_rating, strengths: row.strengths, improvements: row.improvements,
+    summary: row.summary, recommendations: row.recommendations,
+    nextFlightNotes: row.next_flight_notes, summaryRecommendations: row.summary_recommendations,
+    ...details
+  };
 }
 
 class Component extends DCLogic {
   state = {
     role: null, screen: 'intro', navHistory: [], loading: false, msLoading:false,
     currentTraineeId: 1,
-    selectedTraineeId: null, viewingFeedbackId: null, evalForm:null,
-    searchQuery:'', filterCourse:'all', filterStatus:'all', filterUserRole:'all', filterPopulation:'all',
-    draft:null, userForm:null,
-    users: [...TRAINEES.map(t=>({id:'t'+t.id, kind:'trainee', traineeId:t.id, name:t.name, role:'trainee', course:t.course+' · '+t.class})),
-            ...INSTRUCTORS.map(i=>({id:'i'+i.id, kind:'instructor', instructorId:i.id, name:i.name, role:'instructor', course:'', populations:[...i.populations]})),
-            {id:'smat1', kind:'smat', name:SMAT_NAME, role:'smat', course:''}],
-    feedbacks: FEEDBACKS.map(f=>({...f, scores:{...f.scores}})),
+    evalForm:null,
+    searchQuery:'', filterCourse:'all', filterStatus:'all',
+    draft:null,
     showSuccess:false, successMsg:'', confirmDialog:null, showWindTransition:false, showAddToHome:false,
     loginStage:'idle', hasLoggedInBefore:false,
     infoModal:null, printJob:null, printFrom:'', printTo:'',
     authMode:'signin', authUsername:'', authPassword:'', authFullName:'', authError:'', authLoading:false, authGate:null,
     accounts:[], accountsLoading:false, accountsError:'', roleModal:null, resetPwModal:null,
-    links:[], linksLoading:false, linksError:'', linkInstructorId:'', linkTraineeId:''
+    links:[], linksLoading:false, linksError:'', linkInstructorId:'', linkTraineeId:'',
+    myProfileId:null, trainees:[], traineesLoading:false, myFeedbacks:[], feedbacksLoading:false,
+    allFeedbacks:[], allFeedbacksLoading:false,
+    myApprovedFeedbacks:[], myApprovedFeedbacksLoading:false,
+    provisionedTraineeIds: new Set(), provisionedInstructorIds: new Set(),
+    viewingFeedback: null, feedbackViewError: '',
+    deleteUserModal: null,
+    selectedTraineeId: null, traineeDetail: null, traineeDetailLoading: false, traineeDetailError: '',
+    myProfileName: '', myProfileCourseLabel: ''
   };
 
   componentDidMount(){
@@ -1656,10 +1620,201 @@ class Component extends DCLogic {
   }
   bootstrapAuth=async()=>{
     const {session, profile} = await window.NimbusAuth.getSessionProfile();
-    if(!session || !profile){ this.setState({authGate:null}); return; }
-    if(profile.status==='approved' && profile.role){ this.loginAs(profile.role); this.setState({authGate:null}); return; }
+    if(!session || !profile){ this.setState({authGate:null, myProfileId:null, myProfileName:''}); return; }
+    if(profile.status==='approved' && profile.role){
+      this.loginAs(profile.role);
+      // full_name (or username as a fallback) of the actually signed-in
+      // profile - getSessionProfile() already returns it, it just wasn't
+      // being kept anywhere before. Left '' for a demo login (loginAs() is
+      // also called directly by onDemoInstructor/Trainee/Smat/Kahad, which
+      // never sets this) so every greeting/profile field below falls back to
+      // the existing demo name exactly as before whenever this is empty.
+      this.setState({authGate:null, myProfileId:profile.id, myProfileName: profile.full_name || profile.username || ''});
+      // trainees was previously only loaded lazily from openNewFeedback() -
+      // iTrainees (below) needs it too, and is reachable directly from the
+      // bottom nav tab without ever visiting the new-feedback flow first.
+      if(profile.role==='instructor'){ this.loadMyFeedbacks(profile.id); this.loadMyTrainees(); }
+      // accounts/links were previously only loaded lazily from
+      // onOpenAccounts() (the sDash button, smat-only) - sAccounts is now
+      // also reachable directly from the bottom nav tab (for smat AND
+      // kahad, replacing the old demo sUsers tab), so both need it preloaded
+      // the same way every other real screen already is.
+      else if(profile.role==='smat' || profile.role==='kahad'){ this.loadAllFeedbacks(); this.loadAccounts(); this.loadLinks(); }
+      else if(profile.role==='trainee'){ this.loadMyApprovedFeedbacks(profile.id); this.loadMyOwnTraineeProfile(profile.id); }
+      return;
+    }
     if(profile.status==='disabled'){ this.setState({authGate:'disabled'}); return; }
     this.setState({authGate:'pending'});
+  };
+  // course/class for the signed-in trainee's own greeting/profile subtitle -
+  // trainee_profiles is the same real source already used (for other
+  // trainees) by loadMyTrainees()/loadTraineeDetail(). Left '' on
+  // any failure so the existing demo fallback (traineeById) below still
+  // applies rather than showing a broken label.
+  loadMyOwnTraineeProfile=async(profileId)=>{
+    const { data: tprof } = await window.nimbusSupabase.from('trainee_profiles').select('course, class').eq('profile_id', profileId).maybeSingle();
+    if(!tprof || (!tprof.course && !tprof.class)) return;
+    this.setState({myProfileCourseLabel: [tprof.course, tprof.class].filter(Boolean).join(' · ')});
+  };
+  loadMyTrainees=async()=>{
+    if(!this.state.myProfileId) return;
+    this.setState({traineesLoading:true});
+    const { data: links, error: linksErr } = await window.nimbusSupabase.from('instructor_trainees').select('trainee_id').eq('instructor_id', this.state.myProfileId);
+    if(linksErr || !links || !links.length){ this.setState({traineesLoading:false, trainees:[]}); return; }
+    const ids = links.map(l=>l.trainee_id);
+    const { data: profs, error: profErr } = await window.nimbusSupabase.from('profiles').select('id, full_name, username').in('id', ids);
+    if(profErr){ this.setState({traineesLoading:false, trainees:[]}); return; }
+    // course/population/class come from trainee_profiles, not profiles - only
+    // needed by the real iTraineeDetail path (openTrainee/buildDetail
+    // below); assignedOptions (the new-feedback draft picker) only reads
+    // id/name, so this addition is harmless to that existing use.
+    const { data: tprofs } = await window.nimbusSupabase.from('trainee_profiles').select('profile_id, course, population, class').in('profile_id', ids);
+    const tp = {}; (tprofs||[]).forEach(r=>{ tp[r.profile_id] = r; });
+    this.setState({traineesLoading:false, trainees:(profs||[]).map(p=>({id:p.id, name:p.full_name||p.username,
+      course:(tp[p.id]||{}).course||'', population:(tp[p.id]||{}).population||'', class:(tp[p.id]||{}).class||''}))});
+  };
+  // Real trainee-detail screen (iTraineeDetail with a real UUID) - loads the
+  // trainee's own profile/trainee_profiles info plus their FULL feedback
+  // history, deliberately with no instructor_id filter: the RLS SELECT
+  // policy for instructor already scopes this correctly via
+  // instructor_trainees (an instructor sees every feedback for a trainee
+  // they're linked to, including ones written by other instructors) - smat/
+  // kahad see everything via feedbacks_smat_all. Sorted by `date` in JS,
+  // never relying on the query's created_at order (same pattern as tDash/
+  // tStats/tFeedback).
+  loadTraineeDetail=async(traineeId)=>{
+    this.setState({traineeDetailLoading:true, traineeDetail:null, traineeDetailError:''});
+    const { data: prof, error: profErr } = await window.nimbusSupabase.from('profiles').select('id, full_name, username').eq('id', traineeId).single();
+    if(profErr || !prof){ this.setState({traineeDetailLoading:false, traineeDetailError:'שגיאה בטעינת פרטי החניך: '+(profErr? profErr.message : 'לא נמצא')}); return; }
+    const { data: tprof } = await window.nimbusSupabase.from('trainee_profiles').select('course, population, class').eq('profile_id', traineeId).maybeSingle();
+    const { data: rows, error: fbErr } = await window.nimbusSupabase.from('feedbacks')
+      .select('id, trainee_id, instructor_id, form_type, title, date, status, course, segment, scores, overall_rating, next_flight_notes, recommendations')
+      .eq('trainee_id', traineeId).order('created_at', {ascending:false});
+    if(fbErr){ this.setState({traineeDetailLoading:false, traineeDetailError:'שגיאה בטעינת ההיסטוריה: '+fbErr.message}); return; }
+    const history = [...(rows||[])].sort((a,b)=>a.date<b.date?1:-1);
+    this.setState({traineeDetailLoading:false, traineeDetailError:'',
+      traineeDetail: { id: prof.id, name: prof.full_name||prof.username,
+        course: (tprof&&tprof.course)||'', population: (tprof&&tprof.population)||'', class: (tprof&&tprof.class)||'', history }});
+  };
+  // Opens the real (Supabase) trainee-detail screen. The trainee_id always
+  // comes from a feedback row the caller could already see (RLS-scoped), so
+  // no extra client-side access check is needed here beyond this not being
+  // part of the trainee's own flow.
+  openTrainee=(id)=>{
+    if(!id || this.state.role==='trainee') return;
+    this.setState({selectedTraineeId:id});
+    this.navigate('iTraineeDetail', {});
+    this.loadTraineeDetail(id);
+  };
+  // The only trainee-detail builder now (the demo buildDetail() it was
+  // originally kept separate from has since been removed - it had no active
+  // caller left). Same generic helpers (avg/num/scoreColor/fmtDate/
+  // statusInfo/typeLabel), same output shape the iTraineeDetail template
+  // already expects. History always opens via viewFeedback (never
+  // editFeedback directly) - matches every other real list in the app; editing happens
+  // only from inside feedbackView, where the existing canEdit gating (smat,
+  // or the owning instructor while not approved) already applies unchanged.
+  buildDetail(rd){
+    const hist = rd.history;
+    const doneHist = hist.filter(f=>f.status==='approved');
+    const statHist = (doneHist.length? doneHist : hist).filter(f=>f.scores && Object.keys(f.scores||{}).length);
+    const doneVals = doneHist.map(f=>avg(f.scores)).filter(v=>v>0);
+    const a = doneVals.length? doneVals.reduce((x,y)=>x+y,0)/doneVals.length : 0;
+    const chrono = [...statHist].sort((x,y)=>x.date<y.date?-1:1);
+    const pts = chrono.map(f=>avg(f.scores));
+    const minV = Math.min(...pts, 5), maxV = Math.max(...pts, 10);
+    const stepX = pts.length>1? 280/(pts.length-1) : 0;
+    const coords = pts.map((v,i)=>({x:10+i*stepX, y: 80 - ((v-minV)/((maxV-minV)||1))*60}));
+    const allCatKeys = {}; statHist.forEach(f=>Object.keys(f.scores||{}).forEach(k=>{ allCatKeys[k]=true; }));
+    const labelMap = {}; [...AIR_CREW_CATS,...CONTROLLERS_CATS,...SCOUTS_CATS].forEach(c=>labelMap[c.key]=c.label);
+    const catBars = Object.keys(allCatKeys).map(k=>{
+      const vals = statHist.map(f=>num((f.scores||{})[k])).filter(v=>v!==null); const av = vals.length? vals.reduce((x,y)=>x+y,0)/vals.length : 0;
+      return {label:labelMap[k]||k, value: vals.length? av.toFixed(1):'-', pct: vals.length? ((av-5)/4)*100 : 0, barColor:scoreColor(av)};
+    }).sort((x,y)=>y.pct-x.pct);
+    const role = this.state.role;
+    // syllabusStatusFor()/segmentsForCourse() only know the demo's fixed
+    // course catalogue - a real free-text course simply won't match, which
+    // safely yields an empty list (0/0 shown), never a crash. Not fixed here -
+    // same known-gap family as the isEditing course/segment handling in iEval
+    // and the controllers/scouts overall_rating issue; tracked separately.
+    const syl = syllabusStatusFor(hist, rd.course);
+    const sylDone = syl.filter(x=>x.done).length;
+    return { name:rd.name, initial:(rd.name||'-')[0], avatarBg:'#4FAEFF', course:rd.course||'-', class:rd.class||'-',
+      avgLabel: doneVals.length? a.toFixed(1):'-', count: hist.length, empty: hist.length===0, canAdd: role==='instructor',
+      hasStats: statHist.length>0,
+      hasHighlights: hist.some(f=>(f.next_flight_notes||f.recommendations||'').trim()),
+      highlights: hist.filter(f=>(f.next_flight_notes||f.recommendations||'').trim()).map(f=>({
+        title: f.title, dateLabel: fmtDate(f.date), notes: f.next_flight_notes || f.recommendations, onClick: ()=>this.viewFeedback(f.id)})),
+      hasPatterns:false, patterns:[],
+      showSyllabusOverview: role==='smat' || role==='kahad',
+      syllabusSummary: sylDone+' מתוך '+syl.length+' מקטעים הושלמו',
+      syllabusItems: syl.map(x=>({name:x.label, mark: x.done?'✓':'', statusLabel: x.done?'בוצע':'',
+        markStyle:'width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; flex-shrink:0; '+(x.done?'background:#E4F8ED; color:#1FA86A;':'background:#F4F8FC; color:#F4F8FC;')})),
+      // PDF export is a separate, not-yet-implemented task (per instruction) -
+      // no-op placeholders so the existing buttons don't throw if clicked.
+      onExportAll: ()=>{}, onExportRange: ()=>{},
+      trendPoints: coords.map(c=>`${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(' '), trendDots: coords, catBars,
+      history: hist.map(f=>{ const st=statusInfo(f.status); return {title:f.title, typeLabel:typeLabel(f.form_type), dateLabel:fmtDate(f.date), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg,
+        onClick: ()=>this.viewFeedback(f.id) }; })
+    };
+  }
+  loadMyFeedbacks=async(profileId)=>{
+    const pid = profileId || this.state.myProfileId;
+    if(!pid) return;
+    this.setState({feedbacksLoading:true});
+    const { data, error } = await window.nimbusSupabase.from('feedbacks').select('id, trainee_id, form_type, title, date, status, overall_rating')
+      .eq('instructor_id', pid).order('created_at', {ascending:false});
+    if(error || !data){ this.setState({feedbacksLoading:false, myFeedbacks:[]}); return; }
+    const traineeIds = Array.from(new Set(data.map(f=>f.trainee_id)));
+    let names = {};
+    if(traineeIds.length){
+      const { data: profs } = await window.nimbusSupabase.from('profiles').select('id, full_name, username').in('id', traineeIds);
+      (profs||[]).forEach(p=>{ names[p.id] = p.full_name||p.username; });
+    }
+    this.setState({feedbacksLoading:false, myFeedbacks: data.map(f=>({...f, traineeName: names[f.trainee_id]||'-'}))});
+  };
+  // SMAT/KAHAD-facing list: every real feedback the signed-in user is allowed
+  // to see (RLS decides that - feedbacks_smat_all is unrestricted for both
+  // roles, so this is a plain select with no client-side role filter).
+  // Fully independent from loadMyFeedbacks (instructor-only, filtered to
+  // instructor_id) - separate state field, never touches myFeedbacks.
+  loadAllFeedbacks=async()=>{
+    this.setState({allFeedbacksLoading:true});
+    const { data, error } = await window.nimbusSupabase.from('feedbacks')
+      .select('id, trainee_id, instructor_id, form_type, title, date, status, course, segment, overall_rating')
+      .order('created_at', {ascending:false});
+    if(error || !data){ this.setState({allFeedbacksLoading:false, allFeedbacks:[]}); return; }
+    // Resolve trainee/instructor names generically from profiles by uuid -
+    // never traineeById/instructorById (those only know the demo dataset).
+    const ids = Array.from(new Set(data.flatMap(f=>[f.trainee_id, f.instructor_id]).filter(Boolean)));
+    let names = {};
+    if(ids.length){
+      const { data: profs } = await window.nimbusSupabase.from('profiles').select('id, full_name, username').in('id', ids);
+      (profs||[]).forEach(p=>{ names[p.id] = p.full_name||p.username; });
+    }
+    this.setState({allFeedbacksLoading:false, allFeedbacks: data.map(f=>({...f, traineeName: names[f.trainee_id]||'-', instructorName: names[f.instructor_id]||'-'}))});
+  };
+  // Trainee-facing list: feedbacks_select_trainee RLS already restricts this
+  // to trainee_id = auth.uid() AND status = 'approved' - that's the real
+  // boundary. The .eq('status','approved') below is defense-in-depth UX only
+  // (matches the pattern used everywhere else in this file), not the actual
+  // security control. Fully independent from loadMyFeedbacks (instructor,
+  // filtered by instructor_id) and loadAllFeedbacks (smat/kahad) -
+  // separate state field, doesn't touch either.
+  loadMyApprovedFeedbacks=async(profileId)=>{
+    const pid = profileId || this.state.myProfileId;
+    if(!pid) return;
+    this.setState({myApprovedFeedbacksLoading:true});
+    const { data, error } = await window.nimbusSupabase.from('feedbacks').select('id, trainee_id, instructor_id, form_type, title, date, status, overall_rating, scores, next_flight_notes, recommendations')
+      .eq('trainee_id', pid).eq('status','approved').order('created_at', {ascending:false});
+    if(error || !data){ this.setState({myApprovedFeedbacksLoading:false, myApprovedFeedbacks:[]}); return; }
+    const instructorIds = Array.from(new Set(data.map(f=>f.instructor_id).filter(Boolean)));
+    let names = {};
+    if(instructorIds.length){
+      const { data: profs } = await window.nimbusSupabase.from('profiles').select('id, full_name, username').in('id', instructorIds);
+      (profs||[]).forEach(p=>{ names[p.id] = p.full_name||p.username; });
+    }
+    this.setState({myApprovedFeedbacksLoading:false, myApprovedFeedbacks: data.map(f=>({...f, instructorName: names[f.instructor_id]||'-'}))});
   };
 
   speedMul(){ const m = this.props.animationIntensity || 'normal'; return m==='subtle'?1.25 : m==='playful'?0.75 : 1; }
@@ -1745,119 +1900,64 @@ class Component extends DCLogic {
       {label:'מקטע', value:segmentOf(f)},
       {label:'קורס', value:courseOf(f)},
       {label:'סוג דפית', value:typeLabel(f.formType)},
-      {label:'מדריך', value:f.instructorFullName || instructorById(f.instructorId) || '—'},
-      {label:'ציון', value:(f.scores&&f.scores.overall!==undefined)? String(f.scores.overall)+' · '+(f.overallRating||'') : '—'}
+      {label:'מדריך', value:f.instructorFullName || instructorById(f.instructorId) || '-'},
+      {label:'ציון', value:(f.scores&&f.scores.overall!==undefined)? String(f.scores.overall)+' · '+(f.overallRating||'') : '-'}
     ];
     if(f.formType==='airCrew'){
       const r = f.remarks||{};
-      rows.push({label:'סוג מטוס', value:f.aircraftType||'—'}, {label:'סילבוס בוצע במלואו', value:f.syllabusFull||'—'},
-        {label:'סילבוס — מה תורגל', value:f.syllabusContent||'—'}, {label:'השלמות שיש לבצע', value:f.completionsNeeded||'—'},
-        {label:'תדריך', value:r.briefing||'—'}, {label:'על הקרקע', value:r.ground||'—'}, {label:'אחה"מ', value:r.postFlight||'—'},
-        {label:'טיפוס', value:r.aircraftHandling||'—'}, {label:'נתיב משימה', value:r.missionRoute||'—'},
-        {label:'בסיס המראה > בסיס נחיתה', value:r.takeoffLanding||'—'}, {label:'הערות נוספות', value:r.additional||'—'});
+      rows.push({label:'סוג מטוס', value:f.aircraftType||'-'}, {label:'סילבוס בוצע במלואו', value:f.syllabusFull||'-'},
+        {label:'סילבוס - מה תורגל', value:f.syllabusContent||'-'}, {label:'השלמות שיש לבצע', value:f.completionsNeeded||'-'},
+        {label:'תדריך', value:r.briefing||'-'}, {label:'על הקרקע', value:r.ground||'-'}, {label:'אחה"מ', value:r.postFlight||'-'},
+        {label:'טיפוס', value:r.aircraftHandling||'-'}, {label:'נתיב משימה', value:r.missionRoute||'-'},
+        {label:'בסיס המראה > בסיס נחיתה', value:r.takeoffLanding||'-'}, {label:'הערות נוספות', value:r.additional||'-'});
     } else if(f.formType==='controllers'){
       const legacy = (rowsArr)=>(rowsArr||[]).filter(x=>x.topic||x.note).map(x=>(x.topic? x.topic+': ':'')+x.note).join('\n');
-      rows.push({label:'סוג הטיסה', value:f.flightType||'—'},
-        {label:'עמידה ביעדים', value:f.objectivesText || [f.target1,f.target2,f.target3].map((v,i)=>'יעד '+(i+1)+': '+(v||'—')).join(' · ')},
-        {label:'מה בוצע', value:f.syllabusCompletion||'—'},
-        {label:'הערות לשיפור', value:f.improveNotes || legacy(f.remarksImprove) || '—'},
-        {label:'הערות לשימור', value:f.keepNotes || legacy(f.remarksKeep) || '—'},
-        {label:'תצפית', value:(f.observations||[]).filter(o=>o.time||o.topic||o.description).map(o=>o.time+' — '+o.topic+': '+o.description).join('\n')||'—'});
+      rows.push({label:'סוג הטיסה', value:f.flightType||'-'},
+        {label:'עמידה ביעדים', value:f.objectivesText || [f.target1,f.target2,f.target3].map((v,i)=>'יעד '+(i+1)+': '+(v||'-')).join(' · ')},
+        {label:'מה בוצע', value:f.syllabusCompletion||'-'},
+        {label:'הערות לשיפור', value:f.improveNotes || legacy(f.remarksImprove) || '-'},
+        {label:'הערות לשימור', value:f.keepNotes || legacy(f.remarksKeep) || '-'},
+        {label:'תצפית', value:(f.observations||[]).filter(o=>o.time||o.topic||o.description).map(o=>o.time+' - '+o.topic+': '+o.description).join('\n')||'-'});
     } else {
-      rows.push({label:'משימה', value:f.mission||'—'}, {label:'תוכן הגיחה ותרגולים', value:f.contentNotes||'—'},
-        {label:'הכנה — מעבר הדרכות', value:f.prepBriefingTransfer||'—'}, {label:'הכנה — התארגנות בעמדה', value:f.prepStationSetup||'—'},
-        {label:'תפעול מערכת', value:['הכרת מערכות: '+(f.sysFamiliarity||'—'),'IVA: '+(f.sysIVA||'—'),'MSDC: '+(f.sysMSDC||'—'),'Launcher/Symon: '+(f.sysLauncher||'—'),'תקלות: '+(f.sysFaults||'—')].join('\n')},
-        {label:'משימתיות', value:['חיבור למשימה: '+(f.missionConnect||'—'),'ש"ע במשימה: '+(f.missionSA||'—'),'ש"ע במעבר נתיבים: '+(f.missionSARoutes||'—'),'ש"ע בבלת"מים: '+(f.missionSAFaults||'—')].join('\n')},
-        {label:'עבודת צוות', value:['חיצוני: '+(f.teamExternal||'—'),'MC: '+(f.teamMC||'—'),'OSO: '+(f.teamOSO||'—'),'RDO: '+(f.teamRDO||'—'),'MPO: '+(f.teamMPO||'—')].join('\n')},
-        {label:'תכונות אישיות ומקצועיות', value:['עצמאות ויוזמה: '+(f.traitIndependence||'—'),'ביטחון עצמי: '+(f.traitConfidence||'—'),'תפקוד בלחץ: '+(f.traitPressure||'—'),'סדר וסדירות: '+(f.traitOrder||'—'),'רמת תחקיר: '+(f.traitDebrief||'—')].join('\n')});
+      rows.push({label:'משימה', value:f.mission||'-'}, {label:'תוכן הגיחה ותרגולים', value:f.contentNotes||'-'},
+        {label:'הכנה - מעבר הדרכות', value:f.prepBriefingTransfer||'-'}, {label:'הכנה - התארגנות בעמדה', value:f.prepStationSetup||'-'},
+        {label:'תפעול מערכת', value:['הכרת מערכות: '+(f.sysFamiliarity||'-'),'IVA: '+(f.sysIVA||'-'),'MSDC: '+(f.sysMSDC||'-'),'Launcher/Symon: '+(f.sysLauncher||'-'),'תקלות: '+(f.sysFaults||'-')].join('\n')},
+        {label:'משימתיות', value:['חיבור למשימה: '+(f.missionConnect||'-'),'ש"ע במשימה: '+(f.missionSA||'-'),'ש"ע במעבר נתיבים: '+(f.missionSARoutes||'-'),'ש"ע בבלת"מים: '+(f.missionSAFaults||'-')].join('\n')},
+        {label:'עבודת צוות', value:['חיצוני: '+(f.teamExternal||'-'),'MC: '+(f.teamMC||'-'),'OSO: '+(f.teamOSO||'-'),'RDO: '+(f.teamRDO||'-'),'MPO: '+(f.teamMPO||'-')].join('\n')},
+        {label:'תכונות אישיות ומקצועיות', value:['עצמאות ויוזמה: '+(f.traitIndependence||'-'),'ביטחון עצמי: '+(f.traitConfidence||'-'),'תפקוד בלחץ: '+(f.traitPressure||'-'),'סדר וסדירות: '+(f.traitOrder||'-'),'רמת תחקיר: '+(f.traitDebrief||'-')].join('\n')});
     }
-    rows.push({label:'דגשים לטיסה הבאה', value:f.nextFlightNotes||f.recommendations||'—'}, {label:'סיכום הגיחה', value:f.summaryRecommendations||f.summary||'—'},
+    rows.push({label:'דגשים לטיסה הבאה', value:f.nextFlightNotes||f.recommendations||'-'}, {label:'סיכום הגיחה', value:f.summaryRecommendations||f.summary||'-'},
       {label:'סטטוס', value:statusInfo(f.status).label});
     return rows;
   }
-  buildPrintJob(heading, subheading, list){
-    const docs = [...list].sort((a,b)=>a.date<b.date?-1:1).map(f=>({
-      title: f.title, meta: traineeById(f.traineeId).name+' · '+typeLabel(f.formType)+' · '+fmtDate(f.date), rows: this.printRows(f)
-    }));
-    this.setState({printJob:{heading, subheading, docs, empty: docs.length===0}});
-  }
-  exportOne(f){ this.buildPrintJob(f.title, traineeById(f.traineeId).name+' · '+fmtDate(f.date), [f]); }
-  exportAllForTrainee(tid){
-    const t = traineeById(tid);
-    const list = this.state.feedbacks.filter(f=>f.traineeId===tid);
-    this.buildPrintJob('כל הדפיות — '+t.name, t.course+' · '+t.class+' · '+list.length+' דפיות', list);
-  }
-  exportRangeForTrainee(tid){
-    const t = traineeById(tid); const from = this.state.printFrom, to = this.state.printTo;
-    const list = this.state.feedbacks.filter(f=>f.traineeId===tid && (!from||f.date>=from) && (!to||f.date<=to));
-    const rangeLabel = (from? fmtDate(from):'תחילת המסלול')+' — '+(to? fmtDate(to):'היום');
-    this.buildPrintJob('דפיות — '+t.name, rangeLabel+' · '+list.length+' דפיות', list);
+  // f is state.viewingFeedback - already has traineeName resolved by
+  // viewFeedback() from profiles (never traineeById), and is otherwise the
+  // same flat camelCase shape (formType, remarks, aircraftType, etc. - all
+  // restored from `details` by mapFeedbackRow) that printRows() already
+  // expects, so printRows(f) itself needs no change. Sets the same printJob
+  // state the print overlay/buttons already render.
+  exportOne(f){
+    this.setState({printJob:{heading:f.title, subheading:(f.traineeName||'-')+' · '+typeLabel(f.formType)+' · '+fmtDate(f.date),
+      docs:[{title:f.title, meta:(f.traineeName||'-')+' · '+typeLabel(f.formType)+' · '+fmtDate(f.date), rows:this.printRows(f)}], empty:false}});
   }
   onCloseAddToHome=()=>this.setState({showAddToHome:false});
 
-  openTrainee(id){
-    if(!canAccessTrainee(this.state.role, 1, id)) return;
-    this.navigate('iTraineeDetail', {selectedTraineeId:id});
-  }
-  buildDetail(t, feedbacks, canAdd){
-    const hist = feedbacks.filter(f=>f.traineeId===t.id).sort((a,b)=>a.date<b.date?1:-1);
-    const doneHist = hist.filter(f=>f.status==='approved');
-    const statHist = (doneHist.length? doneHist : hist).filter(f=>f.scores && Object.keys(f.scores).length);
-    const doneVals = doneHist.map(f=>avg(f.scores)).filter(v=>v>0);
-    const a = doneVals.length? doneVals.reduce((x,y)=>x+y,0)/doneVals.length : 0;
-    const chrono = [...statHist].sort((x,y)=>x.date<y.date?-1:1);
-    const pts = chrono.map(f=>avg(f.scores));
-    const minV = Math.min(...pts, 5), maxV = Math.max(...pts, 10);
-    const stepX = pts.length>1? 280/(pts.length-1) : 0;
-    const coords = pts.map((v,i)=>({x:10+i*stepX, y: 80 - ((v-minV)/((maxV-minV)||1))*60}));
-    const allCatKeys = {}; statHist.forEach(f=>Object.keys(f.scores).forEach(k=>{ allCatKeys[k]=true; }));
-    const labelMap = {}; [...AIR_CREW_CATS,...CONTROLLERS_CATS,...SCOUTS_CATS].forEach(c=>labelMap[c.key]=c.label);
-    const catBars = Object.keys(allCatKeys).map(k=>{
-      const vals = statHist.map(f=>num(f.scores[k])).filter(v=>v!==null); const av = vals.length? vals.reduce((x,y)=>x+y,0)/vals.length : 0;
-      return {label:labelMap[k]||k, value: vals.length? av.toFixed(1):'—', pct: vals.length? ((av-5)/4)*100 : 0, barColor:scoreColor(av)};
-    }).sort((x,y)=>y.pct-x.pct);
-    const role = this.state.role;
-    const latest = hist[0];
-    const patterns = recurringPatterns(hist).map(p=>({
-      label:p.label, countLabel:'הופיע ב-'+p.hits.length+' דפיות',
-      items: p.hits.map(f=>({label: f.title+' · '+fmtDate(f.date), onClick: ()=>this.viewFeedback(f.id)}))
-    }));
-    const syl = syllabusStatusFor(hist, t.course);
-    const sylDone = syl.filter(x=>x.done).length;
-    return { name:t.name, initial:t.name[0], avatarBg:t.avatarBg, course:t.course, class:t.class,
-      avgLabel: doneVals.length? a.toFixed(1):'—', count: hist.length, empty: hist.length===0, canAdd: !!canAdd,
-      hasStats: statHist.length>0,
-      hasHighlights: hist.some(f=>(f.nextFlightNotes||f.recommendations||'').trim()),
-      highlights: hist.filter(f=>(f.nextFlightNotes||f.recommendations||'').trim()).map(f=>({
-        title: f.title, dateLabel: fmtDate(f.date), notes: f.nextFlightNotes || f.recommendations, onClick: ()=>this.viewFeedback(f.id)})),
-      hasPatterns: patterns.length>0, patterns,
-      showSyllabusOverview: role==='smat' || role==='kahad',
-      syllabusSummary: sylDone+' מתוך '+syl.length+' מקטעים הושלמו',
-      syllabusItems: syl.map(x=>({name:x.label, mark: x.done?'✓':'', statusLabel: x.done?'בוצע':'',
-        markStyle:'width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; flex-shrink:0; '+(x.done?'background:#E4F8ED; color:#1FA86A;':'background:#F4F8FC; color:#F4F8FC;')})),
-      onExportAll: ()=>this.exportAllForTrainee(t.id),
-      onExportRange: ()=>this.exportRangeForTrainee(t.id),
-      trendPoints: coords.map(c=>`${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(' '), trendDots: coords, catBars,
-      history: hist.map(f=>{ const st=statusInfo(f.status); return {title:f.title, typeLabel:typeLabel(f.formType), dateLabel:fmtDate(f.date), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg,
-        onClick: f.status==='approved'? ()=>this.viewFeedback(f.id) : ()=>this.editFeedback(f) }; })};
-  }
   onSearchChange=(e)=>this.setState({searchQuery:e.target.value});
   setFilterCourse(c){ this.setState({filterCourse:c}); }
   setFilterStatus(st){ this.setState({filterStatus:st}); }
-  setFilterUserRole(r){ this.setState({filterUserRole:r}); }
-  setFilterPopulation(p){ this.setState({filterPopulation:p, filterCourse:'all'}); }
-  onFilterPopulationChange=(e)=>this.setState({filterPopulation:e.target.value, filterCourse:'all'});
-  onFilterCourseSelChange=(e)=>this.setState({filterCourse:e.target.value});
 
-  openNewFeedback(traineeId){
-    const t = traineeId? traineeById(traineeId) : null;
-    this.navigate('iNewFeedback', {draft:{ traineeId: traineeId||'', traineeName: t?t.name:'', formType:'', title:'' }});
+  openNewFeedback(){
+    // Trainee must be chosen from the real, Supabase-linked list (assignedOptions) -
+    // no longer pre-filled from the demo TRAINEES roster, since that has no relation
+    // to a real trainee_profiles UUID. Applies regardless of entry point.
+    this.navigate('iNewFeedback', {draft:{ traineeId:'', traineeName:'', formType:'', title:'' }});
+    this.loadMyTrainees();
   }
-  onOpenNewFeedback=()=>this.openNewFeedback(null);
-  onNewFeedbackForTrainee=()=>this.openNewFeedback(this.state.selectedTraineeId);
+  onOpenNewFeedback=()=>this.openNewFeedback();
+  onNewFeedbackForTrainee=()=>this.openNewFeedback();
   onDraftTraineeChange=(e)=>{
-    const id = e.target.value? Number(e.target.value) : '';
-    const t = id? traineeById(id) : null;
+    const id = e.target.value || '';
+    const t = id? this.state.trainees.find(rt=>rt.id===id) : null;
     this.setState(s=>({draft:{...s.draft, traineeId:id, traineeName: t?t.name:''}}));
   };
   onDraftTitleChange=(e)=>this.setState(s=>({draft:{...s.draft, title:e.target.value}}));
@@ -1866,10 +1966,16 @@ class Component extends DCLogic {
   onDraftContinue=()=>{
     const d = this.state.draft;
     if(!d.traineeId || !d.formType) return;
-    const dt = traineeById(d.traineeId);
+    // d.traineeId is a real Supabase uuid (from state.draft, set via
+    // onDraftTraineeChange off state.trainees) - traineeById(d.traineeId)
+    // would always return undefined (TRAINEES only has small demo integer
+    // ids), so this looked the trainee up in the real list that's already
+    // loaded instead - no new query. trainees already carries
+    // course/population/class (from trainee_profiles).
+    const dt = this.state.trainees.find(t=>t.id===d.traineeId);
     const seedCourses = coursesForType(d.formType).map(c=>c.name);
     const seedCourse = (dt && seedCourses.includes(dt.course))? dt.course : '';
-    const base = { feedbackId:null, status:'new', traineeId:d.traineeId, formType:d.formType, segment:'', course:seedCourse,
+    const base = { feedbackId:null, status:'new', traineeId:d.traineeId, traineeName:d.traineeName, formType:d.formType, segment:'', course:seedCourse,
       syllabusNumber:'', title:typeLabel(d.formType), validationMsg:'', date:new Date().toISOString().slice(0,10) };
     if(d.formType==='airCrew'){
       this.navigate('iEval', {evalForm:{...base, lessonNumber:'', aircraftType:'', instructorFullName:'', syllabusFull:'כן', syllabusContent:'', completionsNeeded:'',
@@ -1951,24 +2057,28 @@ class Component extends DCLogic {
   setSyllabusFull(v){ this.setEvalField('syllabusFull', v); }
   onAircraftTypeChange=(e)=>this.setEvalField('aircraftType', e.target.value);
   onInstructorFullNameChange=(e)=>this.setEvalField('instructorFullName', e.target.value);
-  onSaveEval=()=>{
+  onSaveEval=async()=>{
     const f=this.state.evalForm;
     const missing = [];
     if(!f.course) missing.push('קורס');
     if(!f.segment) missing.push('גיחה');
-    const targetKey = segmentKey(f.formType, f.course, f.segment);
-    const sectionApproved = this.state.feedbacks.some(x=>x.traineeId===f.traineeId && x.status==='approved' && x.id!==f.feedbackId && segmentKeyOf(x)===targetKey);
-    if(sectionApproved){
-      this.setState(s=>({evalForm:{...s.evalForm, validationMsg:'המקטע אושר על ידי הסמ"ט — לא ניתן להוסיף דפית נוספת במקטע זה'}}));
-      return;
-    }
+    // A "this segment is already approved elsewhere" guard against
+    // s.feedbacks (demo) used to sit here. It never actually fired for a
+    // real feedback (real traineeId is a uuid, s.feedbacks' entries use
+    // small demo integer ids - they can never match), so removing it changes
+    // no observable real behavior; it's not replaced by a Supabase query
+    // here since none was requested for this pass.
     if(!(f.nextFlightNotes||'').trim()) missing.push('דגשים לטיסה הבאה');
     if(!(f.summaryRecommendations||'').trim()) missing.push('סיכום הגיחה');
     if(missing.length){
-      this.setState(s=>({evalForm:{...s.evalForm, validationMsg:'לא ניתן לשמור — חובה למלא: '+missing.join(' · ')}}));
+      this.setState(s=>({evalForm:{...s.evalForm, validationMsg:'לא ניתן לשמור - חובה למלא: '+missing.join(' · ')}}));
       return;
     }
-    let toSave = {...f, validationMsg:'', title: segmentLabelFor(f.segment, f.course)};
+    // segmentLabelFor() matches against the demo's fixed course/segment lists
+    // (see the isEditing branch in renderVals) - for a real feedback it would
+    // resolve to '-' and silently blank the title on every save, so keep the
+    // existing title as-is for isEditing instead of recomputing it.
+    let toSave = {...f, validationMsg:'', title: f.isEditing ? f.title : segmentLabelFor(f.segment, f.course)};
     if(f.formType==='airCrew'){
       const scoreVal = (f.scores&&f.scores.overall)||7;
       toSave = {...toSave, overallRating: ratingFromScore(scoreVal), strengths: f.remarks.additional, improvements: f.completionsNeeded, summary: f.summaryRecommendations, recommendations: f.nextFlightNotes};
@@ -1979,86 +2089,221 @@ class Component extends DCLogic {
       const scoreVal = (f.scores&&f.scores.overall)||7;
       toSave = {...toSave, overallRating: ratingFromScore(scoreVal), strengths: f.contentNotes, improvements: '', summary: f.summaryRecommendations, recommendations: f.nextFlightNotes};
     }
-    this.setState(s=>{
-      let feedbacks;
-      if(toSave.feedbackId){ feedbacks = s.feedbacks.map(fb=>fb.id===toSave.feedbackId? {...fb, ...toSave, status:'pending'}: fb); }
-      else { feedbacks = [...s.feedbacks, {id:'f'+Date.now(), instructorId:1, ...toSave, status:'pending'}]; }
-      return {feedbacks};
+    // Editing an existing feedback - loaded via viewFeedback/editFeedback
+    // (isEditing:true; the only place that ever sets feedbackId on an existing
+    // row). isEditing itself is kept for a different reason - see buildEvalFormOut
+    // below - not to branch demo vs real here anymore.
+    if(toSave.isEditing && toSave.feedbackId){
+      const role = this.state.role;
+      const allowed = role==='smat' || (role==='instructor' && toSave.instructorId===this.state.myProfileId && toSave.status!=='approved');
+      if(!allowed){
+        this.setState(s=>({evalForm:{...s.evalForm, validationMsg:'אין לך הרשאה לערוך משוב זה.'}}));
+        return;
+      }
+      this.setState(s=>({evalForm:{...s.evalForm, saving:true, validationMsg:''}}));
+      const { data, error } = await window.nimbusSupabase.from('feedbacks').update({
+        // instructor_id/trainee_id are re-sent unchanged on purpose - the row
+        // keeps whoever it already belonged to, never reassigned by an edit.
+        trainee_id: toSave.traineeId,
+        instructor_id: toSave.instructorId,
+        form_type: toSave.formType,
+        title: toSave.title,
+        date: toSave.date,
+        course: toSave.course,
+        segment: toSave.segment,
+        scores: toSave.scores || {},
+        overall_rating: toSave.overallRating || null,
+        strengths: toSave.strengths || null,
+        improvements: toSave.improvements || null,
+        summary: toSave.summary || null,
+        recommendations: toSave.recommendations || null,
+        next_flight_notes: toSave.nextFlightNotes || null,
+        summary_recommendations: toSave.summaryRecommendations || null,
+        details: buildFeedbackDetails(toSave),
+        // UPDATE never applies a column default the way INSERT does - the RLS
+        // with-check for instructor edits requires status='pending' explicitly.
+        status: 'pending'
+      }).eq('id', toSave.feedbackId).select();
+      if(error){
+        this.setState(s=>({evalForm:{...s.evalForm, saving:false, validationMsg:'שמירת המשוב נכשלה. הנתונים שמילאת נשמרו בטופס - אפשר לנסות שוב.'}}));
+        return;
+      }
+      if(!data || !data.length){
+        // RLS silently returns zero updated rows rather than an error when it
+        // blocks the write (e.g. the instructor-trainee link was removed
+        // since this feedback was created) - treat that the same as a denial.
+        this.setState(s=>({evalForm:{...s.evalForm, saving:false, validationMsg:'העדכון לא בוצע - אין לך הרשאה לערוך משוב זה כרגע.'}}));
+        return;
+      }
+      this.setState(s=>({evalForm:{...s.evalForm, saving:false}}));
+      this.setState({showSuccess:true, successMsg:'המשוב עודכן ונשלח לאישור סמ"ט'});
+      setTimeout(async ()=>{
+        this.setState({showSuccess:false});
+        await this.viewFeedback(toSave.feedbackId);
+      }, 1000*this.speedMul());
+      this.loadMyFeedbacks();
+      return;
+    }
+    // No demo "editing an existing feedback" branch anymore: editFeedback()
+    // is now the only function that ever sets evalForm.feedbackId for an
+    // existing row, and it always sets isEditing:true, so the branch above
+    // always catches it. What follows is only ever reached for a brand-new
+    // feedback (no feedbackId) - the real, Supabase-backed insert path.
+    if(!this.state.myProfileId){
+      this.setState(s=>({evalForm:{...s.evalForm, validationMsg:'לא ניתן לשמור - המשתמש המחובר לא זוהה. נסה/י להתחבר מחדש.'}}));
+      return;
+    }
+    this.setState(s=>({evalForm:{...s.evalForm, saving:true, validationMsg:''}}));
+    const { error } = await window.nimbusSupabase.from('feedbacks').insert({
+      trainee_id: toSave.traineeId,
+      instructor_id: this.state.myProfileId,
+      form_type: toSave.formType,
+      title: toSave.title,
+      date: toSave.date,
+      course: toSave.course,
+      segment: toSave.segment,
+      scores: toSave.scores || {},
+      overall_rating: toSave.overallRating || null,
+      strengths: toSave.strengths || null,
+      improvements: toSave.improvements || null,
+      summary: toSave.summary || null,
+      recommendations: toSave.recommendations || null,
+      next_flight_notes: toSave.nextFlightNotes || null,
+      summary_recommendations: toSave.summaryRecommendations || null,
+      details: buildFeedbackDetails(toSave)
     });
-    this.showSuccessThenBack('הטופס נשמר ונשלח לאישור סמ"ט', 'iTraineeDetail', {selectedTraineeId:f.traineeId});
+    if(error){
+      this.setState(s=>({evalForm:{...s.evalForm, saving:false, validationMsg:'שמירת הטופס נכשלה. הנתונים שמילאת נשמרו בטופס - אפשר לנסות שוב.'}}));
+      return;
+    }
+    this.setState(s=>({evalForm:{...s.evalForm, saving:false}}));
+    this.showSuccessThenBack('הטופס נשמר ונשלח לאישור סמ"ט', 'iDash', {});
+    this.loadMyFeedbacks();
   };
-  editFeedback(fb){
-    const base = { feedbackId:fb.id, status:fb.status, traineeId:fb.traineeId, formType:fb.formType, title:fb.title, date:fb.date,
-      segment: sectionNumberOf(fb) || '', course: courseOf(fb), syllabusNumber: fb.syllabusNumber||'', validationMsg:'',
-      scores:{...fb.scores}, overallRating:fb.overallRating };
+  showSuccessThenBack(msg, screen, patch){
+    this.setState({showSuccess:true, successMsg:msg});
+    setTimeout(()=>{ this.setState({showSuccess:false}); this.navigate(screen, patch||{}); }, 1000*this.speedMul());
+  }
+
+  // Loads one feedback row directly from Supabase by its real uuid, maps it
+  // (mapFeedbackRow), resolves trainee/instructor names from profiles,
+  // then navigates to feedbackView. This is now the only view path - there is
+  // no separate demo lookup by array index anymore.
+  viewFeedback=async(id)=>{
+    this.setState({feedbackViewError:''});
+    const { data, error } = await window.nimbusSupabase.from('feedbacks').select('*').eq('id', id).single();
+    if(error || !data){ this.setState({feedbackViewError:'שגיאה בטעינת המשוב: '+(error? error.message : 'לא נמצא')}); return; }
+    const mapped = mapFeedbackRow(data);
+    const nameIds = [mapped.traineeId, mapped.instructorId].filter(Boolean);
+    let names = {};
+    if(nameIds.length){
+      const { data: profs } = await window.nimbusSupabase.from('profiles').select('id, full_name, username').in('id', nameIds);
+      (profs||[]).forEach(p=>{ names[p.id] = p.full_name||p.username; });
+    }
+    this.setState({viewingFeedback: {...mapped, traineeName: names[mapped.traineeId]||'-', instructorName: names[mapped.instructorId]||'-'}});
+    this.navigate('feedbackView', {});
+  };
+  // Edits the feedback in state.viewingFeedback via the existing iEval
+  // screen. Never touches traineeById/instructorById (traineeName/
+  // instructorName were already resolved by viewFeedback from profiles).
+  // Permission is re-checked here too, not just via the button's visibility -
+  // this mirrors the feedbacks_update_instructor RLS policy exactly (smat:
+  // unrestricted; instructor: only their own, only while not approved;
+  // trainee/kahad: never allowed).
+  editFeedback(){
+    const fb = this.state.viewingFeedback;
+    if(!fb) return;
+    const role = this.state.role;
+    const allowed = role==='smat' || (role==='instructor' && fb.instructorId===this.state.myProfileId && fb.status!=='approved');
+    if(!allowed) return;
+    // isEditing:true tells buildEvalFormOut() (see renderVals) to treat course
+    // as an already-committed free-text value (skip the fixed-catalogue
+    // validation that new-feedback creation still needs) - kept, not demo-
+    // vs-real bookkeeping, it's the "editing an existing feedback" signal.
+    const base = { feedbackId:fb.id, isEditing:true, status:fb.status, traineeId:fb.traineeId, instructorId:fb.instructorId,
+      traineeName:fb.traineeName||'', formType:fb.formType, title:fb.title, date:fb.date,
+      segment: fb.segment||'', course: fb.course||'', syllabusNumber: fb.syllabusNumber||'', validationMsg:'',
+      scores:{...(fb.scores||{})}, overallRating:fb.overallRating };
     if(fb.formType==='airCrew'){
       this.navigate('iEval', {evalForm:{...base, lessonNumber:fb.lessonNumber||'', aircraftType:fb.aircraftType||'', instructorFullName:fb.instructorFullName||'', syllabusFull:fb.syllabusFull||'כן',
-        syllabusContent:fb.syllabusContent||'', completionsNeeded:fb.completionsNeeded||'', remarks:{...(fb.remarks||{})}, nextFlightNotes:fb.nextFlightNotes||'', summaryRecommendations:fb.summaryRecommendations||''}});
+        syllabusContent:fb.syllabusContent||'', completionsNeeded:fb.completionsNeeded||'',
+        remarks:{briefing:'',ground:'',postFlight:'',aircraftHandling:'',missionRoute:'',takeoffLanding:'',additional:'', ...(fb.remarks||{})},
+        nextFlightNotes:fb.nextFlightNotes||'', summaryRecommendations:fb.summaryRecommendations||''}});
     } else if(fb.formType==='controllers'){
-      const dr=(rows,def)=>rows? rows.map(r=>({...r})) : def;
-      const legacy=(rowsArr)=>(rowsArr||[]).filter(x=>x.topic||x.note).map(x=>(x.topic? x.topic+': ':'')+x.note).join('\n');
-      const legacyTargets = [fb.target1,fb.target2,fb.target3].some(Boolean)? [fb.target1,fb.target2,fb.target3].map((v,i)=>'יעד '+(i+1)+': '+(v==='v'?'עמד':v==='x'?'לא עמד':'—')).join('\n') : '';
       this.navigate('iEval', {evalForm:{...base, courseName:fb.courseName||'', controllerSyllabus:fb.controllerSyllabus||'', instructorFullName:fb.instructorFullName||'',
         flightType:fb.flightType||'מבצעי', flightName:fb.flightName||'',
-        objectivesText: fb.objectivesText || legacyTargets,
-        syllabusCompletion:fb.syllabusCompletion||'',
-        improveNotes: fb.improveNotes || legacy(fb.remarksImprove),
-        keepNotes: fb.keepNotes || legacy(fb.remarksKeep),
-        nextFlightNotes: fb.nextFlightNotes || fb.recommendations || '',
-        summaryRecommendations: fb.summaryRecommendations || fb.summary || '',
-        observations:dr(fb.observations,[{time:'',topic:'',description:''},{time:'',topic:'',description:''},{time:'',topic:'',description:''},{time:'',topic:'',description:''}])}});
+        objectivesText: fb.objectivesText||'', syllabusCompletion:fb.syllabusCompletion||'',
+        improveNotes: fb.improveNotes||'', keepNotes: fb.keepNotes||'',
+        nextFlightNotes: fb.nextFlightNotes||'', summaryRecommendations: fb.summaryRecommendations||'',
+        observations: (fb.observations&&fb.observations.length)? fb.observations.map(o=>({...o})) : [{time:'',topic:'',description:''},{time:'',topic:'',description:''},{time:'',topic:'',description:''},{time:'',topic:'',description:''}]}});
     } else {
       this.navigate('iEval', {evalForm:{...base, nextFlightNotes:fb.nextFlightNotes||'', syllabusSection:fb.syllabusSection||'', instructorFullName:fb.instructorFullName||'', mission:fb.mission||'', contentNotes:fb.contentNotes||'', prepBriefingTransfer:fb.prepBriefingTransfer||'', prepStationSetup:fb.prepStationSetup||'',
         sysFamiliarity:fb.sysFamiliarity||'', sysIVA:fb.sysIVA||'', sysMSDC:fb.sysMSDC||'', sysLauncher:fb.sysLauncher||'', sysFaults:fb.sysFaults||'',
         missionConnect:fb.missionConnect||'', missionSA:fb.missionSA||'', missionSARoutes:fb.missionSARoutes||'', missionSAFaults:fb.missionSAFaults||'',
         teamExternal:fb.teamExternal||'', teamMC:fb.teamMC||'', teamOSO:fb.teamOSO||'', teamRDO:fb.teamRDO||'', teamMPO:fb.teamMPO||'',
         traitIndependence:fb.traitIndependence||'', traitConfidence:fb.traitConfidence||'', traitPressure:fb.traitPressure||'', traitOrder:fb.traitOrder||'', traitDebrief:fb.traitDebrief||'',
-        summaryRecommendations:fb.summaryRecommendations||'', strengths:fb.strengths, improvements:fb.improvements, summary:fb.summary, recommendations:fb.recommendations}});
+        summaryRecommendations:fb.summaryRecommendations||'', strengths:fb.strengths||'', improvements:fb.improvements||'', summary:fb.summary||'', recommendations:fb.recommendations||'', overallRating:fb.overallRating||''}});
     }
   }
-
-  showSuccessThenBack(msg, screen, patch){
-    this.setState({showSuccess:true, successMsg:msg});
-    setTimeout(()=>{ this.setState({showSuccess:false}); this.navigate(screen, patch||{}); }, 1000*this.speedMul());
-  }
-
-  viewFeedback(id){ this.navigate('feedbackView', {viewingFeedbackId:id}); }
-  onGoFeedback=()=>this.navigate('tFeedback', {});
-  onOpenLatest=()=>{ const f=this.myApprovedFeedbacks()[0]; if(f) this.viewFeedback(f.id); };
-  toggleExpand(id){ this.setState(s=>({expandedId: s.expandedId===id? null : id})); }
-
-  approveFeedback(id){ if(!canManage(this.state.role)) return; this.setState(s=>({feedbacks:s.feedbacks.map(f=>f.id===id?{...f,status:'approved'}:f)})); this.showSuccessThenBack('הטופס אושר ופורסם לחניך', 'sFeedbacks', {}); }
-  rejectFeedback(id){ if(!canManage(this.state.role)) return; this.setState(s=>({feedbacks:s.feedbacks.map(f=>f.id===id?{...f,status:'rejected'}:f)})); this.showSuccessThenBack('הטופס נדחה', 'sFeedbacks', {}); }
+  // Feedback deletion - smat only (matches feedbacks_smat_all; no RLS policy
+  // grants delete to any other role). Uses the existing confirmDialog
+  // mechanism, same as onRemoveLink.
   askDeleteFeedback(id){
-    if(!canManage(this.state.role)) return;
-    this.setState({confirmDialog:{ message:'האם למחוק את הדפית? פעולה זו אינה הפיכה.',
+    if(this.state.role!=='smat') return;
+    this.setState({confirmDialog:{ message:'האם למחוק את המשוב לצמיתות? פעולה זו אינה הפיכה.',
       onCancel:()=>this.setState({confirmDialog:null}),
-      onConfirm:()=>{ this.setState(s=>({feedbacks:s.feedbacks.filter(f=>f.id!==id), confirmDialog:null})); this.showSuccessThenBack('הטופס נמחק', 'sFeedbacks', {}); } }});
+      onConfirm: async ()=>{
+        this.setState({confirmDialog:null});
+        const { error } = await window.nimbusSupabase.from('feedbacks').delete().eq('id', id);
+        if(error){ this.setState({feedbackViewError:'מחיקת המשוב נכשלה: '+error.message}); return; }
+        this.setState({showSuccess:true, successMsg:'המשוב נמחק'});
+        const home = this.state.role==='instructor' ? 'iDash' : 'sDash';
+        setTimeout(()=>{ this.setState({showSuccess:false}); this.navigate(home, {}); }, 1000*this.speedMul());
+        this.loadMyFeedbacks();
+        this.loadAllFeedbacks();
+      } }});
   }
-
-  onAddUser=()=>{ if(!canManage(this.state.role)) return; this.setState({screen:'sUserForm', navHistory:[...this.state.navHistory,'sUsers'], userForm:{id:null, name:'', role:'trainee', course:'', populations:[]}}); };
-  editUser(u){ if(!canManage(this.state.role)) return; this.setState({screen:'sUserForm', navHistory:[...this.state.navHistory,'sUsers'], userForm:{id:u.id, name:u.name, role:u.role, course:u.course||'', populations:[...(u.populations||[])]}}); }
-  onUserNameChange=(e)=>this.setState(s=>({userForm:{...s.userForm, name:e.target.value}}));
-  onUserCourseChange=(e)=>this.setState(s=>({userForm:{...s.userForm, course:e.target.value}}));
-  setUserRole(r){ this.setState(s=>({userForm:{...s.userForm, role:r}})); }
-  toggleUserPopulation(k){ this.setState(s=>{ const cur = s.userForm.populations||[]; return {userForm:{...s.userForm, populations: cur.includes(k)? cur.filter(x=>x!==k) : [...cur, k]}}; }); }
-  onSaveUser=()=>{
-    const uf = this.state.userForm;
-    if(!uf.name.trim()) return;
-    this.setState(s=>{
-      let users;
-      const pops = uf.role==='instructor'? (uf.populations||[]) : [];
-      if(uf.id){ users = s.users.map(u=>u.id===uf.id? {...u, name:uf.name, role:uf.role, course:uf.role==='trainee'?uf.course:'', populations:pops} : u); }
-      else { users = [...s.users, {id:'u'+Date.now(), name:uf.name, role:uf.role, course:uf.role==='trainee'?uf.course:'', populations:pops}]; }
-      return {users};
-    });
-    this.showSuccessThenBack('המשתמש נשמר בהצלחה', 'sUsers', {});
-  };
-  askDeleteUser(u){
-    this.setState({confirmDialog:{ message:'האם למחוק את המשתמש "'+u.name+'"?',
+  // Approve/reject - smat only, matches feedbacks_smat_all exactly (no other
+  // RLS policy allows any other role to write status). Operates only on
+  // state.viewingFeedback's real id.
+  approveFeedback(){
+    if(this.state.role!=='smat') return;
+    const fb = this.state.viewingFeedback;
+    if(!fb) return;
+    this.setState({confirmDialog:{ message:'האם לאשר את המשוב? המשוב יסומן כמאושר ויהיה גלוי לחניך.',
+      confirmLabel:'אישור', confirmBg:'#1FA86A',
       onCancel:()=>this.setState({confirmDialog:null}),
-      onConfirm:()=>{ this.setState(s=>({users:s.users.filter(x=>x.id!==u.id), confirmDialog:null})); this.showSuccessThenBack('המשתמש נמחק', 'sUsers', {}); } }});
+      onConfirm: async ()=>{
+        this.setState({confirmDialog:null});
+        const { error } = await window.nimbusSupabase.from('feedbacks').update({status:'approved'}).eq('id', fb.id);
+        if(error){ this.setState({feedbackViewError:'אישור המשוב נכשל: '+error.message}); return; }
+        this.setState({showSuccess:true, successMsg:'המשוב אושר'});
+        setTimeout(()=>this.setState({showSuccess:false}), 1000*this.speedMul());
+        await this.viewFeedback(fb.id);
+        this.loadMyFeedbacks();
+        this.loadAllFeedbacks();
+      } }});
   }
+  rejectFeedback(){
+    if(this.state.role!=='smat') return;
+    const fb = this.state.viewingFeedback;
+    if(!fb) return;
+    this.setState({confirmDialog:{ message:'האם לדחות את המשוב? המדריך יידרש לערוך ולשלוח אותו מחדש לאישור.',
+      confirmLabel:'דחייה', confirmBg:'#E0902E',
+      onCancel:()=>this.setState({confirmDialog:null}),
+      onConfirm: async ()=>{
+        this.setState({confirmDialog:null});
+        const { error } = await window.nimbusSupabase.from('feedbacks').update({status:'rejected'}).eq('id', fb.id);
+        if(error){ this.setState({feedbackViewError:'דחיית המשוב נכשלה: '+error.message}); return; }
+        this.setState({showSuccess:true, successMsg:'המשוב נדחה'});
+        setTimeout(()=>this.setState({showSuccess:false}), 1000*this.speedMul());
+        await this.viewFeedback(fb.id);
+        this.loadMyFeedbacks();
+        this.loadAllFeedbacks();
+      } }});
+  }
+  onGoFeedback=()=>this.navigate('tFeedback', {});
+  toggleExpand(id){ this.setState(s=>({expandedId: s.expandedId===id? null : id})); }
 
   async invokeAdminFn(name, body){
     const { data, error } = await window.nimbusSupabase.functions.invoke(name, { body });
@@ -2082,14 +2327,40 @@ class Component extends DCLogic {
     this.loadLinks();
   };
   loadAccounts=async()=>{
-    if(this.state.role!=='smat') return;
+    // Read-only - kahad needs this too now that sAccounts is its real
+    // "משתמשים" screen. The actual management actions (approve/disable/
+    // reset/delete/link) each still carry their own smat-only guard,
+    // unchanged - this only controls who can load the list to view it.
+    if(this.state.role!=='smat' && this.state.role!=='kahad') return;
     this.setState({accountsLoading:true, accountsError:''});
     const { data, error } = await window.nimbusSupabase.from('profiles').select('id, full_name, username, role, status').order('created_at', {ascending:true});
     if(error){ this.setState({accountsLoading:false, accounts:[], accountsError:'שגיאה בטעינת המשתמשים: '+error.message}); return; }
     this.setState({accountsLoading:false, accounts:data||[]});
+    this.loadProvisionedIds();
+  };
+  // Tracks which approved trainee/instructor profiles actually have their
+  // matching trainee_profiles/instructor_profiles row. A profile can end up
+  // approved without one (e.g. role was changed on an already-approved user,
+  // which today doesn't provision it) - this lets the UI avoid ever offering
+  // such a profile in the link picker, which is what was violating the
+  // instructor_trainees foreign keys.
+  loadProvisionedIds=async()=>{
+    if(this.state.role!=='smat') return;
+    const [tp, ip] = await Promise.all([
+      window.nimbusSupabase.from('trainee_profiles').select('profile_id'),
+      window.nimbusSupabase.from('instructor_profiles').select('profile_id')
+    ]);
+    this.setState({
+      provisionedTraineeIds: new Set(((tp.data)||[]).map(r=>r.profile_id)),
+      provisionedInstructorIds: new Set(((ip.data)||[]).map(r=>r.profile_id))
+    });
   };
   loadLinks=async()=>{
-    if(this.state.role!=='smat') return;
+    // Same read-only reasoning as loadAccounts() above - kahad only ever
+    // sees this data if canManageUsers hides the link-management section for
+    // it in the template; onAddLink/onRemoveLink keep their own smat-only
+    // guards unchanged.
+    if(this.state.role!=='smat' && this.state.role!=='kahad') return;
     this.setState({linksLoading:true, linksError:''});
     const { data, error } = await window.nimbusSupabase.from('instructor_trainees').select('instructor_id, trainee_id, created_at');
     if(error){ this.setState({linksLoading:false, links:[], linksError:'שגיאה בטעינת השיוכים: '+error.message}); return; }
@@ -2098,6 +2369,15 @@ class Component extends DCLogic {
   onOpenRoleModal(u, mode){
     if(this.state.role!=='smat') return;
     this.setState({roleModal:{targetId:u.id, targetName:u.full_name||u.username, mode, selectedRole: mode==='change'? u.role : null,
+      course:'', population:'', traineeClass:'', instructorPopulations:[], error:'', saving:false}});
+  }
+  // Repair path for a profile that is approved with role trainee/instructor
+  // but has no matching trainee_profiles/instructor_profiles row (see
+  // loadProvisionedIds). Reuses the same modal, but never touches
+  // profiles.role/status - only creates the missing extension row.
+  onOpenCompleteProfile(u){
+    if(this.state.role!=='smat') return;
+    this.setState({roleModal:{targetId:u.id, targetName:u.full_name||u.username, mode:'complete', selectedRole:u.role,
       course:'', population:'', traineeClass:'', instructorPopulations:[], error:'', saving:false}});
   }
   onCloseRoleModal=()=>this.setState({roleModal:null});
@@ -2116,23 +2396,29 @@ class Component extends DCLogic {
     if(this.state.role!=='smat') return;
     const m = this.state.roleModal;
     if(!m || !m.selectedRole){ this.setState(s=>({roleModal:{...s.roleModal, error:'יש לבחור תפקיד'}})); return; }
-    if(m.mode==='approve' && m.selectedRole==='trainee' && (!m.course.trim() || !m.population || !m.traineeClass.trim())){
+    // 'complete' repairs a profile that is already approved trainee/instructor
+    // but is missing its extension row (see loadProvisionedIds) - same field
+    // requirements as a fresh approval, but profiles.role/status is untouched.
+    const provisioning = m.mode==='approve' || m.mode==='complete';
+    if(provisioning && m.selectedRole==='trainee' && (!m.course.trim() || !m.population || !m.traineeClass.trim())){
       this.setState(s=>({roleModal:{...s.roleModal, error:'יש למלא קורס, אוכלוסייה ומחזור'}})); return;
     }
-    if(m.mode==='approve' && m.selectedRole==='instructor' && !(m.instructorPopulations||[]).length){
+    if(provisioning && m.selectedRole==='instructor' && !(m.instructorPopulations||[]).length){
       this.setState(s=>({roleModal:{...s.roleModal, error:'יש לבחור לפחות אוכלוסייה אחת'}})); return;
     }
     this.setState(s=>({roleModal:{...s.roleModal, saving:true, error:''}}));
-    const patch = m.mode==='approve' ? {role:m.selectedRole, status:'approved'} : {role:m.selectedRole};
-    const { error } = await window.nimbusSupabase.from('profiles').update(patch).eq('id', m.targetId);
-    if(error){ this.setState(s=>({roleModal:{...s.roleModal, saving:false, error:error.message}})); return; }
-    if(m.mode==='approve' && m.selectedRole==='trainee'){
-      const { error: tErr } = await window.nimbusSupabase.from('trainee_profiles').insert({profile_id:m.targetId, course:m.course.trim(), population:m.population, class:m.traineeClass.trim()});
-      if(tErr){ this.setState(s=>({roleModal:{...s.roleModal, saving:false, error:'הפרופיל אושר אך יצירת פרטי החניך נכשלה: '+tErr.message}})); await this.loadAccounts(); return; }
+    if(m.mode!=='complete'){
+      const patch = m.mode==='approve' ? {role:m.selectedRole, status:'approved'} : {role:m.selectedRole};
+      const { error } = await window.nimbusSupabase.from('profiles').update(patch).eq('id', m.targetId);
+      if(error){ this.setState(s=>({roleModal:{...s.roleModal, saving:false, error:error.message}})); return; }
     }
-    if(m.mode==='approve' && m.selectedRole==='instructor'){
-      const { error: iErr } = await window.nimbusSupabase.from('instructor_profiles').insert({profile_id:m.targetId, populations:m.instructorPopulations});
-      if(iErr){ this.setState(s=>({roleModal:{...s.roleModal, saving:false, error:'הפרופיל אושר אך יצירת פרטי המדריך נכשלה: '+iErr.message}})); await this.loadAccounts(); return; }
+    if(provisioning && m.selectedRole==='trainee'){
+      const { error: tErr } = await window.nimbusSupabase.from('trainee_profiles').upsert({profile_id:m.targetId, course:m.course.trim(), population:m.population, class:m.traineeClass.trim()}, {onConflict:'profile_id'});
+      if(tErr){ this.setState(s=>({roleModal:{...s.roleModal, saving:false, error:'יצירת פרטי החניך נכשלה: '+tErr.message}})); await this.loadAccounts(); return; }
+    }
+    if(provisioning && m.selectedRole==='instructor'){
+      const { error: iErr } = await window.nimbusSupabase.from('instructor_profiles').upsert({profile_id:m.targetId, populations:m.instructorPopulations}, {onConflict:'profile_id'});
+      if(iErr){ this.setState(s=>({roleModal:{...s.roleModal, saving:false, error:'יצירת פרטי המדריך נכשלה: '+iErr.message}})); await this.loadAccounts(); return; }
     }
     this.setState({roleModal:null, showSuccess:true, successMsg:'העדכון בוצע בהצלחה'});
     setTimeout(()=>this.setState({showSuccess:false}), 1000*this.speedMul());
@@ -2164,6 +2450,44 @@ class Component extends DCLogic {
         await this.loadAccounts();
       } }});
   }
+  // Permanent account deletion - smat only, two-step confirmation. Step 1 is
+  // the usual confirmDialog; only on confirming that does the second, typed-
+  // username modal open. The client-side guards here (role/self/allowed
+  // roles) are UX only - admin-delete-user re-checks everything server-side,
+  // and never deletes the user's feedbacks itself if they're what's blocking
+  // the delete (feedbacks.trainee_id/instructor_id are ON DELETE RESTRICT).
+  askDeleteAccount(u){
+    if(this.state.role!=='smat') return;
+    if(u.id===this.state.myProfileId) return;
+    if(u.role!=='trainee' && u.role!=='instructor') return;
+    this.setState({confirmDialog:{
+      message:'האם למחוק לצמיתות את המשתמש "'+(u.full_name||u.username)+'"? פעולה זו בלתי הפיכה ותמחק את כל המידע הקשור אליו לפי מבנה מסד הנתונים. אם קיימים משובים הקשורים אליו, המחיקה תיחסם - במקרה כזה מומלץ להשתמש בהשבתה במקום כדי לשמור את ההיסטוריה.',
+      onCancel:()=>this.setState({confirmDialog:null}),
+      onConfirm:()=>{
+        this.setState({confirmDialog:null, deleteUserModal:{targetId:u.id, targetUsername:u.username, targetName:u.full_name||u.username, confirmText:'', error:'', saving:false}});
+      } }});
+  }
+  onCloseDeleteUserModal=()=>this.setState({deleteUserModal:null});
+  onDeleteUserConfirmTextChange=(e)=>this.setState(s=>({deleteUserModal:{...s.deleteUserModal, confirmText:e.target.value, error:''}}));
+  onConfirmDeleteUser=async()=>{
+    if(this.state.role!=='smat') return;
+    const m = this.state.deleteUserModal;
+    if(!m) return;
+    if(m.targetId===this.state.myProfileId){
+      this.setState(s=>({deleteUserModal:{...s.deleteUserModal, error:'לא ניתן למחוק את המשתמש המחובר בעצמו'}}));
+      return;
+    }
+    if((m.confirmText||'').trim().toLowerCase() !== (m.targetUsername||'').trim().toLowerCase()){
+      this.setState(s=>({deleteUserModal:{...s.deleteUserModal, error:'שם המשתמש שהוקלד אינו תואם - יש להקליד אותו בדיוק כדי לאשר.'}}));
+      return;
+    }
+    this.setState(s=>({deleteUserModal:{...s.deleteUserModal, saving:true, error:''}}));
+    const res = await this.invokeAdminFn('admin-delete-user', {target_user_id:m.targetId});
+    if(res.error){ this.setState(s=>({deleteUserModal:{...s.deleteUserModal, saving:false, error:res.error}})); return; }
+    this.setState({deleteUserModal:null, showSuccess:true, successMsg:'המשתמש נמחק לצמיתות'});
+    setTimeout(()=>this.setState({showSuccess:false}), 1000*this.speedMul());
+    await this.loadAccounts();
+  };
   onOpenResetPwModal(u){
     if(this.state.role!=='smat') return;
     this.setState({resetPwModal:{targetId:u.id, targetName:u.full_name||u.username, password:'', error:'', saving:false}});
@@ -2189,6 +2513,18 @@ class Component extends DCLogic {
     const {linkInstructorId, linkTraineeId} = this.state;
     if(!linkInstructorId || !linkTraineeId){ this.setState({linksError:'יש לבחור גם מדריך וגם חניך'}); return; }
     this.setState({linksLoading:true, linksError:''});
+    // Re-check directly against trainee_profiles/instructor_profiles right
+    // before inserting, instead of trusting the (possibly stale) client-side
+    // provisionedTraineeIds/provisionedInstructorIds used to filter the
+    // dropdowns. instructor_trainees.trainee_id references
+    // trainee_profiles(profile_id) - not profiles(id) directly - so this is
+    // the exact row that must exist for the insert to satisfy that FK.
+    const [tpCheck, ipCheck] = await Promise.all([
+      window.nimbusSupabase.from('trainee_profiles').select('profile_id').eq('profile_id', linkTraineeId).maybeSingle(),
+      window.nimbusSupabase.from('instructor_profiles').select('profile_id').eq('profile_id', linkInstructorId).maybeSingle()
+    ]);
+    if(!tpCheck.data){ this.setState({linksLoading:false, linksError:'לחניך שנבחר אין עדיין רשומת trainee_profiles - יש להשתמש בכפתור "השלמת פרטים חסרים" קודם.'}); return; }
+    if(!ipCheck.data){ this.setState({linksLoading:false, linksError:'למדריך שנבחר אין עדיין רשומת instructor_profiles - יש להשתמש בכפתור "השלמת פרטים חסרים" קודם.'}); return; }
     const { error } = await window.nimbusSupabase.from('instructor_trainees').insert({instructor_id:linkInstructorId, trainee_id:linkTraineeId});
     if(error){ this.setState({linksLoading:false, linksError:'שגיאה בשיוך: '+error.message}); return; }
     this.setState({linkInstructorId:'', linkTraineeId:''});
@@ -2206,8 +2542,6 @@ class Component extends DCLogic {
       } }});
   }
 
-  myApprovedFeedbacks(){ return this.state.feedbacks.filter(f=>f.traineeId===this.state.currentTraineeId && f.status==='approved').sort((a,b)=>a.date<b.date?1:-1); }
-
   scoreOptionsFor(cats, scores, setFn){
     return cats.map(c=>({
       key:c.key, label:c.label,
@@ -2221,17 +2555,152 @@ class Component extends DCLogic {
     }));
   }
 
+  // Builds every out.* field the iEval template (create/edit form) needs from
+  // s.evalForm. Originally lived only inside the role==='instructor' branch
+  // of renderVals(), which meant out.scrIEval/out.evalForm/etc. were never
+  // populated when role==='smat' - editFeedback() already filled
+  // s.evalForm correctly for smat, but nothing ever turned that into `out`,
+  // so the iEval screen just never opened. Extracted here as the single
+  // source of truth, called from both the instructor and the smat/kahad
+  // branches of renderVals() - not duplicated.
+  buildEvalFormOut(out, s){
+    if(!s.evalForm) return;
+    const locked = s.evalForm.status==='approved';
+    out.evalForm = {...s.evalForm, typeLabel: typeLabel(s.evalForm.formType), traineeName: s.evalForm.traineeName||'', notSaving: !s.evalForm.saving,
+      isAirCrew: s.evalForm.formType==='airCrew', isControllers: s.evalForm.formType==='controllers', isStandard: s.evalForm.formType==='scouts',
+      syllabusLocked: locked,
+      segmentStyle: 'width:100%; padding:9px 10px; border-radius:10px; border:1.5px solid #E3EEF8; font-size:13.5px; outline:none; '+(locked||!s.evalForm.course? 'background:#F1F5F9; color:#8CA3B8; cursor:not-allowed;' : 'background:white; color:#123A5E;'),
+      segmentPlaceholder: s.evalForm.course? 'בחר גיחה' : 'בחר קורס תחילה',
+      lockStyle: 'width:100%; padding:9px 10px; border-radius:10px; border:1.5px solid #E3EEF8; font-size:13.5px; outline:none; '+(locked? 'background:#F1F5F9; color:#8CA3B8; cursor:not-allowed;' : 'background:white; color:#123A5E;')};
+    if(s.evalForm.isEditing){
+      // Real feedbacks carry free-text course values (typed by smat on the
+      // trainee's profile) that were never meant to match the demo's fixed
+      // course-name lists below - matching against them would blank the
+      // field and empty the segment list on every real edit. Keep the
+      // existing course as-is, and offer segments from the generic
+      // SYLLABUS_SECTIONS list instead of course-specific ones.
+      out.courseOptions = [{value: s.evalForm.course||'', label: s.evalForm.course||'-'}];
+      out.segmentOptions = SYLLABUS_SECTIONS.map(sec=>({value:sec.n, label:sec.n+' - '+sec.name, disabled:false, style:'color:#123A5E;'}));
+      out.evalForm.segmentDisabled = locked;
+    } else {
+      // This branch only runs for brand-new feedback creation now (editing
+      // an existing one always has isEditing:true - see the if above). It used
+      // to pre-compute which segments were already approved by scanning
+      // s.feedbacks (demo) for this trainee, to disable them in the segment
+      // picker - but a real evalForm.traineeId is a uuid that can never
+      // match s.feedbacks' small demo integer ids, so approvedSections was
+      // always empty in practice for a real trainee. Left empty here
+      // (identical real-world behavior) rather than replaced by a Supabase
+      // query, since none was requested for this pass.
+      const approvedSections = {};
+      out.segmentOptions = segmentsForCourse(s.evalForm.course).map(sec=>{
+        const lockedSec = !!approvedSections[segmentKey(s.evalForm.formType, s.evalForm.course, sec.n)];
+        return {value:sec.n, label: segmentLabelFor(sec.n, s.evalForm.course), disabled: lockedSec,
+          style: lockedSec? 'color:#B7C5D2; background:#F1F5F9;' : 'color:#123A5E;'};
+      });
+      const typeCourses = coursesForType(s.evalForm.formType);
+      const validCourses = typeCourses.length? typeCourses.map(c=>c.name) : COURSES;
+      out.courseOptions = validCourses.map(x=>({value:x, label:x}));
+      const courseValid = validCourses.includes(s.evalForm.course);
+      out.evalForm.course = courseValid? s.evalForm.course : '';
+      out.segmentOptions = courseValid? out.segmentOptions : [];
+      out.evalForm.segmentDisabled = !courseValid || locked;
+    }
+    out.onSegmentChange = this.onSegmentChange; out.onEvalCourseChange = this.onEvalCourseChange; out.onSyllabusNumberChange = this.onSyllabusNumberChange;
+    out.onObjectivesTextChange = this.onObjectivesTextChange; out.onImproveNotesChange = this.onImproveNotesChange; out.onKeepNotesChange = this.onKeepNotesChange;
+    out.onEvalDateChange = this.onEvalDateChange;
+    out.evalScoreRows = this.scoreOptionsFor(catsFor(s.evalForm.formType), s.evalForm.scores, (k,n)=>this.setEvalScore(k,n));
+    out.airCrewScoreOptions = SCORE_OPTIONS.map(n=>{
+      const selected = s.evalForm.scores && s.evalForm.scores.overall===n;
+      return {n, onClick:()=>this.setEvalScore('overall', n),
+        style: selected
+          ? 'flex:1; text-align:center; padding:11px 0; border-radius:12px; font-weight:800; font-size:14px; cursor:pointer; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; box-shadow:0 6px 14px rgba(46,143,224,0.35); transform:scale(1.04); transition:all 180ms;'
+          : 'flex:1; text-align:center; padding:11px 0; border-radius:12px; font-weight:700; font-size:14px; cursor:pointer; background:#F2F8FE; color:#5C7A96; transition:all 180ms;'};
+    });
+    out.onAircraftTypeChange = this.onAircraftTypeChange;
+    out.onInstructorFullNameChange = this.onInstructorFullNameChange;
+    out.onCourseNameChange = this.onCourseNameChange; out.onControllerSyllabusChange = this.onControllerSyllabusChange;
+    out.onFlightNameChange = this.onFlightNameChange; out.onSyllabusCompletionChange = this.onSyllabusCompletionChange;
+    out.onMissionChange = this.onMissionChange; out.onContentNotesChange = this.onContentNotesChange;
+    out.onPrepBriefingTransferChange = this.onPrepBriefingTransferChange; out.onPrepStationSetupChange = this.onPrepStationSetupChange;
+    out.onSysFamiliarityChange = this.onSysFamiliarityChange; out.onSysIVAChange = this.onSysIVAChange; out.onSysMSDCChange = this.onSysMSDCChange;
+    out.onSysLauncherChange = this.onSysLauncherChange; out.onSysFaultsChange = this.onSysFaultsChange;
+    out.onMissionConnectChange = this.onMissionConnectChange; out.onMissionSAChange = this.onMissionSAChange;
+    out.onMissionSARoutesChange = this.onMissionSARoutesChange; out.onMissionSAFaultsChange = this.onMissionSAFaultsChange;
+    out.onTeamExternalChange = this.onTeamExternalChange; out.onTeamMCChange = this.onTeamMCChange; out.onTeamOSOChange = this.onTeamOSOChange;
+    out.onTeamRDOChange = this.onTeamRDOChange; out.onTeamMPOChange = this.onTeamMPOChange;
+    out.onTraitIndependenceChange = this.onTraitIndependenceChange; out.onTraitConfidenceChange = this.onTraitConfidenceChange;
+    out.onTraitPressureChange = this.onTraitPressureChange; out.onTraitOrderChange = this.onTraitOrderChange; out.onTraitDebriefChange = this.onTraitDebriefChange;
+    out.flightTypeOptions = ['מבצעי','אימוני'].map(v=>{
+      const selected = s.evalForm.flightType===v;
+      return {label:v, onClick:()=>this.setEvalField('flightType', v),
+        style:`padding:9px 16px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; transition:all 180ms; ${selected?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#F2F8FE; color:#2E6FA8;'}`};
+    });
+    out.targetRows = [1,2,3].map(n=>{
+      const key = 'target'+n; const val = s.evalForm[key]||'';
+      const baseStyle='flex:1; text-align:center; padding:9px 0; border-radius:10px; font-weight:800; font-size:14px; cursor:pointer; transition:all 180ms;';
+      return { n,
+        vStyle: baseStyle + (val==='v' ? 'background:#2FB380; color:white;' : 'background:#F2F8FE; color:#5C7A96;'),
+        xStyle: baseStyle + (val==='x' ? 'background:#E0524B; color:white;' : 'background:#F2F8FE; color:#5C7A96;'),
+        onV:()=>this.setEvalField(key, val==='v'?'':'v'), onX:()=>this.setEvalField(key, val==='x'?'':'x') };
+    });
+    out.remarksImproveRows = (s.evalForm.remarksImprove||[]).map((r,i)=>({
+      topic:r.topic, note:r.note,
+      onTopicChange:(e)=>this.setArrayField('remarksImprove', i, 'topic', e.target.value),
+      onNoteChange:(e)=>this.setArrayField('remarksImprove', i, 'note', e.target.value)
+    }));
+    out.remarksKeepRows = (s.evalForm.remarksKeep||[]).map((r,i)=>({
+      topic:r.topic, note:r.note,
+      onTopicChange:(e)=>this.setArrayField('remarksKeep', i, 'topic', e.target.value),
+      onNoteChange:(e)=>this.setArrayField('remarksKeep', i, 'note', e.target.value)
+    }));
+    out.observationRows = (s.evalForm.observations||[]).map((r,i)=>({
+      time:r.time, topic:r.topic, description:r.description,
+      onTimeChange:(e)=>this.setArrayField('observations', i, 'time', e.target.value),
+      onTopicChange:(e)=>this.setArrayField('observations', i, 'topic', e.target.value),
+      onDescriptionChange:(e)=>this.setArrayField('observations', i, 'description', e.target.value),
+      onRemove:()=>this.removeArrayRow('observations', i)
+    }));
+    out.onAddObservation = this.addObservationRow;
+    out.controllerLevelDefs = CONTROLLER_LEVEL_DEFS;
+    out.topicReference = TOPIC_REFERENCE;
+    out.onStrengthsChange = this.onStrengthsChange; out.onImprovementsChange = this.onImprovementsChange;
+    out.onSummaryChange = this.onSummaryChange; out.onRecommendationsChange = this.onRecommendationsChange;
+    out.onLessonNumberChange = this.onLessonNumberChange; out.onSyllabusContentChange = this.onSyllabusContentChange;
+    out.onCompletionsNeededChange = this.onCompletionsNeededChange; out.onNextFlightNotesChange = this.onNextFlightNotesChange;
+    out.onSummaryRecommendationsChange = this.onSummaryRecommendationsChange;
+    out.onRemarkBriefingChange = this.onRemarkBriefingChange; out.onRemarkGroundChange = this.onRemarkGroundChange;
+    out.onRemarkPostFlightChange = this.onRemarkPostFlightChange; out.onRemarkAircraftHandlingChange = this.onRemarkAircraftHandlingChange;
+    out.onRemarkMissionRouteChange = this.onRemarkMissionRouteChange; out.onRemarkTakeoffLandingChange = this.onRemarkTakeoffLandingChange;
+    out.onRemarkAdditionalChange = this.onRemarkAdditionalChange;
+    out.aircraftTypeOptions = AIRCRAFT_TYPES.map(at=>{
+      const selected = s.evalForm.aircraftType===at;
+      return {label:at, onClick:()=>this.setAircraftType(at),
+        style:`padding:9px 12px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; transition:all 180ms; ${selected?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#F2F8FE; color:#2E6FA8;'}`};
+    });
+    out.syllabusFullOptions = ['כן','לא'].map(v=>{
+      const selected = s.evalForm.syllabusFull===v;
+      return {label:v, onClick:()=>this.setSyllabusFull(v),
+        style:`padding:9px 16px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; transition:all 180ms; ${selected?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#F2F8FE; color:#2E6FA8;'}`};
+    });
+    out.overallRatingOptions = RATINGS.map(r=>{
+      const selected = s.evalForm.overallRating===r; const rc = ratingColors(r);
+      return {label:r, onClick:()=>this.setEvalField('overallRating', r),
+        style:`padding:14px 16px; border-radius:14px; font-weight:700; font-size:14.5px; cursor:pointer; transition:all 180ms; ${selected? `background:${rc.fg}; color:white; box-shadow:0 8px 18px rgba(0,0,0,0.12);` : `background:${rc.bg}; color:${rc.fg};`}`};
+    });
+    out.onSaveEval = this.onSaveEval;
+  }
+
   renderVals(){
     const s = this.state;
     const role = s.role;
     const scrIntro = s.screen==='intro';
     const scrLogin = s.screen==='login';
     const scrApp = !scrIntro && !scrLogin;
-    const feedbacks = s.feedbacks;
 
     const TITLES = {iDash:'נימבוס', iTrainees:'חניכים', iFeed:'דפיות', iTraineeDetail:'פרופיל חניך', iNewFeedback:'דפית חדשה', iEval:'טופס דפית',
       feedbackView:'צפייה בדפית', tDash:'נימבוס', tFeedback:'הדפיות שלי', tStats:'סטטיסטיקה', sDash:'נימבוס', sFeedbacks:'כל הדפיות',
-      sUsers:'ניהול משתמשים', sUserForm:'משתמש', scrProfile:'פרופיל', sAccounts:'ניהול חשבונות'};
+      scrProfile:'פרופיל', sAccounts:'ניהול חשבונות'};
     const NO_BACK = ['iDash','tDash','sDash'];
 
     let out = {
@@ -2253,7 +2722,11 @@ class Component extends DCLogic {
       loading:s.loading, contentVisible: !s.loading, showBack: !NO_BACK.includes(s.screen), onBack:this.onBack,
       topTitle: s.screen==='profile'? 'פרופיל' : (TITLES[s.screen]||'נימבוס'),
       isBrandTitle: s.screen!=='profile' && (TITLES[s.screen]||'נימבוס')==='נימבוס',
-      showSuccess:s.showSuccess, successMsg:s.successMsg, confirmDialog:s.confirmDialog,
+      showSuccess:s.showSuccess, successMsg:s.successMsg,
+      // Every existing caller keeps the default red "מחיקה" look untouched -
+      // only approveFeedback/rejectFeedback set confirmLabel/confirmBg
+      // explicitly to get their own action-appropriate button.
+      confirmDialog: s.confirmDialog ? {...s.confirmDialog, confirmLabel: s.confirmDialog.confirmLabel || 'מחיקה', confirmBg: s.confirmDialog.confirmBg || '#D14A38'} : null,
       showAddToHome: s.showAddToHome, onCloseAddToHome: this.onCloseAddToHome,
       infoModal: s.infoModal, onCloseInfo: this.onCloseInfo, onOpenCourseInfo: this.onOpenCourseInfo, onOpenRatingInfo: this.onOpenRatingInfo,
       printJob: s.printJob, onDoPrint: this.onDoPrint, onClosePrint: this.onClosePrint,
@@ -2262,21 +2735,23 @@ class Component extends DCLogic {
       canManageUsers: canManage(role),
       scrIDash:false, scrITrainees:false, scrIFeed:false, scrITraineeDetail:false, scrINewFeedback:false, scrIEval:false,
       scrFeedbackView:false, scrProfile:false, scrTDash:false, scrTFeedback:false, scrTStats:false,
-      scrSDash:false, scrSFeedbacks:false, scrSUsers:false, scrSUserForm:false, scrSAccounts:false
+      scrSDash:false, scrSFeedbacks:false, scrSAccounts:false
     };
     if(!scrApp) { out.navItems = []; return out; }
 
     const instructorNav = [{key:'iDash', label:'בית', letter:'ב'}, {key:'iTrainees', label:'חניכים', letter:'ח'}, {key:'iFeed', label:'דפיות', letter:'ד'}, {key:'profile', label:'פרופיל', letter:'פ'}];
     const traineeNav = [{key:'tDash', label:'בית', letter:'ב'}, {key:'tFeedback', label:'הדפיות שלי', letter:'ד'}, {key:'tStats', label:'סטטיסטיקה', letter:'ס'}, {key:'profile', label:'פרופיל', letter:'פ'}];
-    const smatNav = [{key:'sDash', label:'בית', letter:'ב'}, {key:'sFeedbacks', label:'דפיות', letter:'ד'}, {key:'sUsers', label:'משתמשים', letter:'מ'}, {key:'profile', label:'פרופיל', letter:'פ'}];
+    // "משתמשים" now points straight at sAccounts (the one real accounts
+    // screen) for both smat and kahad - the old demo sUsers tab is gone.
+    const smatNav = [{key:'sDash', label:'בית', letter:'ב'}, {key:'sFeedbacks', label:'דפיות', letter:'ד'}, {key:'sAccounts', label:'משתמשים', letter:'מ'}, {key:'profile', label:'פרופיל', letter:'פ'}];
     const navBase = role==='instructor'? instructorNav : (role==='smat'||role==='kahad')? smatNav : traineeNav;
     const activeGroup = {iDash:'iDash',iTrainees:'iTrainees',iFeed:'iFeed',iTraineeDetail: (role==='smat'||role==='kahad')?'sFeedbacks':'iTrainees',iNewFeedback:'iTrainees',iEval:'iTrainees',feedbackView:role==='instructor'?'iFeed':(role==='smat'||role==='kahad')?'sFeedbacks':'tFeedback',
       profile:'profile', tDash:'tDash', tFeedback:'tFeedback', tStats:'tStats',
-      sDash:'sDash', sFeedbacks:'sFeedbacks', sUsers:'sUsers', sUserForm:'sUsers', sAccounts:'sDash'}[s.screen];
+      sDash:'sDash', sFeedbacks:'sFeedbacks', sAccounts:'sAccounts'}[s.screen];
     out.navItems = navBase.map(n=>{
       const active = n.key===activeGroup;
       const isHome = ['iDash','tDash','sDash'].includes(n.key);
-      const isPeople = n.key==='sUsers';
+      const isPeople = n.key==='sAccounts';
       const isCap = n.key==='iTrainees';
       const isDoc = ['iFeed','tFeedback','sFeedbacks'].includes(n.key);
       const isProfile = n.key==='profile';
@@ -2290,61 +2765,91 @@ class Component extends DCLogic {
 
     if(s.screen==='profile'){
       out.scrProfile = true;
-      if(role==='instructor'){ out.profileInitial=INSTRUCTOR_NAME[0]; out.profileName=INSTRUCTOR_NAME; out.profileSubtitle='מדריך · חיל האוויר'; }
-      else if(role==='smat'){ out.profileInitial=SMAT_NAME[0]; out.profileName=SMAT_NAME; out.profileSubtitle='מנהל/ת מערכת (סמ"ט)'; }
-      else if(role==='kahad'){ out.profileInitial=KAHAD_NAME[0]; out.profileName=KAHAD_NAME; out.profileSubtitle='קה"ד · צפייה בלבד'; }
-      else { const me=traineeById(s.currentTraineeId); out.profileInitial=me.name[0]; out.profileName=me.name; out.profileSubtitle=me.course+' · '+me.class; }
+      // s.myProfileName is only ever set by bootstrapAuth() (a real signed-in
+      // session) - a demo login (loginAs() called directly by onDemoInstructor/
+      // Trainee/Smat/Kahad) never sets it, so it stays '' and every branch
+      // below falls back to exactly the demo name/label it used before.
+      if(role==='instructor'){ const nm=s.myProfileName||INSTRUCTOR_NAME; out.profileInitial=nm[0]; out.profileName=nm; out.profileSubtitle='מדריך · חיל האוויר'; }
+      else if(role==='smat'){ const nm=s.myProfileName||SMAT_NAME; out.profileInitial=nm[0]; out.profileName=nm; out.profileSubtitle='מנהל/ת מערכת (סמ"ט)'; }
+      else if(role==='kahad'){ const nm=s.myProfileName||KAHAD_NAME; out.profileInitial=nm[0]; out.profileName=nm; out.profileSubtitle='קה"ד · צפייה בלבד'; }
+      else { const me=traineeById(s.currentTraineeId); const nm=s.myProfileName||me.name; out.profileInitial=nm[0]; out.profileName=nm; out.profileSubtitle=s.myProfileCourseLabel||(me.course+' · '+me.class); }
       out.onLogout = this.onLogout;
       out.onOpenAddToHome = this.onOpenAddToHome;
     }
 
     if(role==='instructor'){
-      const myTrainees = visibleTrainees('instructor', 1);
-      const myTraineeIds = myTrainees.map(t=>t.id);
-      const myFeedbacks = feedbacks.filter(f=>myTraineeIds.includes(f.traineeId));
-
       out.scrIDash = s.screen==='iDash'; out.scrITrainees = s.screen==='iTrainees'; out.scrIFeed = s.screen==='iFeed';
       out.scrITraineeDetail = s.screen==='iTraineeDetail'; out.scrINewFeedback = s.screen==='iNewFeedback'; out.scrIEval = s.screen==='iEval';
-      out.instructorName = INSTRUCTOR_NAME;
+      // s.myProfileName falls back to the demo name for a demo login (see
+      // bootstrapAuth()/the profile-screen block for the same pattern).
+      out.instructorName = s.myProfileName || INSTRUCTOR_NAME;
       out.todayLabel = new Date().toLocaleDateString('he-IL',{weekday:'long', day:'numeric', month:'long'});
-      out.stats = { pendingCount: myFeedbacks.filter(f=>f.status==='pending').length, approvedCount: myFeedbacks.filter(f=>f.status==='approved').length, traineeCount: myTrainees.length };
+      // iDash is now real-only: stats/recentTrainees/recentFeedbacks come
+      // from s.trainees (instructor_trainees+profiles+trainee_profiles,
+      // already loaded at bootstrap via loadMyTrainees()) and
+      // s.myFeedbacks (already loaded via loadMyFeedbacks()) -
+      // never TRAINEES/visibleTrainees/traineeById/FEEDBACKS/s.feedbacks.
+      // Loading/empty flags reuse the same traineesLoading/
+      // noTrainees/feedbacksLoading/noFeedbacks computed below
+      // for iTrainees/"המשובים שלי" - no new state, no new query.
+      out.stats = { pendingCount: s.myFeedbacks.filter(f=>f.status==='pending').length, approvedCount: s.myFeedbacks.filter(f=>f.status==='approved').length, traineeCount: s.trainees.length };
       out.onOpenNewFeedback = this.onOpenNewFeedback;
-      out.recentTrainees = myTrainees.slice(0,4).map(t=>({name:t.name, initial:t.name[0], avatarBg:t.avatarBg, onClick:()=>this.openTrainee(t.id)}));
-      out.recentFeedbacks = [...myFeedbacks].sort((a,b)=>a.date<b.date?1:-1).slice(0,3).map(f=>{
-        const t=traineeById(f.traineeId); const st=statusInfo(f.status);
-        return {title:f.title, traineeName:t.name, typeLabel:typeLabel(f.formType), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, onClick:()=>this.viewFeedback(f.id)};
+      // No avatarBg in trainees (trainee_profiles doesn't carry a color) -
+      // same fixed color already used for iTrainees' traineeCards.
+      out.recentTrainees = s.trainees.slice(0,4).map(t=>({name:t.name, initial:(t.name||'-')[0], avatarBg:'#4FAEFF', onClick:()=>this.openTrainee(t.id)}));
+      out.recentFeedbacks = [...s.myFeedbacks].sort((a,b)=>a.date<b.date?1:-1).slice(0,3).map(f=>{
+        const st=statusInfo(f.status);
+        return {title:f.title, traineeName:f.traineeName, typeLabel:typeLabel(f.form_type), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, onClick:()=>this.viewFeedback(f.id)};
+      });
+      out.feedbacksLoading = s.feedbacksLoading;
+      out.noFeedbacks = !s.feedbacksLoading && s.myFeedbacks.length===0;
+      out.hasFeedbackViewError = !!s.feedbackViewError; out.feedbackViewError = s.feedbackViewError;
+      out.myFeedbacksRows = s.myFeedbacks.map(f=>{
+        const st = statusInfo(f.status);
+        return {title:f.title, traineeName:f.traineeName, typeLabel:typeLabel(f.form_type), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, onClick:()=>this.viewFeedback(f.id),
+          onTraineeClick:(e)=>{ e.stopPropagation(); this.openTrainee(f.trainee_id); }};
       });
 
       const q = s.searchQuery.trim();
-      const courses = ['all', ...Array.from(new Set(myTrainees.map(t=>t.course)))];
+      // iTrainees ("החניכים שלי") is now real-data-backed: s.trainees
+      // (instructor_trainees + profiles + trainee_profiles, already loaded at
+      // bootstrap and reused as-is from the new-feedback picker) - never
+      // TRAINEES/visibleTrainees/traineeById. courseFilters stays the same
+      // generic mechanism, just built from the real, free-text course values
+      // instead of the demo catalogue - it still works because it only ever
+      // compares distinct values, never matches against a fixed course list.
+      out.traineesLoading = s.traineesLoading;
+      out.noTrainees = !s.traineesLoading && s.trainees.length===0;
+      const courses = ['all', ...Array.from(new Set(s.trainees.map(t=>t.course).filter(Boolean)))];
       out.courseFilters = courses.map(c=>({label: c==='all'?'הכל':c, onClick:()=>this.setFilterCourse(c),
         style:`padding:9px 16px; border-radius:999px; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; transition:all 180ms; ${s.filterCourse===c?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#ffffff; color:#5C7A96;'}`}));
-      out.traineeCards = myTrainees.filter(t=>(s.filterCourse==='all'||t.course===s.filterCourse)&&(!q||t.name.includes(q))).map(t=>{
-        const hist = feedbacks.filter(f=>f.traineeId===t.id);
-        const vals = hist.map(f=>avg(f.scores)).filter(v=>v>0);
-        const a = vals.length? vals.reduce((x,y)=>x+y,0)/vals.length : 0;
-        const hasAvg = vals.length>0;
-        return {name:t.name, initial:t.name[0], avatarBg:t.avatarBg, course:t.course, class:t.class,
-          avgLabel: hasAvg? a.toFixed(1) : '—', avgColor: hasAvg? scoreColor(a) : '#B7C5D2', onClick:()=>this.openTrainee(t.id)};
-      });
+      // No average score shown - loadMyTrainees() doesn't carry feedback
+      // data (and isn't extended to fetch it here, per instruction not to
+      // invent new data/queries in this pass), so it's left as a neutral '-'
+      // rather than computed from anything.
+      out.traineeCards = s.trainees.filter(t=>(s.filterCourse==='all'||t.course===s.filterCourse)&&(!q||(t.name||'').includes(q))).map(t=>({
+        name:t.name, initial:(t.name||'-')[0], avatarBg:'#4FAEFF', course:t.course||'-', class:t.class||'-',
+        avgLabel:'-', avgColor:'#B7C5D2', onClick:()=>this.openTrainee(t.id)
+      }));
 
       out.statusFilters = ['all','pending','approved','rejected'].map(st=>{
         const label = st==='all'?'הכל':statusInfo(st).label;
         return {label, onClick:()=>this.setFilterStatus(st),
           style:`padding:9px 16px; border-radius:999px; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; transition:all 180ms; ${s.filterStatus===st?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#ffffff; color:#5C7A96;'}`};
       });
-      out.feedFeed = [...myFeedbacks].filter(f=>s.filterStatus==='all'||f.status===s.filterStatus).sort((a,b)=>a.date<b.date?1:-1).map(f=>{
-        const t=traineeById(f.traineeId); const st=statusInfo(f.status);
-        return {title:f.title, traineeName:t.name, typeLabel:typeLabel(f.formType), dateLabel:fmtDate(f.date), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, onClick:()=>this.viewFeedback(f.id)};
+      // s.myFeedbacks already loaded at bootstrap (loadMyFeedbacks(),
+      // unchanged). traineeName is already resolved from profiles there -
+      // never traineeById. Opens via viewFeedback, same pattern used for
+      // sFeedbacks.
+      out.feedFeed = [...s.myFeedbacks].filter(f=>s.filterStatus==='all'||f.status===s.filterStatus).sort((a,b)=>a.date<b.date?1:-1).map(f=>{
+        const st=statusInfo(f.status);
+        return {title:f.title, traineeName:f.traineeName, typeLabel:typeLabel(f.form_type), dateLabel:fmtDate(f.date), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, onClick:()=>this.viewFeedback(f.id)};
       });
 
-      if(s.selectedTraineeId){
-        out.detail = this.buildDetail(traineeById(s.selectedTraineeId), feedbacks, true);
-        out.onNewFeedbackForTrainee = this.onNewFeedbackForTrainee;
-      }
-
       if(s.draft){
-        out.assignedOptions = myTrainees.map(t=>({value:String(t.id), label:t.name}));
+        // traineesLoading/noTrainees are now computed unconditionally
+        // above (iTrainees needs them too) - not redeclared here.
+        out.assignedOptions = s.trainees.map(t=>({value:t.id, label:t.name}));
         const draftReady = !!(s.draft.traineeId && s.draft.formType);
         out.draft = { showTraineeSelect: !s.draft.traineeName, showTraineeName: !!s.draft.traineeName, traineeId: s.draft.traineeId, traineeName: s.draft.traineeName,
           title: s.draft.title,
@@ -2359,252 +2864,203 @@ class Component extends DCLogic {
         });
       }
 
-      if(s.evalForm){
-        const locked = s.evalForm.status==='approved';
-        out.evalForm = {...s.evalForm, typeLabel: typeLabel(s.evalForm.formType), traineeName: traineeById(s.evalForm.traineeId).name,
-          isAirCrew: s.evalForm.formType==='airCrew', isControllers: s.evalForm.formType==='controllers', isStandard: s.evalForm.formType==='scouts',
-          syllabusLocked: locked,
-          segmentStyle: 'width:100%; padding:9px 10px; border-radius:10px; border:1.5px solid #E3EEF8; font-size:13.5px; outline:none; '+(locked||!s.evalForm.course? 'background:#F1F5F9; color:#8CA3B8; cursor:not-allowed;' : 'background:white; color:#123A5E;'),
-          segmentPlaceholder: s.evalForm.course? 'בחר גיחה' : 'בחר קורס תחילה',
-          lockStyle: 'width:100%; padding:9px 10px; border-radius:10px; border:1.5px solid #E3EEF8; font-size:13.5px; outline:none; '+(locked? 'background:#F1F5F9; color:#8CA3B8; cursor:not-allowed;' : 'background:white; color:#123A5E;')};
-        const approvedSections = {};
-        feedbacks.filter(f=>f.traineeId===s.evalForm.traineeId && f.status==='approved' && f.id!==s.evalForm.feedbackId)
-          .forEach(f=>{ const k=segmentKeyOf(f); if(k) approvedSections[k]=true; });
-        out.segmentOptions = segmentsForCourse(s.evalForm.course).map(sec=>{
-          const lockedSec = !!approvedSections[segmentKey(s.evalForm.formType, s.evalForm.course, sec.n)];
-          return {value:sec.n, label: segmentLabelFor(sec.n, s.evalForm.course), disabled: lockedSec,
-            style: lockedSec? 'color:#B7C5D2; background:#F1F5F9;' : 'color:#123A5E;'};
-        });
-        const typeCourses = coursesForType(s.evalForm.formType);
-        const validCourses = typeCourses.length? typeCourses.map(c=>c.name) : COURSES;
-        out.courseOptions = validCourses.map(x=>({value:x, label:x}));
-        const courseValid = validCourses.includes(s.evalForm.course);
-        out.evalForm.course = courseValid? s.evalForm.course : '';
-        out.segmentOptions = courseValid? out.segmentOptions : [];
-        out.evalForm.segmentDisabled = !courseValid || locked;
-        out.onSegmentChange = this.onSegmentChange; out.onEvalCourseChange = this.onEvalCourseChange; out.onSyllabusNumberChange = this.onSyllabusNumberChange;
-        out.onObjectivesTextChange = this.onObjectivesTextChange; out.onImproveNotesChange = this.onImproveNotesChange; out.onKeepNotesChange = this.onKeepNotesChange;
-        out.onEvalDateChange = this.onEvalDateChange;
-        out.evalScoreRows = this.scoreOptionsFor(catsFor(s.evalForm.formType), s.evalForm.scores, (k,n)=>this.setEvalScore(k,n));
-        out.airCrewScoreOptions = SCORE_OPTIONS.map(n=>{
-          const selected = s.evalForm.scores && s.evalForm.scores.overall===n;
-          return {n, onClick:()=>this.setEvalScore('overall', n),
-            style: selected
-              ? 'flex:1; text-align:center; padding:11px 0; border-radius:12px; font-weight:800; font-size:14px; cursor:pointer; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; box-shadow:0 6px 14px rgba(46,143,224,0.35); transform:scale(1.04); transition:all 180ms;'
-              : 'flex:1; text-align:center; padding:11px 0; border-radius:12px; font-weight:700; font-size:14px; cursor:pointer; background:#F2F8FE; color:#5C7A96; transition:all 180ms;'};
-        });
-        out.onAircraftTypeChange = this.onAircraftTypeChange;
-        out.onInstructorFullNameChange = this.onInstructorFullNameChange;
-        out.onCourseNameChange = this.onCourseNameChange; out.onControllerSyllabusChange = this.onControllerSyllabusChange;
-        out.onFlightNameChange = this.onFlightNameChange; out.onSyllabusCompletionChange = this.onSyllabusCompletionChange;
-        out.onMissionChange = this.onMissionChange; out.onContentNotesChange = this.onContentNotesChange;
-        out.onPrepBriefingTransferChange = this.onPrepBriefingTransferChange; out.onPrepStationSetupChange = this.onPrepStationSetupChange;
-        out.onSysFamiliarityChange = this.onSysFamiliarityChange; out.onSysIVAChange = this.onSysIVAChange; out.onSysMSDCChange = this.onSysMSDCChange;
-        out.onSysLauncherChange = this.onSysLauncherChange; out.onSysFaultsChange = this.onSysFaultsChange;
-        out.onMissionConnectChange = this.onMissionConnectChange; out.onMissionSAChange = this.onMissionSAChange;
-        out.onMissionSARoutesChange = this.onMissionSARoutesChange; out.onMissionSAFaultsChange = this.onMissionSAFaultsChange;
-        out.onTeamExternalChange = this.onTeamExternalChange; out.onTeamMCChange = this.onTeamMCChange; out.onTeamOSOChange = this.onTeamOSOChange;
-        out.onTeamRDOChange = this.onTeamRDOChange; out.onTeamMPOChange = this.onTeamMPOChange;
-        out.onTraitIndependenceChange = this.onTraitIndependenceChange; out.onTraitConfidenceChange = this.onTraitConfidenceChange;
-        out.onTraitPressureChange = this.onTraitPressureChange; out.onTraitOrderChange = this.onTraitOrderChange; out.onTraitDebriefChange = this.onTraitDebriefChange;
-        out.flightTypeOptions = ['מבצעי','אימוני'].map(v=>{
-          const selected = s.evalForm.flightType===v;
-          return {label:v, onClick:()=>this.setEvalField('flightType', v),
-            style:`padding:9px 16px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; transition:all 180ms; ${selected?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#F2F8FE; color:#2E6FA8;'}`};
-        });
-        out.targetRows = [1,2,3].map(n=>{
-          const key = 'target'+n; const val = s.evalForm[key]||'';
-          const baseStyle='flex:1; text-align:center; padding:9px 0; border-radius:10px; font-weight:800; font-size:14px; cursor:pointer; transition:all 180ms;';
-          return { n,
-            vStyle: baseStyle + (val==='v' ? 'background:#2FB380; color:white;' : 'background:#F2F8FE; color:#5C7A96;'),
-            xStyle: baseStyle + (val==='x' ? 'background:#E0524B; color:white;' : 'background:#F2F8FE; color:#5C7A96;'),
-            onV:()=>this.setEvalField(key, val==='v'?'':'v'), onX:()=>this.setEvalField(key, val==='x'?'':'x') };
-        });
-        out.remarksImproveRows = (s.evalForm.remarksImprove||[]).map((r,i)=>({
-          topic:r.topic, note:r.note,
-          onTopicChange:(e)=>this.setArrayField('remarksImprove', i, 'topic', e.target.value),
-          onNoteChange:(e)=>this.setArrayField('remarksImprove', i, 'note', e.target.value)
-        }));
-        out.remarksKeepRows = (s.evalForm.remarksKeep||[]).map((r,i)=>({
-          topic:r.topic, note:r.note,
-          onTopicChange:(e)=>this.setArrayField('remarksKeep', i, 'topic', e.target.value),
-          onNoteChange:(e)=>this.setArrayField('remarksKeep', i, 'note', e.target.value)
-        }));
-        out.observationRows = (s.evalForm.observations||[]).map((r,i)=>({
-          time:r.time, topic:r.topic, description:r.description,
-          onTimeChange:(e)=>this.setArrayField('observations', i, 'time', e.target.value),
-          onTopicChange:(e)=>this.setArrayField('observations', i, 'topic', e.target.value),
-          onDescriptionChange:(e)=>this.setArrayField('observations', i, 'description', e.target.value),
-          onRemove:()=>this.removeArrayRow('observations', i)
-        }));
-        out.onAddObservation = this.addObservationRow;
-        out.controllerLevelDefs = CONTROLLER_LEVEL_DEFS;
-        out.topicReference = TOPIC_REFERENCE;
-        out.onStrengthsChange = this.onStrengthsChange; out.onImprovementsChange = this.onImprovementsChange;
-        out.onSummaryChange = this.onSummaryChange; out.onRecommendationsChange = this.onRecommendationsChange;
-        out.onLessonNumberChange = this.onLessonNumberChange; out.onSyllabusContentChange = this.onSyllabusContentChange;
-        out.onCompletionsNeededChange = this.onCompletionsNeededChange; out.onNextFlightNotesChange = this.onNextFlightNotesChange;
-        out.onSummaryRecommendationsChange = this.onSummaryRecommendationsChange;
-        out.onRemarkBriefingChange = this.onRemarkBriefingChange; out.onRemarkGroundChange = this.onRemarkGroundChange;
-        out.onRemarkPostFlightChange = this.onRemarkPostFlightChange; out.onRemarkAircraftHandlingChange = this.onRemarkAircraftHandlingChange;
-        out.onRemarkMissionRouteChange = this.onRemarkMissionRouteChange; out.onRemarkTakeoffLandingChange = this.onRemarkTakeoffLandingChange;
-        out.onRemarkAdditionalChange = this.onRemarkAdditionalChange;
-        out.aircraftTypeOptions = AIRCRAFT_TYPES.map(at=>{
-          const selected = s.evalForm.aircraftType===at;
-          return {label:at, onClick:()=>this.setAircraftType(at),
-            style:`padding:9px 12px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; transition:all 180ms; ${selected?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#F2F8FE; color:#2E6FA8;'}`};
-        });
-        out.syllabusFullOptions = ['כן','לא'].map(v=>{
-          const selected = s.evalForm.syllabusFull===v;
-          return {label:v, onClick:()=>this.setSyllabusFull(v),
-            style:`padding:9px 16px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; transition:all 180ms; ${selected?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#F2F8FE; color:#2E6FA8;'}`};
-        });
-        out.overallRatingOptions = RATINGS.map(r=>{
-          const selected = s.evalForm.overallRating===r; const rc = ratingColors(r);
-          return {label:r, onClick:()=>this.setEvalField('overallRating', r),
-            style:`padding:14px 16px; border-radius:14px; font-weight:700; font-size:14.5px; cursor:pointer; transition:all 180ms; ${selected? `background:${rc.fg}; color:white; box-shadow:0 8px 18px rgba(0,0,0,0.12);` : `background:${rc.bg}; color:${rc.fg};`}`};
-        });
-        out.onSaveEval = this.onSaveEval;
-      }
+      this.buildEvalFormOut(out, s);
     }
 
     if(role==='trainee'){
       out.scrTDash = s.screen==='tDash'; out.scrTFeedback = s.screen==='tFeedback'; out.scrTStats = s.screen==='tStats';
       const me = traineeById(s.currentTraineeId);
-      out.traineeName = me.name; out.traineeCourseLabel = me.course+' · '+me.class;
+      out.traineeName = s.myProfileName || me.name; out.traineeCourseLabel = s.myProfileCourseLabel || (me.course+' · '+me.class);
       const hr = new Date().getHours(); out.greeting = hr<12?'בוקר טוב': hr<18?'צהריים טובים':'ערב טוב';
-      const mine = this.myApprovedFeedbacks();
-      const mineVals = mine.map(f=>avg(f.scores)).filter(v=>v>0);
-      const a = mineVals.length? mineVals.reduce((x,y)=>x+y,0)/mineVals.length : 0;
-      out.myAvg = mineVals.length? a.toFixed(1) : '—';
-      out.progressLabel = mine.length;
-      const circ = 2*Math.PI*27; out.ringCirc = circ.toFixed(1); out.ringOffset = (circ*(1-(mine.length?(a-5)/4:0))).toFixed(1);
-      out.noFeedbackYet = mine.length===0;
-      const latest = mine[0];
-      out.latestFeedback = latest? (()=>{ const rc=ratingColors(latest.overallRating); return {title:latest.title, instructor:instructorById(latest.instructorId), dateLabel:fmtDate(latest.date), overallRating:latest.overallRating, ratingBg:rc.bg, ratingFg:rc.fg}; })() : null;
-      out.onGoFeedback = this.onGoFeedback; out.onOpenLatest = this.onOpenLatest;
+      // circ is a pure geometric constant (not derived from any feedback
+      // data) - still needed below for ringOffset. The demo mine/mineVals/a
+      // this block used to also compute here were removed: every out.*
+      // below already reads mine/mineAvg (real), not them - they had
+      // become dead (myApprovedFeedbacks()'s only other caller, the demo
+      // onOpenLatest, was already dead too).
+      const circ = 2*Math.PI*27; out.ringCirc = circ.toFixed(1);
 
+      // tDash real data. myAvg comes from scores (avg/num, generic - never
+      // overall_rating, which is known-unreliable for controllers/scouts -
+      // that gap is tracked separately, not fixed here). "latest" is sorted
+      // by date (flight date), matching myApprovedFeedbacks()'s own sort -
+      // never relying on the query's created_at order. instructorName is
+      // already resolved by loadMyApprovedFeedbacks() - never
+      // instructorById. onOpenLatest opens it via viewFeedback.
+      const mine = s.myApprovedFeedbacks;
+      const mineVals = mine.map(f=>avg(f.scores)).filter(v=>v>0);
+      const mineAvg = mineVals.length? mineVals.reduce((x,y)=>x+y,0)/mineVals.length : 0;
+      out.myAvg = mineVals.length? mineAvg.toFixed(1) : '-';
+      out.progressLabel = mine.length;
+      out.ringOffset = (circ*(1-(mine.length?(mineAvg-5)/4:0))).toFixed(1);
+      out.noFeedbackYet = mine.length===0;
+      const latest = [...mine].sort((x,y)=>x.date<y.date?1:-1)[0];
+      out.latestFeedback = latest? (()=>{ const rc=ratingColors(latest.overall_rating); return {title:latest.title, instructor:latest.instructorName, dateLabel:fmtDate(latest.date), overallRating:latest.overall_rating, ratingBg:rc.bg, ratingFg:rc.fg}; })() : null;
+      out.onGoFeedback = this.onGoFeedback;
+      out.onOpenLatest = ()=>{ if(latest) this.viewFeedback(latest.id); };
+
+      // tFeedback is now real-data-backed (s.myApprovedFeedbacks, already
+      // loaded at bootstrap - feedbacks_select_trainee RLS guarantees these
+      // are only this trainee's own approved feedbacks). mine/tDash/tStats
+      // above are backed by the same real s.myApprovedFeedbacks state.
       const q = s.searchQuery.trim();
-      const filtered = mine.filter(f=>!q||f.title.includes(q));
+      const filtered = s.myApprovedFeedbacks.filter(f=>!q||f.title.includes(q));
       out.timelineEmpty = filtered.length===0;
       out.timeline = filtered.map(f=>{
-        const rc = ratingColors(f.overallRating); const expanded = s.expandedId===f.id;
-        return {title:f.title, instructor:instructorById(f.instructorId), typeLabel:typeLabel(f.formType), dateLabel:fmtDate(f.date), overallRating:f.overallRating,
-          ratingBg:rc.bg, ratingFg:rc.fg, expanded, onOpen:()=>this.viewFeedback(f.id), strengths:f.strengths, summary:f.summary};
+        const rc = ratingColors(f.overallRating);
+        return {title:f.title, instructor:f.instructorName, typeLabel:typeLabel(f.form_type), dateLabel:fmtDate(f.date), overallRating:f.overallRating,
+          ratingBg:rc.bg, ratingFg:rc.fg, onOpen:()=>this.viewFeedback(f.id)};
       });
 
-      const myHighlights = mine.filter(f=>(f.nextFlightNotes||f.recommendations||'').trim());
-      out.hasHighlights = myHighlights.length>0;
-      out.highlights = myHighlights.map(f=>({title:f.title, dateLabel:fmtDate(f.date),
-        notes: f.nextFlightNotes || f.recommendations, onClick: ()=>this.viewFeedback(f.id)}));
+      // tStats real data - reuses mine/mineAvg already computed for tDash
+      // above, so there's only one real average, not two.
+      // next_flight_notes/recommendations/scores are already resolved by
+      // loadMyApprovedFeedbacks().
+      const highlights = mine.filter(f=>(f.next_flight_notes||f.recommendations||'').trim());
+      out.hasHighlights = highlights.length>0;
+      out.highlights = highlights.map(f=>({title:f.title, dateLabel:fmtDate(f.date),
+        notes: f.next_flight_notes || f.recommendations, onClick: ()=>this.viewFeedback(f.id)}));
       out.completedCount = mine.length;
       out.completionPct = Math.min(100, Math.round((mine.length/8)*100));
-      const statCirc = 2*Math.PI*50; out.statCirc = statCirc.toFixed(1); out.statOffset = (statCirc*(1-(mine.length?(a-5)/4:0))).toFixed(1);
-      const pts = mine.length? [...mine].reverse().map(f=>avg(f.scores)) : [5];
+      const statCirc = 2*Math.PI*50; out.statCirc = statCirc.toFixed(1); out.statOffset = (statCirc*(1-(mine.length?(mineAvg-5)/4:0))).toFixed(1);
+      // Sorted by date (descending) then reversed to chronological (oldest ->
+      // newest) - same as mine's own sort inside myApprovedFeedbacks(), never
+      // relying on the query's created_at order.
+      const sorted = [...mine].sort((x,y)=>x.date<y.date?1:-1);
+      const pts = sorted.length? [...sorted].reverse().map(f=>avg(f.scores)) : [5];
       const minV = Math.min(...pts,5), maxV = Math.max(...pts,9);
       const stepX = pts.length>1? 280/(pts.length-1) : 0;
       const coords = pts.map((v,i)=>({x:10+i*stepX, y: 80 - ((v-minV)/((maxV-minV)||1))*60}));
       out.trendPoints = coords.map(c=>`${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(' ');
       out.trendDots = coords;
-      const allCatKeys = {}; mine.forEach(f=>Object.keys(f.scores).forEach(k=>{ allCatKeys[k]=true; }));
+      // Object.keys(f.scores||{}) - not f.scores directly - guards against a
+      // theoretical null scores value that onSaveEval itself never writes
+      // (it always sends scores:{} at minimum) but that isn't provable for
+      // every historical row without querying the database directly.
+      const allCatKeys = {}; mine.forEach(f=>Object.keys(f.scores||{}).forEach(k=>{ allCatKeys[k]=true; }));
       const labelMap = {}; [...AIR_CREW_CATS,...CONTROLLERS_CATS,...SCOUTS_CATS].forEach(c=>labelMap[c.key]=c.label);
       out.catBars = Object.keys(allCatKeys).map(k=>{
-        const vals = mine.map(f=>num(f.scores[k])).filter(v=>v!==null); const av = vals.length? vals.reduce((a,b)=>a+b,0)/vals.length : 0;
-        return {label:labelMap[k]||k, value: vals.length? av.toFixed(1):'—', pct: vals.length? ((av-5)/4)*100 : 0, barColor:scoreColor(av)};
+        const vals = mine.map(f=>num((f.scores||{})[k])).filter(v=>v!==null); const av = vals.length? vals.reduce((a,b)=>a+b,0)/vals.length : 0;
+        return {label:labelMap[k]||k, value: vals.length? av.toFixed(1):'-', pct: vals.length? ((av-5)/4)*100 : 0, barColor:scoreColor(av)};
       });
     }
 
     if(role==='smat' || role==='kahad'){
-      out.scrSDash = s.screen==='sDash'; out.scrSFeedbacks = s.screen==='sFeedbacks'; out.scrSUsers = s.screen==='sUsers'; out.scrSUserForm = s.screen==='sUserForm';
+      out.scrSDash = s.screen==='sDash'; out.scrSFeedbacks = s.screen==='sFeedbacks';
       out.scrITraineeDetail = s.screen==='iTraineeDetail';
-      if(s.selectedTraineeId) out.detail = this.buildDetail(traineeById(s.selectedTraineeId), feedbacks, false);
-      out.smatName = role==='kahad'? KAHAD_NAME : SMAT_NAME;
+      // Real-feedback editing for smat only (editFeedback() already
+      // guards this before navigating here, and RLS/onSaveEval enforce it
+      // server-side regardless) - kahad is read-only and must never open
+      // iEval, so scrIEval/evalForm stay unset for kahad even if s.screen
+      // were ever 'iEval'. Same shared builder the instructor branch uses -
+      // see buildEvalFormOut() - so smat gets the identical full iEval UI.
+      if(role==='smat'){
+        out.scrIEval = s.screen==='iEval';
+        this.buildEvalFormOut(out, s);
+      }
+      out.smatName = s.myProfileName || (role==='kahad'? KAHAD_NAME : SMAT_NAME);
       out.smatRoleLabel = role==='kahad'? 'קה"ד · צפייה בלבד' : 'מנהל/ת מערכת';
       out.pendingHeading = role==='kahad'? 'ממתינים לאישור' : 'ממתינים לאישור שלך';
-      out.smatStats = { pending: feedbacks.filter(f=>f.status==='pending').length, approved: feedbacks.filter(f=>f.status==='approved').length,
-        rejected: feedbacks.filter(f=>f.status==='rejected').length, users: s.users.length };
-      const pendingList = feedbacks.filter(f=>f.status==='pending').sort((a,b)=>a.date<b.date?1:-1);
-      out.smatPendingEmpty = pendingList.length===0;
-      out.smatPendingList = pendingList.slice(0,4).map(f=>({title:f.title, traineeName:traineeById(f.traineeId).name, instructor:instructorById(f.instructorId), onClick:()=>this.viewFeedback(f.id),
-        onTraineeClick:(e)=>{ e.stopPropagation(); this.openTrainee(f.traineeId); }}));
+      // Feedback-related dashboard stats/list are now real (s.allFeedbacks,
+      // While allFeedbacks is still loading, show '…' rather than 0 - 0
+      // would look like a real, final "no pending feedbacks" count instead
+      // of "not loaded yet". users now counts s.accounts (real, loaded at
+      // bootstrap for smat/kahad below) instead of the demo s.users - the
+      // old sUsers/sUserForm system this used to depend on has been removed.
+      out.smatStats = {
+        pending: s.allFeedbacksLoading ? '…' : s.allFeedbacks.filter(f=>f.status==='pending').length,
+        approved: s.allFeedbacksLoading ? '…' : s.allFeedbacks.filter(f=>f.status==='approved').length,
+        rejected: s.allFeedbacksLoading ? '…' : s.allFeedbacks.filter(f=>f.status==='rejected').length,
+        users: s.accounts.length
+      };
+      const pendingList = s.allFeedbacks.filter(f=>f.status==='pending').sort((a,b)=>a.date<b.date?1:-1);
+      out.smatPendingEmpty = !s.allFeedbacksLoading && pendingList.length===0;
+      // traineeName/instructorName already resolved from profiles by
+      // loadAllFeedbacks() - never traineeById/instructorById. Opens via
+      // viewFeedback; traineeName click opens openTrainee (real uuid) -
+      // same pattern as iDash/sFeedbacks.
+      out.smatPendingList = pendingList.slice(0,4).map(f=>({title:f.title, traineeName:f.traineeName, instructor:f.instructorName, onClick:()=>this.viewFeedback(f.id),
+        onTraineeClick:(e)=>{ e.stopPropagation(); this.openTrainee(f.trainee_id); }}));
+
+      // Full real (Supabase) feedbacks list - same s.allFeedbacks as
+      // smatPendingList above (that one just filters to status==='pending').
+      // Opens via the existing viewFeedback(id), same as the instructor's
+      // "המשובים שלי ב-Supabase" list on iDash.
+      out.allFeedbacksLoading = s.allFeedbacksLoading;
+      out.noAllFeedbacks = !s.allFeedbacksLoading && s.allFeedbacks.length===0;
+      out.allFeedbacksRows = s.allFeedbacks.map(f=>{
+        const st = statusInfo(f.status);
+        return {title:f.title, traineeName:f.traineeName, dateLabel:fmtDate(f.date), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, onClick:()=>this.viewFeedback(f.id)};
+      });
 
       out.statusFilters = ['all','pending','approved','rejected'].map(st=>{
         const label = st==='all'?'הכל':statusInfo(st).label;
         return {label, onClick:()=>this.setFilterStatus(st),
           style:`padding:9px 16px; border-radius:999px; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; transition:all 180ms; ${s.filterStatus===st?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#ffffff; color:#5C7A96;'}`};
       });
-      out.allFeedbacks = [...feedbacks].filter(f=>s.filterStatus==='all'||f.status===s.filterStatus).sort((a,b)=>a.date<b.date?1:-1).map(f=>{
+      // sFeedbacks is now real-data-backed: both the cards and the status
+      // filter/count logic above run against s.allFeedbacks, never the
+      // demo `feedbacks` array. Opens via the same viewFeedback used
+      // everywhere else - fully independent from s.feedbacks.
+      out.allFeedbacks = [...s.allFeedbacks].filter(f=>s.filterStatus==='all'||f.status===s.filterStatus).sort((a,b)=>a.date<b.date?1:-1).map(f=>{
         const st=statusInfo(f.status);
-        return {title:f.title, traineeName:traineeById(f.traineeId).name, instructor:instructorById(f.instructorId), typeLabel:typeLabel(f.formType),
+        // traineeName is now clickable - iTraineeDetail knows real Supabase
+        // uuids (openTrainee/buildDetail), so this no longer needs
+        // to stay display-only.
+        return {title:f.title, traineeName:f.traineeName, instructor:f.instructorName, typeLabel:typeLabel(f.form_type),
           statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, onClick:()=>this.viewFeedback(f.id),
-          onTraineeClick:(e)=>{ e.stopPropagation(); this.openTrainee(f.traineeId); }};
+          onTraineeClick:(e)=>{ e.stopPropagation(); this.openTrainee(f.trainee_id); }};
       });
-
-      const popKey = s.filterPopulation;
-      const popCourses = popKey==='all'? [] : coursesForType(popKey==='airCrew'?'airCrew':popKey);
-      out.filterPopulation = popKey;
-      out.populationOptions = POPULATIONS.map(p=>({value:p.key, label:p.label}));
-      out.onFilterPopulationChange = this.onFilterPopulationChange;
-      out.filterCourseSel = s.filterCourse;
-      out.courseFilterOptions = popCourses.map(c=>({value:c.name, label:c.name}));
-      out.courseFilterDisabled = popKey==='all';
-      out.courseFilterPlaceholder = popKey==='all'? 'בחר אוכלוסייה תחילה' : 'כל הקורסים';
-      out.courseFilterStyle = 'width:100%; padding:11px 12px; border-radius:12px; border:1.5px solid #E3EEF8; font-size:13.5px; outline:none; '+(popKey==='all'? 'background:#F1F5F9; color:#8CA3B8; cursor:not-allowed;' : 'background:#ffffff; color:#123A5E;');
-      out.onFilterCourseSelChange = this.onFilterCourseSelChange;
-      out.roleFilters = ['all','trainee','instructor','smat'].map(r=>{
-        const labels = {all:'הכל', trainee:'חניכים', instructor:'מדריכים', smat:'סמ"ט'};
-        return {label:labels[r], onClick:()=>this.setFilterUserRole(r),
-          style:`padding:9px 16px; border-radius:999px; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; transition:all 180ms; ${s.filterUserRole===r?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#ffffff; color:#5C7A96;'}`};
-      });
-      const roleLabels = {trainee:'חניך', instructor:'מדריך', smat:'מנהל מערכת (סמ"ט)'};
-      const roleColors = {trainee:'#4FAEFF', instructor:'#8FD3FF', smat:'#FFB74F'};
-      out.userList = s.users.filter(u=>{
-        if(!(s.filterUserRole==='all'||u.role===s.filterUserRole)) return false;
-        if(s.filterPopulation!=='all'){
-          const t = u.kind==='trainee'? traineeById(u.traineeId) : null;
-          const insPops = u.kind==='instructor'? ((INSTRUCTORS.find(i=>i.id===u.instructorId)||{}).populations||[]) : [];
-          const popOk = (t && t.population===s.filterPopulation) || insPops.includes(s.filterPopulation);
-          if(!popOk) return false;
-          if(s.filterCourse!=='all'){ if(!t || t.course!==s.filterCourse) return false; }
-        }
-        return true;
-      }).map(u=>({
-        name:u.name, initial:u.name[0], avatarBg:roleColors[u.role], roleLabel:roleLabels[u.role],
-        hasCourse: !!(u.role==='trainee'? u.course : (u.populations||[]).length),
-        course: u.role==='trainee'? u.course : (u.populations||[]).map(populationLabel).join(' · '),
-        nameColor: u.kind==='trainee'? '#2E8FE0' : '#123A5E',
-        nameRowStyle: 'flex:1; min-width:0;' + (u.kind==='trainee'? ' cursor:pointer;' : ''),
-        showActions: canManage(role),
-        onOpen: u.kind==='trainee'? ()=>this.openTrainee(u.traineeId) : null,
-        onEdit:()=>this.editUser(u), onDelete:()=>this.askDeleteUser(u)
-      }));
-      out.onAddUser = this.onAddUser;
 
       out.scrSAccounts = s.screen==='sAccounts';
-      if(role==='smat'){
+      // sAccounts is the single, real accounts screen for both smat and
+      // kahad now (the old demo sUsers/sUserForm - filterPopulation/
+      // filterUserRole/roleFilters/userList/onAddUser/editUser/askDeleteUser
+      // and everything else that only they used - has been removed, not just
+      // hidden). smat keeps full management; kahad gets the same real rows
+      // but every action button is gated off per-row via a.canManage below
+      // (template wraps the whole actions block in {{a.canManage}}), and the
+      // link-management section is gated by the existing canManageUsers
+      // (smat-only) flag - matching the read-only model kahad already has
+      // everywhere else, not a new permission rule.
+      if(role==='smat' || role==='kahad'){
         out.onOpenAccounts = this.onOpenAccounts;
         out.accountsLoading = s.accountsLoading;
         out.hasAccountsError = !!s.accountsError; out.accountsError = s.accountsError;
         out.accountRows = s.accounts.map(a=>{
           const st = accountStatusInfo(a.status);
+          const missingProfile = a.status==='approved' &&
+            ((a.role==='trainee' && !s.provisionedTraineeIds.has(a.id)) || (a.role==='instructor' && !s.provisionedInstructorIds.has(a.id)));
+          const canManageThis = canManage(role);
           return {
-            id:a.id, name:a.full_name||'(ללא שם)', username:a.username||'—', roleLabel: accountRoleLabel(a.role),
+            id:a.id, name:a.full_name||'(ללא שם)', username:a.username||'-', roleLabel: accountRoleLabel(a.role),
             statusLabel:st.label, statusBg:st.bg, statusFg:st.fg,
+            canManage: canManageThis,
             isPending: a.status==='pending', isApproved: a.status==='approved', isDisabled: a.status==='disabled',
             canResetPw: a.status==='approved' || a.status==='disabled',
+            missingProfile,
+            // Permanent deletion: only trainee/instructor, never pending
+            // (role is null anyway while pending), never smat/kahad, never
+            // the smat's own row. The Edge Function re-checks all of this
+            // server-side too - this only controls whether the button shows.
+            canDeleteAccount: a.status!=='pending' && (a.role==='trainee'||a.role==='instructor') && a.id!==s.myProfileId,
             onApprove: ()=>this.onOpenRoleModal(a,'approve'),
             onChangeRole: ()=>this.onOpenRoleModal(a,'change'),
+            onCompleteProfile: ()=>this.onOpenCompleteProfile(a),
             onDisable: ()=>this.askDisableAccount(a),
             onReactivate: ()=>this.askReactivateAccount(a),
-            onResetPassword: ()=>this.onOpenResetPwModal(a)
+            onResetPassword: ()=>this.onOpenResetPwModal(a),
+            onDeleteAccount: ()=>this.askDeleteAccount(a)
           };
         });
         if(s.roleModal){
-          const showTraineeFields = s.roleModal.mode==='approve' && s.roleModal.selectedRole==='trainee';
-          const showInstructorFields = s.roleModal.mode==='approve' && s.roleModal.selectedRole==='instructor';
+          const provisioning = s.roleModal.mode==='approve' || s.roleModal.mode==='complete';
+          const showTraineeFields = provisioning && s.roleModal.selectedRole==='trainee';
+          const showInstructorFields = provisioning && s.roleModal.selectedRole==='instructor';
           const selPops = s.roleModal.instructorPopulations||[];
           out.roleModal = {...s.roleModal,
-            title: s.roleModal.mode==='approve' ? 'אישור משתמש ובחירת תפקיד' : 'שינוי תפקיד',
+            title: s.roleModal.mode==='approve' ? 'אישור משתמש ובחירת תפקיד' : s.roleModal.mode==='complete' ? 'השלמת פרטים חסרים' : 'שינוי תפקיד',
+            showRolePicker: s.roleModal.mode!=='complete',
             hasError: !!s.roleModal.error, showTraineeFields, showInstructorFields,
             roleOptions: ACCOUNT_ROLE_OPTIONS.map(ro=>{
               const selected = s.roleModal.selectedRole===ro.key;
@@ -2627,73 +3083,102 @@ class Component extends DCLogic {
         if(s.resetPwModal){
           out.resetPwModal = {...s.resetPwModal, hasError: !!s.resetPwModal.error, onPasswordChange:this.onResetPwChange, onCancel:this.onCloseResetPwModal, onConfirm:this.onConfirmResetPw};
         }
+        if(s.deleteUserModal){
+          out.deleteUserModal = {...s.deleteUserModal, hasError: !!s.deleteUserModal.error, onConfirmTextChange:this.onDeleteUserConfirmTextChange, onCancel:this.onCloseDeleteUserModal, onConfirm:this.onConfirmDeleteUser};
+        }
         out.linksLoading = s.linksLoading; out.hasLinksError = !!s.linksError; out.linksError = s.linksError;
         out.linkInstructorId = s.linkInstructorId; out.linkTraineeId = s.linkTraineeId;
         out.onLinkInstructorChange = this.onLinkInstructorChange; out.onLinkTraineeChange = this.onLinkTraineeChange; out.onAddLink = this.onAddLink;
-        out.linkInstructorOptions = s.accounts.filter(a=>a.role==='instructor' && a.status==='approved').map(a=>({value:a.id, label:a.full_name||a.username}));
-        out.linkTraineeOptions = s.accounts.filter(a=>a.role==='trainee' && a.status==='approved').map(a=>({value:a.id, label:a.full_name||a.username}));
+        out.linkInstructorOptions = s.accounts.filter(a=>a.role==='instructor' && a.status==='approved' && s.provisionedInstructorIds.has(a.id)).map(a=>({value:a.id, label:a.full_name||a.username}));
+        out.linkTraineeOptions = s.accounts.filter(a=>a.role==='trainee' && a.status==='approved' && s.provisionedTraineeIds.has(a.id)).map(a=>({value:a.id, label:a.full_name||a.username}));
         out.linkRows = s.links.map(l=>{
           const ins = s.accounts.find(a=>a.id===l.instructor_id);
           const tr = s.accounts.find(a=>a.id===l.trainee_id);
-          const instructorName = ins? (ins.full_name||ins.username) : '—';
-          const traineeName = tr? (tr.full_name||tr.username) : '—';
+          const instructorName = ins? (ins.full_name||ins.username) : '-';
+          const traineeName = tr? (tr.full_name||tr.username) : '-';
           return { instructorName, traineeName, onRemove: ()=>this.onRemoveLink({instructor_id:l.instructor_id, trainee_id:l.trainee_id, instructorName, traineeName}) };
-        });
-      }
-
-      if(s.userForm){
-        const selPops = s.userForm.populations || [];
-        out.userForm = {...s.userForm, showCourse: s.userForm.role==='trainee', showPopulations: s.userForm.role==='instructor',
-          populationOptions: POPULATIONS.map(p=>{
-            const on = selPops.includes(p.key);
-            return {label:p.label, onClick:()=>this.toggleUserPopulation(p.key),
-              style:'padding:10px 16px; border-radius:999px; font-size:13.5px; font-weight:700; cursor:pointer; transition:all 180ms; '+(on?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; box-shadow:0 6px 14px rgba(46,143,224,0.28);':'background:#ffffff; color:#5C7A96; border:1.5px solid #E3EEF8;')};
-          })};
-        out.onUserNameChange = this.onUserNameChange; out.onUserCourseChange = this.onUserCourseChange; out.onSaveUser = this.onSaveUser;
-        out.userRoleOptions = [{key:'trainee',label:'חניך'},{key:'instructor',label:'מדריך'},{key:'smat',label:'מנהל מערכת (סמ"ט)'}].map(ro=>{
-          const selected = s.userForm.role===ro.key;
-          return {label:ro.label, onClick:()=>this.setUserRole(ro.key),
-            style:`padding:13px 16px; border-radius:14px; font-weight:700; font-size:14px; cursor:pointer; transition:all 180ms; ${selected?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; box-shadow:0 6px 14px rgba(46,143,224,0.3);':'background:#F2F8FE; color:#2E6FA8;'}`};
         });
       }
     }
 
-    if(s.screen==='feedbackView' && s.viewingFeedbackId){
-      const f = feedbacks.find(x=>x.id===s.viewingFeedbackId);
-      if(f){
-        const st = statusInfo(f.status); const cats = catsFor(f.formType); const isAC = f.formType==='airCrew'; const isCtl = f.formType==='controllers';
-        out.scrFeedbackView = true;
-        out.viewFb = {
-          title:f.title, typeLabel:typeLabel(f.formType), traineeName:traineeById(f.traineeId).name, instructor:instructorById(f.instructorId),
-          dateLabel:fmtDate(f.date), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, overallRating:f.overallRating||'ללא ציון',
-          isAirCrew:isAC, isControllers:isCtl, isStandard:!isAC && !isCtl,
-          strengths:f.strengths||'—', improvements:f.improvements||'—', summary:f.summary||'—', recommendations:f.recommendations||'—',
-          scoreRows: cats.map(c=>{ const v=num(f.scores[c.key]); return {label:c.label, value:f.scores[c.key], pct: v===null?0:((v-5)/4)*100, barColor:scoreColor(v===null?0:v)}; }),
-          lessonNumber:syllabusSectionLabel(f.lessonNumber), aircraftType:f.aircraftType||'—', instructorFullName:f.instructorFullName||'—', syllabusFull:f.syllabusFull||'—',
-          scoreValue: (f.scores&&f.scores.overall!==undefined)? f.scores.overall : '—',
-          syllabusContent:f.syllabusContent||'—', completionsNeeded:f.completionsNeeded||'—',
-          remarks: f.remarks||{briefing:'—',ground:'—',postFlight:'—',aircraftHandling:'—',missionRoute:'—',takeoffLanding:'—',additional:'—'},
-          nextFlightNotes:f.nextFlightNotes||f.recommendations||'—', summaryRecommendations:f.summaryRecommendations||f.summary||'—',
-          courseName:f.courseName||'—', controllerSyllabus:syllabusSectionLabel(f.controllerSyllabus), flightType:f.flightType||'—', flightName:f.flightName||'—',
-          mission:f.mission||'—', contentNotes:f.contentNotes||'—', prepBriefingTransfer:f.prepBriefingTransfer||'—', prepStationSetup:f.prepStationSetup||'—',
-          sysFamiliarity:f.sysFamiliarity||'—', sysIVA:f.sysIVA||'—', sysMSDC:f.sysMSDC||'—', sysLauncher:f.sysLauncher||'—', sysFaults:f.sysFaults||'—',
-          missionConnect:f.missionConnect||'—', missionSA:f.missionSA||'—', missionSARoutes:f.missionSARoutes||'—', missionSAFaults:f.missionSAFaults||'—',
-          teamExternal:f.teamExternal||'—', teamMC:f.teamMC||'—', teamOSO:f.teamOSO||'—', teamRDO:f.teamRDO||'—', teamMPO:f.teamMPO||'—',
-          traitIndependence:f.traitIndependence||'—', traitConfidence:f.traitConfidence||'—', traitPressure:f.traitPressure||'—', traitOrder:f.traitOrder||'—', traitDebrief:f.traitDebrief||'—',
-          summaryRecommendations:f.summaryRecommendations||f.summary||'—', nextFlightNotes:f.nextFlightNotes||f.recommendations||'—',
-          segment: segmentOf(f), course: courseOf(f),
-          objectivesText: f.objectivesText || [f.target1,f.target2,f.target3].filter(Boolean).map((v,i)=>'יעד '+(i+1)+': '+(v==='v'?'עמד':'לא עמד')).join(' · ') || '—',
-          improveNotes: f.improveNotes || (f.remarksImprove||[]).filter(r=>r.topic||r.note).map(r=>(r.topic? r.topic+': ':'')+r.note).join('\n') || '—',
-          keepNotes: f.keepNotes || (f.remarksKeep||[]).filter(r=>r.topic||r.note).map(r=>(r.topic? r.topic+': ':'')+r.note).join('\n') || '—',
-          onExport: ()=>this.exportOne(f),
-          target1:f.target1||'', target2:f.target2||'', target3:f.target3||'', syllabusCompletion:f.syllabusCompletion||'—',
-          remarksImprove:(f.remarksImprove||[]).filter(r=>r.note||r.topic), remarksKeep:(f.remarksKeep||[]).filter(r=>r.note||r.topic),
-          observations:(f.observations||[]).filter(r=>r.time||r.topic||r.description),
-          smatMode: role==='smat',
-          onApprove: ()=>this.approveFeedback(f.id), onReject: ()=>this.rejectFeedback(f.id),
-          onEdit: ()=>this.editFeedback(f), onDelete: ()=>this.askDeleteFeedback(f.id)
-        };
-      }
+    // Real trainee detail - global/shared, not nested in a role branch (same
+    // pattern as feedbackView below), so it works whether the current screen
+    // was reached from the instructor or the smat/kahad side. This is now
+    // the only path that ever sets out.detail (the demo buildDetail()/
+    // selectedTraineeId path was removed - it had no active caller left).
+    // out.scrITraineeDetail is already true/false from whichever role block
+    // ran above - not touched here.
+    if(s.selectedTraineeId){
+      out.traineeDetailLoading = s.traineeDetailLoading;
+      out.hasTraineeDetailError = !!s.traineeDetailError; out.traineeDetailError = s.traineeDetailError;
+      // The template reads detail.* unconditionally (no sc-if guard around
+      // the header/stats sections) - so during the async gap before
+      // traineeDetail arrives, out.detail must still be a well-formed
+      // object, never undefined.
+      out.detail = s.traineeDetail ? this.buildDetail(s.traineeDetail) : {
+        name:'', initial:'', avatarBg:'#4FAEFF', course:'-', class:'-', avgLabel:'-', count:0, empty:true, canAdd:false,
+        hasStats:false, hasHighlights:false, highlights:[], hasPatterns:false, patterns:[],
+        showSyllabusOverview:false, syllabusSummary:'', syllabusItems:[],
+        onExportAll:()=>{}, onExportRange:()=>{}, trendPoints:'', trendDots:[], catBars:[], history:[]
+      };
+      out.onNewFeedbackForTrainee = this.onNewFeedbackForTrainee;
+    }
+
+    // The single feedback view/edit screen - was two parallel screens+state
+    // (a demo one keyed by viewingFeedbackId/s.feedbacks, and this one,
+    // keyed by viewingFeedback/Supabase) during the migration; now unified
+    // onto the real path only. Global/shared, not nested in a role branch,
+    // so it works from any role's entry point.
+    if(s.screen==='feedbackView' && s.viewingFeedback){
+      const f = s.viewingFeedback;
+      const st = statusInfo(f.status); const cats = catsFor(f.formType); const isAC = f.formType==='airCrew'; const isCtl = f.formType==='controllers';
+      out.scrFeedbackView = true;
+      out.viewFb = {
+        title:f.title, typeLabel:typeLabel(f.formType), traineeName:f.traineeName||'-', instructor:f.instructorName||'-',
+        dateLabel:fmtDate(f.date), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, overallRating:f.overallRating||'ללא ציון',
+        isAirCrew:isAC, isControllers:isCtl, isStandard:!isAC && !isCtl,
+        strengths:f.strengths||'-', improvements:f.improvements||'-', summary:f.summary||'-', recommendations:f.recommendations||'-',
+        scoreRows: cats.map(c=>{ const v=num((f.scores||{})[c.key]); return {label:c.label, value:(f.scores||{})[c.key], pct: v===null?0:((v-5)/4)*100, barColor:scoreColor(v===null?0:v)}; }),
+        lessonNumber:syllabusSectionLabel(f.lessonNumber), aircraftType:f.aircraftType||'-', instructorFullName:f.instructorFullName||'-', syllabusFull:f.syllabusFull||'-',
+        scoreValue: (f.scores&&f.scores.overall!==undefined)? f.scores.overall : '-',
+        syllabusContent:f.syllabusContent||'-', completionsNeeded:f.completionsNeeded||'-',
+        remarks: f.remarks||{briefing:'-',ground:'-',postFlight:'-',aircraftHandling:'-',missionRoute:'-',takeoffLanding:'-',additional:'-'},
+        nextFlightNotes:f.nextFlightNotes||f.recommendations||'-', summaryRecommendations:f.summaryRecommendations||f.summary||'-',
+        courseName:f.courseName||'-', controllerSyllabus:syllabusSectionLabel(f.controllerSyllabus), flightType:f.flightType||'-', flightName:f.flightName||'-',
+        mission:f.mission||'-', contentNotes:f.contentNotes||'-', prepBriefingTransfer:f.prepBriefingTransfer||'-', prepStationSetup:f.prepStationSetup||'-',
+        sysFamiliarity:f.sysFamiliarity||'-', sysIVA:f.sysIVA||'-', sysMSDC:f.sysMSDC||'-', sysLauncher:f.sysLauncher||'-', sysFaults:f.sysFaults||'-',
+        missionConnect:f.missionConnect||'-', missionSA:f.missionSA||'-', missionSARoutes:f.missionSARoutes||'-', missionSAFaults:f.missionSAFaults||'-',
+        teamExternal:f.teamExternal||'-', teamMC:f.teamMC||'-', teamOSO:f.teamOSO||'-', teamRDO:f.teamRDO||'-', teamMPO:f.teamMPO||'-',
+        traitIndependence:f.traitIndependence||'-', traitConfidence:f.traitConfidence||'-', traitPressure:f.traitPressure||'-', traitOrder:f.traitOrder||'-', traitDebrief:f.traitDebrief||'-',
+        segment: f.segment || '-', course: f.course || '-',
+        objectivesText: f.objectivesText || [f.target1,f.target2,f.target3].filter(Boolean).map((v,i)=>'יעד '+(i+1)+': '+(v==='v'?'עמד':'לא עמד')).join(' · ') || '-',
+        improveNotes: f.improveNotes || (f.remarksImprove||[]).filter(r=>r.topic||r.note).map(r=>(r.topic? r.topic+': ':'')+r.note).join('\n') || '-',
+        keepNotes: f.keepNotes || (f.remarksKeep||[]).filter(r=>r.topic||r.note).map(r=>(r.topic? r.topic+': ':'')+r.note).join('\n') || '-',
+        target1:f.target1||'', target2:f.target2||'', target3:f.target3||'', syllabusCompletion:f.syllabusCompletion||'-',
+        remarksImprove:(f.remarksImprove||[]).filter(r=>r.note||r.topic), remarksKeep:(f.remarksKeep||[]).filter(r=>r.note||r.topic),
+        observations:(f.observations||[]).filter(r=>r.time||r.topic||r.description),
+        // Mirrors the RLS UPDATE policy exactly: smat may edit any feedback;
+        // an instructor only their own, and only while not yet approved.
+        // Purely a UI affordance - editFeedback() re-checks this itself.
+        canEdit: role==='smat' || (role==='instructor' && f.instructorId===s.myProfileId && f.status!=='approved'),
+        onEdit: ()=>this.editFeedback(),
+        // Matches feedbacks_smat_all exactly - no other role has delete via RLS.
+        canDelete: role==='smat',
+        onDelete: ()=>this.askDeleteFeedback(f.id),
+        // Approve/reject only make sense (and are only offered) while still
+        // pending — after a successful update f.status changes and these
+        // buttons disappear on the next render, once viewingFeedback is
+        // refreshed by approveFeedback/rejectFeedback.
+        canApprove: role==='smat' && f.status==='pending',
+        canReject: role==='smat' && f.status==='pending',
+        onApprove: ()=>this.approveFeedback(),
+        onReject: ()=>this.rejectFeedback(),
+        // Read-only action, available to every role that can reach this
+        // screen at all (smat/instructor/trainee/kahad) - viewing the
+        // feedback in the first place already went through RLS, so no
+        // extra role check is needed for exporting it.
+        onExport: ()=>this.exportOne(f)
+      };
     }
 
     return out;
