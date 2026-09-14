@@ -18,9 +18,9 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 // A user must currently hold one of these roles to be eligible for
-// permanent deletion — never smat, never kahad, and never a pending user
-// (whose role is null anyway, so it wouldn't match either way).
-const DELETABLE_ROLES = ["trainee", "instructor"];
+// permanent deletion — never smat, and never a pending user (whose role is
+// null anyway, so it wouldn't match either way).
+const DELETABLE_ROLES = ["trainee", "instructor", "kahad"];
 
 const HAS_FEEDBACKS_MESSAGE =
   "לא ניתן למחוק את המשתמש מכיוון שקיימים משובים הקשורים אליו. אם חשוב לשמור את היסטוריית המידע, מומלץ להשתמש בהשבתה במקום מחיקה. ניתן למחוק את המשובים בנפרד ואז לנסות שוב.";

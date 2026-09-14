@@ -99,37 +99,6 @@
     </div>
     </sc-if>
 
-    <sc-if value="{{showLoginCard}}" hint-placeholder-val="{{true}}">
-    <div style="width:100%; background:#ffffff; border-radius:24px; padding:22px 20px; box-shadow:0 16px 40px rgba(30,90,140,0.10);">
-      <button onClick="{{onMsLogin}}" style="width:100%; padding:15px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; display:flex; align-items:center; justify-content:center; gap:10px; cursor:pointer; font-size:15px; font-weight:700; color:#26364A; transition:transform 180ms, box-shadow 180ms;" style-active="transform:scale(0.96);">
-        
-        <sc-if value="{{msLoading}}" hint-placeholder-val="{{false}}">
-          <span>מתחבר...</span>
-        </sc-if>
-        <sc-if value="{{msNotLoading}}" hint-placeholder-val="{{true}}">
-          <span>התחברות עם Google</span>
-        </sc-if>
-      </button>
-
-      <div style="text-align:center; font-size:12.5px; color:#9FB2C4; font-weight:500; margin:18px 0 10px;">- כניסה מהירה להדגמה -</div>
-      <div style="display:flex; flex-direction:column; gap:8px;">
-        <button onClick="{{onDemoInstructor}}" style="width:100%; padding:12px; border-radius:14px; border:1.5px solid #DCEBFA; background:#F7FBFF; color:#2E6FA8; font-weight:700; font-size:13.5px; cursor:pointer; transition:transform 180ms;" style-active="transform:scale(0.96);">כניסה כמדריך</button>
-        <button onClick="{{onDemoTrainee}}" style="width:100%; padding:12px; border-radius:14px; border:1.5px solid #DCEBFA; background:#F7FBFF; color:#2E6FA8; font-weight:700; font-size:13.5px; cursor:pointer; transition:transform 180ms;" style-active="transform:scale(0.96);">כניסה כחניך</button>
-        <button onClick="{{onDemoSmat}}" style="width:100%; padding:12px; border-radius:14px; border:1.5px solid #DCEBFA; background:#F7FBFF; color:#2E6FA8; font-weight:700; font-size:13.5px; cursor:pointer; transition:transform 180ms;" style-active="transform:scale(0.96);">כניסה כמנהל מערכת (סמ"ט)</button>
-        <button onClick="{{onDemoKahad}}" style="width:100%; padding:12px; border-radius:14px; border:1.5px solid #DCEBFA; background:#F7FBFF; color:#2E6FA8; font-weight:700; font-size:13.5px; cursor:pointer; transition:transform 180ms;" style-active="transform:scale(0.96);">כניסה כקה"ד (צפייה בלבד)</button>
-      </div>
-    </div>
-    </sc-if>
-
-    <sc-if value="{{showWelcomeCard}}" hint-placeholder-val="{{false}}">
-    <div style="width:100%; background:#ffffff; border-radius:24px; padding:26px 20px; box-shadow:0 16px 40px rgba(30,90,140,0.10); text-align:center; animation:popIn 320ms cubic-bezier(.22,1,.36,1) both;">
-      <div style="width:56px; height:56px; border-radius:50%; margin:0 auto 14px; background:linear-gradient(160deg,#4FAEFF,#2E8FE0); display:flex; align-items:center; justify-content:center; color:white; font-size:22px; font-weight:800;">{{googleInitial}}</div>
-      <div style="font-size:22px; font-weight:800; color:#123A5E;">{{welcomeGreeting}}</div>
-      <div style="font-size:13.5px; color:#6B8399; margin-top:6px; margin-bottom:22px;">{{googleEmail}}</div>
-      <button onClick="{{onWelcomeEnter}}" style="width:100%; padding:16px; border:none; border-radius:14px; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-size:16px; font-weight:700; cursor:pointer; box-shadow:0 12px 26px rgba(46,143,224,0.35); transition:transform 180ms;" style-active="transform:scale(0.97);">כניסה</button>
-    </div>
-    </sc-if>
-
     <div style="position:absolute; bottom:26px; left:28px; right:28px; text-align:center; font-size:10.5px; line-height:1.75; color:#93A9BC; text-wrap:pretty;">כל הזכויות שמורות ליחידת שה״ד<br>צוות תכנות - רב״ט עלמה ויקטור ריבלין, רב״ט רעות שמר<br>רת״ח AI ופיתוח - ניר לוי | מפקד גף אנימציה - סגן בר עם שלם<br>מפקד היחידה - ליאור אדלר</div>
   </div>
   </sc-if>
@@ -206,24 +175,7 @@
           </sc-for>
         </div>
 
-        <div style="font-size:16px; font-weight:700; color:#123A5E; margin:20px 0 10px;">דפיות אחרונות</div>
-        <sc-if value="{{feedbacksLoading}}" hint-placeholder-val="{{false}}">
-          <div style="text-align:center; padding:16px; color:#8CA3B8; font-size:13px;">טוען...</div>
-        </sc-if>
-        <sc-if value="{{noFeedbacks}}" hint-placeholder-val="{{false}}">
-          <div style="text-align:center; padding:16px; color:#8CA3B8; font-size:13px; background:#ffffff; border-radius:16px;">עדיין לא נשמרו דפיות</div>
-        </sc-if>
-        <sc-for list="{{recentFeedbacks}}" as="f" hint-placeholder-count="3">
-          <div onClick="{{f.onClick}}" style="background:#ffffff; border-radius:18px; padding:14px 16px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 8px 18px rgba(30,90,140,0.07); cursor:pointer; transition:transform 200ms;" style-active="transform:scale(0.97);">
-            <div style="min-width:0;">
-              <div style="font-size:14.5px; font-weight:700; color:#123A5E; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{f.title}}</div>
-              <div style="font-size:12.5px; color:#6B8399; margin-top:2px;">{{f.traineeName}} · {{f.typeLabel}}</div>
-            </div>
-            <div style="font-size:11.5px; font-weight:700; padding:5px 10px; border-radius:999px; background:{{f.statusBg}}; color:{{f.statusFg}}; white-space:nowrap;">{{f.statusLabel}}</div>
-          </div>
-        </sc-for>
-
-        <div style="font-size:16px; font-weight:700; color:#123A5E; margin:20px 0 10px;">המשובים שלי ב-Supabase</div>
+        <div style="font-size:16px; font-weight:700; color:#123A5E; margin:20px 0 10px;">דפיות</div>
         <sc-if value="{{hasFeedbackViewError}}" hint-placeholder-val="{{false}}">
           <div style="background:#FDEAE7; color:#D14A38; border-radius:12px; padding:10px 12px; font-size:13px; font-weight:600; margin-bottom:12px; text-align:center;">{{feedbackViewError}}</div>
         </sc-if>
@@ -1046,10 +998,6 @@
           </div>
         </div>
 
-        <sc-if value="{{canManageUsers}}" hint-placeholder-val="{{true}}">
-          <button onClick="{{onOpenAccounts}}" style="width:100%; padding:14px; border:1.5px solid #DCEBFA; border-radius:16px; background:#F7FBFF; color:#2E6FA8; font-weight:700; font-size:14px; cursor:pointer; margin-bottom:18px; transition:transform 180ms;" style-active="transform:scale(0.97);">ניהול חשבונות משתמשים</button>
-        </sc-if>
-
         <div style="font-size:16px; font-weight:700; color:#123A5E; margin-bottom:10px;">{{pendingHeading}}</div>
         <sc-if value="{{smatPendingEmpty}}" hint-placeholder-val="{{false}}">
           <div style="text-align:center; padding:30px 20px; color:#8CA3B8; font-size:13.5px; background:#ffffff; border-radius:18px;">אין כרגע טפסים הממתינים לאישור</div>
@@ -1064,7 +1012,7 @@
           </div>
         </sc-for>
 
-        <div style="font-size:16px; font-weight:700; color:#123A5E; margin:20px 0 10px;">דפיות ב-Supabase</div>
+        <div style="font-size:16px; font-weight:700; color:#123A5E; margin:20px 0 10px;">כל הדפיות</div>
         <sc-if value="{{allFeedbacksLoading}}" hint-placeholder-val="{{false}}">
           <div style="text-align:center; padding:16px; color:#8CA3B8; font-size:13px;">טוען...</div>
         </sc-if>
@@ -1540,9 +1488,18 @@ function sectionNumberOf(f){
 function segmentKey(formType, course, n){ return formType+'|'+course+'|'+String(n); }
 function segmentOf(f){ const n = sectionNumberOf(f); return n? segmentLabelFor(n, courseOf(f)) : '-'; }
 function courseOf(f){ if(f.course) return f.course; const t = traineeById(f.traineeId); return (t&&t.course)||'-'; }
+// Comparison-only helper: feedbacks.course (free text typed per feedback)
+// and trainee_profiles.course (free text set once on the profile) are two
+// independently-typed real columns, so trivial formatting drift (extra
+// spaces, double spaces, case) between them would otherwise silently drop
+// an otherwise-matching feedback out of syllabus completion. Never used to
+// change what's displayed or what's stored - only to decide whether two
+// course values refer to the same course for that comparison.
+function normalizeCourseName(value){ return String(value||'').trim().replace(/\s+/g,' ').toLowerCase(); }
 function syllabusStatusFor(hist, course){
   const done = {};
-  hist.filter(f=>f.status==='approved' && courseOf(f)===course).forEach(f=>{ const n = sectionNumberOf(f); if(n) done[n] = true; });
+  const target = normalizeCourseName(course);
+  hist.filter(f=>f.status==='approved' && normalizeCourseName(courseOf(f))===target).forEach(f=>{ const n = sectionNumberOf(f); if(n) done[n] = true; });
   return segmentsForCourse(course).map(s=>({n:s.n, name:s.name, done: !!done[s.n], label: segmentLabelFor(s.n, course)}));
 }
 
@@ -1589,13 +1546,12 @@ function mapFeedbackRow(row){
 
 class Component extends DCLogic {
   state = {
-    role: null, screen: 'intro', navHistory: [], loading: false, msLoading:false,
+    role: null, screen: 'intro', navHistory: [], loading: false,
     currentTraineeId: 1,
     evalForm:null,
     searchQuery:'', filterCourse:'all', filterStatus:'all',
     draft:null,
     showSuccess:false, successMsg:'', confirmDialog:null, showWindTransition:false, showAddToHome:false,
-    loginStage:'idle', hasLoggedInBefore:false,
     infoModal:null, printJob:null, printFrom:'', printTo:'',
     authMode:'signin', authUsername:'', authPassword:'', authFullName:'', authError:'', authLoading:false, authGate:null,
     accounts:[], accountsLoading:false, accountsError:'', roleModal:null, resetPwModal:null,
@@ -1625,10 +1581,10 @@ class Component extends DCLogic {
       this.loginAs(profile.role);
       // full_name (or username as a fallback) of the actually signed-in
       // profile - getSessionProfile() already returns it, it just wasn't
-      // being kept anywhere before. Left '' for a demo login (loginAs() is
-      // also called directly by onDemoInstructor/Trainee/Smat/Kahad, which
-      // never sets this) so every greeting/profile field below falls back to
-      // the existing demo name exactly as before whenever this is empty.
+      // being kept anywhere before. Falls back to '' only if a profile
+      // genuinely has neither full_name nor username set, in which case the
+      // existing demo-name fallbacks (INSTRUCTOR_NAME/SMAT_NAME/KAHAD_NAME,
+      // traineeById) below still apply exactly as before.
       this.setState({authGate:null, myProfileId:profile.id, myProfileName: profile.full_name || profile.username || ''});
       // trainees was previously only loaded lazily from openNewFeedback() -
       // iTrainees (below) needs it too, and is reachable directly from the
@@ -1687,11 +1643,28 @@ class Component extends DCLogic {
     const { data: prof, error: profErr } = await window.nimbusSupabase.from('profiles').select('id, full_name, username').eq('id', traineeId).single();
     if(profErr || !prof){ this.setState({traineeDetailLoading:false, traineeDetailError:'שגיאה בטעינת פרטי החניך: '+(profErr? profErr.message : 'לא נמצא')}); return; }
     const { data: tprof } = await window.nimbusSupabase.from('trainee_profiles').select('course, population, class').eq('profile_id', traineeId).maybeSingle();
+    // details/strengths/improvements/summary/summary_recommendations added
+    // alongside the fields the screen already used, so every row here has
+    // everything mapFeedbackRow() needs to reconstruct a full, printRows()-
+    // ready feedback for the PDF export buttons below - not a new endpoint,
+    // the same query just selects a few more real columns.
     const { data: rows, error: fbErr } = await window.nimbusSupabase.from('feedbacks')
-      .select('id, trainee_id, instructor_id, form_type, title, date, status, course, segment, scores, overall_rating, next_flight_notes, recommendations')
+      .select('id, trainee_id, instructor_id, form_type, title, date, status, course, segment, scores, overall_rating, next_flight_notes, recommendations, strengths, improvements, summary, summary_recommendations, details')
       .eq('trainee_id', traineeId).order('created_at', {ascending:false});
     if(fbErr){ this.setState({traineeDetailLoading:false, traineeDetailError:'שגיאה בטעינת ההיסטוריה: '+fbErr.message}); return; }
-    const history = [...(rows||[])].sort((a,b)=>a.date<b.date?1:-1);
+    // Instructor name resolution for the PDF's "מדריך" field - one query for
+    // every distinct instructor_id in this trainee's history (same pattern
+    // as loadMyFeedbacks/loadAllFeedbacks), never traineeById/instructorById
+    // (those only know the demo dataset). Attached as instructorFullName on
+    // each raw row (not a DB column) so onExportAll/onExportRange can carry
+    // it through mapFeedbackRow() without a query per feedback.
+    const instructorIds = Array.from(new Set((rows||[]).map(r=>r.instructor_id).filter(Boolean)));
+    let instructorNames = {};
+    if(instructorIds.length){
+      const { data: profs } = await window.nimbusSupabase.from('profiles').select('id, full_name, username').in('id', instructorIds);
+      (profs||[]).forEach(p=>{ instructorNames[p.id] = p.full_name||p.username; });
+    }
+    const history = [...(rows||[])].map(r=>({...r, instructorFullName: instructorNames[r.instructor_id]||'-'})).sort((a,b)=>a.date<b.date?1:-1);
     this.setState({traineeDetailLoading:false, traineeDetailError:'',
       traineeDetail: { id: prof.id, name: prof.full_name||prof.username,
         course: (tprof&&tprof.course)||'', population: (tprof&&tprof.population)||'', class: (tprof&&tprof.class)||'', history }});
@@ -1732,13 +1705,27 @@ class Component extends DCLogic {
       return {label:labelMap[k]||k, value: vals.length? av.toFixed(1):'-', pct: vals.length? ((av-5)/4)*100 : 0, barColor:scoreColor(av)};
     }).sort((x,y)=>y.pct-x.pct);
     const role = this.state.role;
-    // syllabusStatusFor()/segmentsForCourse() only know the demo's fixed
-    // course catalogue - a real free-text course simply won't match, which
-    // safely yields an empty list (0/0 shown), never a crash. Not fixed here -
-    // same known-gap family as the isEditing course/segment handling in iEval
-    // and the controllers/scouts overall_rating issue; tracked separately.
+    // syllabusStatusFor()'s course match is now whitespace/case-tolerant
+    // (see normalizeCourseName) so trivial formatting drift between
+    // feedbacks.course and trainee_profiles.course no longer drops a
+    // matching feedback. segmentsForCourse() is a separate, still-open gap:
+    // it only knows the fixed course catalogue (COURSES/FLIGHT_COURSES), so
+    // a real course name that was never in that catalogue falls back to the
+    // generic SYLLABUS_SECTIONS list instead of that course's actual flight
+    // count - never a crash, just a less precise segment list.
     const syl = syllabusStatusFor(hist, rd.course);
     const sylDone = syl.filter(x=>x.done).length;
+    // Shared by onExportAll/onExportRange below - each raw row already
+    // carries instructorFullName (attached in loadTraineeDetail, resolved
+    // from profiles there - never instructorById). mapFeedbackRow() turns
+    // the raw row into the same flat camelCase + details shape printRows()
+    // already expects for the single-feedback PDF (exportOne) - printRows()
+    // itself needs no change, only its input does.
+    const buildDocsFrom = (rows)=>rows.map(row=>{
+      const f = mapFeedbackRow(row);
+      f.instructorFullName = row.instructorFullName || '-';
+      return {title:f.title, meta:(rd.name||'-')+' · '+typeLabel(f.formType)+' · '+fmtDate(f.date), rows:this.printRows(f)};
+    });
     return { name:rd.name, initial:(rd.name||'-')[0], avatarBg:'#4FAEFF', course:rd.course||'-', class:rd.class||'-',
       avgLabel: doneVals.length? a.toFixed(1):'-', count: hist.length, empty: hist.length===0, canAdd: role==='instructor',
       hasStats: statHist.length>0,
@@ -1750,9 +1737,19 @@ class Component extends DCLogic {
       syllabusSummary: sylDone+' מתוך '+syl.length+' מקטעים הושלמו',
       syllabusItems: syl.map(x=>({name:x.label, mark: x.done?'✓':'', statusLabel: x.done?'בוצע':'',
         markStyle:'width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; flex-shrink:0; '+(x.done?'background:#E4F8ED; color:#1FA86A;':'background:#F4F8FC; color:#F4F8FC;')})),
-      // PDF export is a separate, not-yet-implemented task (per instruction) -
-      // no-op placeholders so the existing buttons don't throw if clicked.
-      onExportAll: ()=>{}, onExportRange: ()=>{},
+      // rd.history is already sorted newest-first (loadTraineeDetail) - no
+      // extra sort needed for either export.
+      onExportAll: ()=>{
+        const docs = buildDocsFrom(hist);
+        this.setState({printJob:{heading:rd.name||'-', subheading:'ייצוא כל הדפיות · '+docs.length+' דפיות', docs, empty:docs.length===0}});
+      },
+      onExportRange: ()=>{
+        const from = this.state.printFrom, to = this.state.printTo;
+        const filtered = hist.filter(row=>(!from||row.date>=from) && (!to||row.date<=to));
+        const docs = buildDocsFrom(filtered);
+        const rangeLabel = from&&to? fmtDate(from)+' - '+fmtDate(to) : from? 'מ-'+fmtDate(from) : to? 'עד '+fmtDate(to) : 'כל הטווח';
+        this.setState({printJob:{heading:rd.name||'-', subheading:'ייצוא לפי טווח תאריכים · '+rangeLabel+' · '+docs.length+' דפיות', docs, empty:docs.length===0}});
+      },
       trendPoints: coords.map(c=>`${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(' '), trendDots: coords, catBars,
       history: hist.map(f=>{ const st=statusInfo(f.status); return {title:f.title, typeLabel:typeLabel(f.form_type), dateLabel:fmtDate(f.date), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg,
         onClick: ()=>this.viewFeedback(f.id) }; })
@@ -1836,27 +1833,6 @@ class Component extends DCLogic {
   onIntroEnded=()=>{ if(this.state.screen==='intro') this.setState({screen:'login'}); };
   onSkipIntro=()=>{ if(this.state.screen==='intro') this.setState({screen:'login'}); };
 
-  onMsLogin=()=>{
-    this.setState({msLoading:true});
-    setTimeout(()=>{
-      this.setState({msLoading:false, loginStage:'welcome'});
-    }, 700*this.speedMul());
-  };
-  onWelcomeEnter=()=>{
-    this.setState({loginStage:'idle', hasLoggedInBefore:true});
-    this.startGust('instructor');
-  };
-  startGust=(role)=>{
-    this.setState({showWindTransition:true});
-    setTimeout(()=>{
-      this.loginAs(role);
-      this.setState({showWindTransition:false});
-    }, 1400*this.speedMul());
-  };
-  onDemoInstructor=()=>this.startGust('instructor');
-  onDemoTrainee=()=>this.startGust('trainee');
-  onDemoSmat=()=>this.startGust('smat');
-  onDemoKahad=()=>this.startGust('kahad');
   loginAs(role){
     const home = role==='instructor'?'iDash': (role==='smat'||role==='kahad')?'sDash':'tDash';
     this.setState({role, screen:home, navHistory:[], loading:(this.props.skeletonLoading ?? true), currentTraineeId:1});
@@ -2200,7 +2176,15 @@ class Component extends DCLogic {
       const { data: profs } = await window.nimbusSupabase.from('profiles').select('id, full_name, username').in('id', nameIds);
       (profs||[]).forEach(p=>{ names[p.id] = p.full_name||p.username; });
     }
-    this.setState({viewingFeedback: {...mapped, traineeName: names[mapped.traineeId]||'-', instructorName: names[mapped.instructorId]||'-'}});
+    // instructorFullName is also set here (same value as instructorName) -
+    // printRows() (used by exportOne, and the "שם המדריך/ה" field in
+    // feedbackView itself) reads instructorFullName, but mapFeedbackRow()
+    // only ever populates it from `details` (a free-text field the real
+    // iEval form has no input for, so it's always empty on a real feedback)
+    // - never overwriting mapped.instructorId or the instructorName field
+    // that viewFb.instructor already correctly reads.
+    const instructorFullName = names[mapped.instructorId]||'-';
+    this.setState({viewingFeedback: {...mapped, traineeName: names[mapped.traineeId]||'-', instructorName: instructorFullName, instructorFullName}});
     this.navigate('feedbackView', {});
   };
   // Edits the feedback in state.viewingFeedback via the existing iEval
@@ -2320,12 +2304,6 @@ class Component extends DCLogic {
     return {data};
   }
 
-  onOpenAccounts=()=>{
-    if(this.state.role!=='smat') return;
-    this.navigate('sAccounts', {});
-    this.loadAccounts();
-    this.loadLinks();
-  };
   loadAccounts=async()=>{
     // Read-only - kahad needs this too now that sAccounts is its real
     // "משתמשים" screen. The actual management actions (approve/disable/
@@ -2427,6 +2405,7 @@ class Component extends DCLogic {
   askDisableAccount(u){
     if(this.state.role!=='smat') return;
     this.setState({confirmDialog:{ message:'האם להשבית את המשתמש "'+(u.full_name||u.username)+'"?',
+      confirmLabel:'השבתה', confirmBg:'#D14A38',
       onCancel:()=>this.setState({confirmDialog:null}),
       onConfirm: async ()=>{
         this.setState({confirmDialog:null});
@@ -2440,6 +2419,7 @@ class Component extends DCLogic {
   askReactivateAccount(u){
     if(this.state.role!=='smat') return;
     this.setState({confirmDialog:{ message:'האם להפעיל מחדש את המשתמש "'+(u.full_name||u.username)+'"?',
+      confirmLabel:'הפעלה מחדש', confirmBg:'#1FA86A',
       onCancel:()=>this.setState({confirmDialog:null}),
       onConfirm: async ()=>{
         this.setState({confirmDialog:null});
@@ -2459,7 +2439,7 @@ class Component extends DCLogic {
   askDeleteAccount(u){
     if(this.state.role!=='smat') return;
     if(u.id===this.state.myProfileId) return;
-    if(u.role!=='trainee' && u.role!=='instructor') return;
+    if(u.role!=='trainee' && u.role!=='instructor' && u.role!=='kahad') return;
     this.setState({confirmDialog:{
       message:'האם למחוק לצמיתות את המשתמש "'+(u.full_name||u.username)+'"? פעולה זו בלתי הפיכה ותמחק את כל המידע הקשור אליו לפי מבנה מסד הנתונים. אם קיימים משובים הקשורים אליו, המחיקה תיחסם - במקרה כזה מומלץ להשתמש בהשבתה במקום כדי לשמור את ההיסטוריה.',
       onCancel:()=>this.setState({confirmDialog:null}),
@@ -2705,11 +2685,8 @@ class Component extends DCLogic {
 
     let out = {
       scrIntro, onIntroEnded:this.onIntroEnded, onSkipIntro:this.onSkipIntro,
-      scrLogin, scrApp, msLoading:s.msLoading, msNotLoading: !s.msLoading,
-      showLoginCard: s.loginStage!=='welcome' && !s.authGate, showWelcomeCard: s.loginStage==='welcome' && !s.authGate,
-      welcomeGreeting: (s.hasLoggedInBefore?'שלום':'ברוך הבא')+', קריסי!',
-      googleInitial:'ק', googleEmail:'krissy@iaf.idf.il', onWelcomeEnter:this.onWelcomeEnter,
-      onMsLogin:this.onMsLogin, onDemoInstructor:this.onDemoInstructor, onDemoTrainee:this.onDemoTrainee, onDemoSmat:this.onDemoSmat, onDemoKahad:this.onDemoKahad,
+      scrLogin, scrApp,
+      showLoginCard: !s.authGate,
       showAuthGatePending: s.authGate==='pending', showAuthGateDisabled: s.authGate==='disabled', onAuthSignOut:this.onAuthSignOut,
       isSignInMode: s.authMode==='signin', isSignUpMode: s.authMode==='signup', onToggleAuthMode:this.onToggleAuthMode,
       authUsername:s.authUsername, authPassword:s.authPassword, authFullName:s.authFullName,
@@ -2724,8 +2701,10 @@ class Component extends DCLogic {
       isBrandTitle: s.screen!=='profile' && (TITLES[s.screen]||'נימבוס')==='נימבוס',
       showSuccess:s.showSuccess, successMsg:s.successMsg,
       // Every existing caller keeps the default red "מחיקה" look untouched -
-      // only approveFeedback/rejectFeedback set confirmLabel/confirmBg
-      // explicitly to get their own action-appropriate button.
+      // approveFeedback/rejectFeedback/askDisableAccount/askReactivateAccount
+      // each set confirmLabel/confirmBg explicitly to get their own
+      // action-appropriate button; everything else (delete flows) falls
+      // through to the destructive default below.
       confirmDialog: s.confirmDialog ? {...s.confirmDialog, confirmLabel: s.confirmDialog.confirmLabel || 'מחיקה', confirmBg: s.confirmDialog.confirmBg || '#D14A38'} : null,
       showAddToHome: s.showAddToHome, onCloseAddToHome: this.onCloseAddToHome,
       infoModal: s.infoModal, onCloseInfo: this.onCloseInfo, onOpenCourseInfo: this.onOpenCourseInfo, onOpenRatingInfo: this.onOpenRatingInfo,
@@ -2766,9 +2745,9 @@ class Component extends DCLogic {
     if(s.screen==='profile'){
       out.scrProfile = true;
       // s.myProfileName is only ever set by bootstrapAuth() (a real signed-in
-      // session) - a demo login (loginAs() called directly by onDemoInstructor/
-      // Trainee/Smat/Kahad) never sets it, so it stays '' and every branch
-      // below falls back to exactly the demo name/label it used before.
+      // session); it stays '' if that profile genuinely has neither
+      // full_name nor username, in which case every branch below falls back
+      // to the existing demo name/label exactly as before.
       if(role==='instructor'){ const nm=s.myProfileName||INSTRUCTOR_NAME; out.profileInitial=nm[0]; out.profileName=nm; out.profileSubtitle='מדריך · חיל האוויר'; }
       else if(role==='smat'){ const nm=s.myProfileName||SMAT_NAME; out.profileInitial=nm[0]; out.profileName=nm; out.profileSubtitle='מנהל/ת מערכת (סמ"ט)'; }
       else if(role==='kahad'){ const nm=s.myProfileName||KAHAD_NAME; out.profileInitial=nm[0]; out.profileName=nm; out.profileSubtitle='קה"ד · צפייה בלבד'; }
@@ -2780,27 +2759,24 @@ class Component extends DCLogic {
     if(role==='instructor'){
       out.scrIDash = s.screen==='iDash'; out.scrITrainees = s.screen==='iTrainees'; out.scrIFeed = s.screen==='iFeed';
       out.scrITraineeDetail = s.screen==='iTraineeDetail'; out.scrINewFeedback = s.screen==='iNewFeedback'; out.scrIEval = s.screen==='iEval';
-      // s.myProfileName falls back to the demo name for a demo login (see
-      // bootstrapAuth()/the profile-screen block for the same pattern).
+      // Falls back to INSTRUCTOR_NAME only if this profile genuinely has
+      // neither full_name nor username set (see bootstrapAuth()/the
+      // profile-screen block for the same pattern) - not a demo login path.
       out.instructorName = s.myProfileName || INSTRUCTOR_NAME;
       out.todayLabel = new Date().toLocaleDateString('he-IL',{weekday:'long', day:'numeric', month:'long'});
-      // iDash is now real-only: stats/recentTrainees/recentFeedbacks come
+      // iDash is now real-only: stats/recentTrainees/myFeedbacksRows come
       // from s.trainees (instructor_trainees+profiles+trainee_profiles,
       // already loaded at bootstrap via loadMyTrainees()) and
       // s.myFeedbacks (already loaded via loadMyFeedbacks()) -
       // never TRAINEES/visibleTrainees/traineeById/FEEDBACKS/s.feedbacks.
       // Loading/empty flags reuse the same traineesLoading/
       // noTrainees/feedbacksLoading/noFeedbacks computed below
-      // for iTrainees/"המשובים שלי" - no new state, no new query.
+      // for iTrainees/"דפיות" - no new state, no new query.
       out.stats = { pendingCount: s.myFeedbacks.filter(f=>f.status==='pending').length, approvedCount: s.myFeedbacks.filter(f=>f.status==='approved').length, traineeCount: s.trainees.length };
       out.onOpenNewFeedback = this.onOpenNewFeedback;
       // No avatarBg in trainees (trainee_profiles doesn't carry a color) -
       // same fixed color already used for iTrainees' traineeCards.
       out.recentTrainees = s.trainees.slice(0,4).map(t=>({name:t.name, initial:(t.name||'-')[0], avatarBg:'#4FAEFF', onClick:()=>this.openTrainee(t.id)}));
-      out.recentFeedbacks = [...s.myFeedbacks].sort((a,b)=>a.date<b.date?1:-1).slice(0,3).map(f=>{
-        const st=statusInfo(f.status);
-        return {title:f.title, traineeName:f.traineeName, typeLabel:typeLabel(f.form_type), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, onClick:()=>this.viewFeedback(f.id)};
-      });
       out.feedbacksLoading = s.feedbacksLoading;
       out.noFeedbacks = !s.feedbacksLoading && s.myFeedbacks.length===0;
       out.hasFeedbackViewError = !!s.feedbackViewError; out.feedbackViewError = s.feedbackViewError;
@@ -2985,7 +2961,7 @@ class Component extends DCLogic {
       // Full real (Supabase) feedbacks list - same s.allFeedbacks as
       // smatPendingList above (that one just filters to status==='pending').
       // Opens via the existing viewFeedback(id), same as the instructor's
-      // "המשובים שלי ב-Supabase" list on iDash.
+      // "דפיות" list on iDash.
       out.allFeedbacksLoading = s.allFeedbacksLoading;
       out.noAllFeedbacks = !s.allFeedbacksLoading && s.allFeedbacks.length===0;
       out.allFeedbacksRows = s.allFeedbacks.map(f=>{
@@ -3024,7 +3000,6 @@ class Component extends DCLogic {
       // (smat-only) flag - matching the read-only model kahad already has
       // everywhere else, not a new permission rule.
       if(role==='smat' || role==='kahad'){
-        out.onOpenAccounts = this.onOpenAccounts;
         out.accountsLoading = s.accountsLoading;
         out.hasAccountsError = !!s.accountsError; out.accountsError = s.accountsError;
         out.accountRows = s.accounts.map(a=>{
@@ -3039,11 +3014,11 @@ class Component extends DCLogic {
             isPending: a.status==='pending', isApproved: a.status==='approved', isDisabled: a.status==='disabled',
             canResetPw: a.status==='approved' || a.status==='disabled',
             missingProfile,
-            // Permanent deletion: only trainee/instructor, never pending
-            // (role is null anyway while pending), never smat/kahad, never
-            // the smat's own row. The Edge Function re-checks all of this
+            // Permanent deletion: trainee/instructor/kahad, never pending
+            // (role is null anyway while pending), never smat, never the
+            // smat's own row. The Edge Function re-checks all of this
             // server-side too - this only controls whether the button shows.
-            canDeleteAccount: a.status!=='pending' && (a.role==='trainee'||a.role==='instructor') && a.id!==s.myProfileId,
+            canDeleteAccount: a.status!=='pending' && (a.role==='trainee'||a.role==='instructor'||a.role==='kahad') && a.id!==s.myProfileId,
             onApprove: ()=>this.onOpenRoleModal(a,'approve'),
             onChangeRole: ()=>this.onOpenRoleModal(a,'change'),
             onCompleteProfile: ()=>this.onOpenCompleteProfile(a),
