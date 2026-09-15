@@ -45,7 +45,7 @@
 
   <sc-if value="{{scrIntro}}" hint-placeholder-val="{{false}}">
   <div onClick="{{onSkipIntro}}" style="position:relative; z-index:2; width:100%; height:100vh; background:#0B1E33; overflow:hidden; cursor:pointer;">
-    <video src="assets/openingVideo.mp4" autoPlay="{{true}}" muted="{{true}}" playsInline="{{true}}" onEnded="{{onIntroEnded}}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></video>
+    <video src="assets/openingVideo.mp4" preload="auto" autoPlay="{{true}}" muted="{{true}}" playsInline="{{true}}" onEnded="{{onIntroEnded}}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></video>
     <div style="position:absolute; bottom:22px; left:0; right:0; text-align:center; font-size:12.5px; font-weight:600; color:rgba(255,255,255,0.75); letter-spacing:0.3px;">לדילוג - הקש במסך</div>
   </div>
   </sc-if>
@@ -394,6 +394,18 @@
         </sc-if>
         <sc-if value="{{draft.showTraineeName}}" hint-placeholder-val="{{false}}">
           <div style="background:#F2F8FE; border-radius:14px; padding:12px 16px; margin-bottom:18px; font-size:14.5px; font-weight:700; color:#2E6FA8;">חניך: {{draft.traineeName}}</div>
+        </sc-if>
+        <sc-if value="{{draft.showInstructorSelect}}" hint-placeholder-val="{{false}}">
+          <div style="font-size:14px; font-weight:600; color:#3A5977; margin-bottom:8px;">בחר/י מדריך</div>
+          <select value="{{draft.instructorId}}" onChange="{{onDraftInstructorChange}}" style="width:100%; padding:14px 16px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:15px; color:#123A5E; outline:none; margin-bottom:18px;">
+            <option value="">- בחר מדריך -</option>
+            <sc-for list="{{smatInstructorOptions}}" as="o" hint-placeholder-count="3">
+              <option value="{{o.value}}">{{o.label}}</option>
+            </sc-for>
+          </select>
+        </sc-if>
+        <sc-if value="{{draft.showInstructorName}}" hint-placeholder-val="{{false}}">
+          <div style="background:#F2F8FE; border-radius:14px; padding:12px 16px; margin-bottom:18px; font-size:14.5px; font-weight:700; color:#2E6FA8;">מדריך: {{draft.instructorName}}</div>
         </sc-if>
 
         <div style="font-size:14px; font-weight:600; color:#3A5977; margin-bottom:8px;">סוג דפית</div>
@@ -1005,6 +1017,10 @@
           </div>
         </div>
 
+        <sc-if value="{{canManageUsers}}" hint-placeholder-val="{{true}}">
+          <button onClick="{{onOpenNewFeedback}}" style="width:100%; padding:15px; border:none; border-radius:16px; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-size:15px; font-weight:700; cursor:pointer; box-shadow:0 10px 22px rgba(46,143,224,0.3); margin-bottom:18px; transition:transform 200ms;" style-active="transform:scale(0.97);">+ דפית חדשה</button>
+        </sc-if>
+
         <div style="font-size:16px; font-weight:700; color:#123A5E; margin-bottom:10px;">{{pendingHeading}}</div>
         <sc-if value="{{smatPendingEmpty}}" hint-placeholder-val="{{false}}">
           <div style="text-align:center; padding:30px 20px; color:#8CA3B8; font-size:13.5px; background:#ffffff; border-radius:18px;">אין כרגע טפסים הממתינים לאישור</div>
@@ -1030,7 +1046,7 @@
           <div onClick="{{rf.onClick}}" style="background:#ffffff; border-radius:18px; padding:14px 16px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 8px 18px rgba(30,90,140,0.07); cursor:pointer; transition:transform 200ms;" style-active="transform:scale(0.97);">
             <div style="min-width:0;">
               <div style="font-size:14.5px; font-weight:700; color:#123A5E; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{rf.title}}</div>
-              <div style="font-size:12.5px; color:#6B8399; margin-top:2px;">{{rf.traineeName}} · {{rf.dateLabel}}</div>
+              <div style="font-size:12.5px; color:#6B8399; margin-top:2px;"><span onClick="{{rf.onTraineeClick}}" style="color:#2E8FE0; font-weight:700; cursor:pointer; text-decoration:underline; text-underline-offset:3px;">{{rf.traineeName}}</span> · {{rf.dateLabel}}</div>
             </div>
             <div style="font-size:11.5px; font-weight:700; padding:5px 10px; border-radius:999px; background:{{rf.statusBg}}; color:{{rf.statusFg}}; white-space:nowrap;">{{rf.statusLabel}}</div>
           </div>
@@ -1069,6 +1085,9 @@
         </sc-if>
         <sc-if value="{{accountsLoading}}" hint-placeholder-val="{{false}}">
           <div style="text-align:center; padding:30px 20px; color:#8CA3B8; font-size:13.5px;">טוען משתמשים...</div>
+        </sc-if>
+        <sc-if value="{{canManageUsers}}" hint-placeholder-val="{{true}}">
+          <button onClick="{{onOpenCreateUserModal}}" style="width:100%; padding:14px; border:none; border-radius:16px; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-weight:700; font-size:14px; cursor:pointer; margin-bottom:14px; box-shadow:0 10px 22px rgba(46,143,224,0.3); transition:transform 180ms;" style-active="transform:scale(0.97);">+ משתמש חדש</button>
         </sc-if>
         <sc-for list="{{accountRows}}" as="a" hint-placeholder-count="4">
           <div style="background:#ffffff; border-radius:18px; padding:14px 16px; margin-bottom:10px; box-shadow:0 8px 18px rgba(30,90,140,0.07);">
@@ -1295,6 +1314,56 @@
         <div style="display:flex; gap:10px;">
           <button onClick="{{roleModal.onCancel}}" style="flex:1; padding:13px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; color:#5C7A96; font-weight:700; font-size:14px; cursor:pointer;">ביטול</button>
           <button onClick="{{roleModal.onConfirm}}" style="flex:1; padding:13px; border-radius:14px; border:none; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-weight:700; font-size:14px; cursor:pointer;">אישור</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{createUserModal}}" hint-placeholder-val="{{false}}">
+    <div style="position:absolute; inset:0; z-index:30; background:rgba(18,58,94,0.35); display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeIn 180ms both;">
+      <div style="width:100%; max-height:85vh; overflow-y:auto; background:#ffffff; border-radius:22px; padding:24px 20px; box-shadow:0 24px 50px rgba(0,0,0,0.2); animation:popIn 260ms cubic-bezier(.22,1,.36,1) both;">
+        <div style="font-size:16px; font-weight:800; color:#123A5E; margin-bottom:16px;">משתמש חדש</div>
+        <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">שם משתמש</div>
+        <input value="{{createUserModal.username}}" onChange="{{createUserModal.onUsernameChange}}" placeholder="אותיות אנגליות קטנות, ספרות וקו תחתון" style="width:100%; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:14px; color:#123A5E; outline:none; margin-bottom:12px;">
+        <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">שם מלא</div>
+        <input value="{{createUserModal.fullName}}" onChange="{{createUserModal.onFullNameChange}}" style="width:100%; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:14px; color:#123A5E; outline:none; margin-bottom:12px;">
+        <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">סיסמה</div>
+        <input type="password" value="{{createUserModal.password}}" onChange="{{createUserModal.onPasswordChange}}" style="width:100%; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:14px; color:#123A5E; outline:none; margin-bottom:12px;">
+        <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">תפקיד</div>
+        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">
+          <sc-for list="{{createUserModal.roleOptions}}" as="ro" hint-placeholder-count="4">
+            <div onClick="{{ro.onClick}}" style="{{ro.style}}">{{ro.label}}</div>
+          </sc-for>
+        </div>
+        <sc-if value="{{createUserModal.showTraineeFields}}" hint-placeholder-val="{{false}}">
+          <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">קורס</div>
+          <input value="{{createUserModal.course}}" onChange="{{createUserModal.onCourseChange}}" placeholder="לדוגמה: הסבת ט&quot;מ שביט" style="width:100%; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:14px; color:#123A5E; outline:none; margin-bottom:12px;">
+          <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">אוכלוסייה</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+            <sc-for list="{{createUserModal.populationOptions}}" as="po" hint-placeholder-count="3">
+              <div onClick="{{po.onClick}}" style="{{po.style}}">{{po.label}}</div>
+            </sc-for>
+          </div>
+          <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">מחזור</div>
+          <input value="{{createUserModal.traineeClass}}" onChange="{{createUserModal.onClassChange}}" placeholder="לדוגמה: מחזור 112" style="width:100%; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:14px; color:#123A5E; outline:none; margin-bottom:12px;">
+        </sc-if>
+        <sc-if value="{{createUserModal.showInstructorFields}}" hint-placeholder-val="{{false}}">
+          <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">אוכלוסיות באחריות המדריך</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+            <sc-for list="{{createUserModal.instructorPopulationOptions}}" as="po" hint-placeholder-count="3">
+              <div onClick="{{po.onClick}}" style="{{po.style}}">{{po.label}}</div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{createUserModal.hasError}}" hint-placeholder-val="{{false}}">
+          <div style="color:#D14A38; font-size:12.5px; font-weight:600; margin-bottom:10px; text-align:center;">{{createUserModal.error}}</div>
+        </sc-if>
+        <div style="display:flex; gap:10px;">
+          <button onClick="{{createUserModal.onCancel}}" style="flex:1; padding:13px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; color:#5C7A96; font-weight:700; font-size:14px; cursor:pointer;">ביטול</button>
+          <button onClick="{{createUserModal.onConfirm}}" style="flex:1; padding:13px; border-radius:14px; border:none; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-weight:700; font-size:14px; cursor:pointer;">
+            <sc-if value="{{createUserModal.saving}}" hint-placeholder-val="{{false}}"><span>יוצר...</span></sc-if>
+            <sc-if value="{{createUserModal.notSaving}}" hint-placeholder-val="{{true}}"><span>יצירה</span></sc-if>
+          </button>
         </div>
       </div>
     </div>
@@ -1561,7 +1630,7 @@ class Component extends DCLogic {
     showSuccess:false, successMsg:'', confirmDialog:null, showWindTransition:false, showAddToHome:false,
     infoModal:null, printJob:null, printFrom:'', printTo:'',
     authMode:'signin', authUsername:'', authPassword:'', authFullName:'', authError:'', authLoading:false, authGate:null,
-    accounts:[], accountsLoading:false, accountsError:'', roleModal:null, resetPwModal:null,
+    accounts:[], accountsLoading:false, accountsError:'', roleModal:null, resetPwModal:null, createUserModal:null,
     links:[], linksLoading:false, linksError:'', linkInstructorId:'', linkTraineeId:'',
     myProfileId:null, trainees:[], traineesLoading:false, myFeedbacks:[], feedbacksLoading:false,
     allFeedbacks:[], allFeedbacksLoading:false,
@@ -1933,22 +2002,48 @@ class Component extends DCLogic {
     // Trainee must be chosen from the real, Supabase-linked list (assignedOptions) -
     // no longer pre-filled from the demo TRAINEES roster, since that has no relation
     // to a real trainee_profiles UUID. Applies regardless of entry point.
-    this.navigate('iNewFeedback', {draft:{ traineeId:'', traineeName:'', formType:'', title:'' }});
-    this.loadMyTrainees();
+    // instructorId/instructorName are only ever filled in for smat (picked in
+    // the draft step below) - unused, harmless empty fields for instructor.
+    this.navigate('iNewFeedback', {draft:{ traineeId:'', traineeName:'', instructorId:'', instructorName:'', formType:'', title:'' }});
+    // smat has no instructor_trainees link of its own - the trainee/instructor
+    // pickers for smat are built from s.accounts (already loaded) instead,
+    // so this real query is only useful (and only run) for an instructor.
+    if(this.state.role==='instructor') this.loadMyTrainees();
   }
   onOpenNewFeedback=()=>this.openNewFeedback();
   onNewFeedbackForTrainee=()=>this.openNewFeedback();
   onDraftTraineeChange=(e)=>{
     const id = e.target.value || '';
-    const t = id? this.state.trainees.find(rt=>rt.id===id) : null;
-    this.setState(s=>({draft:{...s.draft, traineeId:id, traineeName: t?t.name:''}}));
+    // Instructor's own trainees come from s.trainees (instructor_trainees
+    // link); smat has no such link, so its trainee list/lookup comes from
+    // s.accounts (already loaded) instead - never touches s.trainees.
+    let name = '';
+    if(id){
+      if(this.state.role==='smat'){
+        const a = this.state.accounts.find(x=>x.id===id);
+        name = a? (a.full_name||a.username) : '';
+      } else {
+        const t = this.state.trainees.find(rt=>rt.id===id);
+        name = t? t.name : '';
+      }
+    }
+    this.setState(s=>({draft:{...s.draft, traineeId:id, traineeName:name}}));
+  };
+  // smat-only field: the eval form has no instructor picker of its own
+  // (an instructor is always themself), so smat picks one here in the draft
+  // step, from s.accounts - same source/shape as onDraftTraineeChange above.
+  onDraftInstructorChange=(e)=>{
+    const id = e.target.value || '';
+    const a = id? this.state.accounts.find(x=>x.id===id) : null;
+    this.setState(s=>({draft:{...s.draft, instructorId:id, instructorName: a?(a.full_name||a.username):''}}));
   };
   onDraftTitleChange=(e)=>this.setState(s=>({draft:{...s.draft, title:e.target.value}}));
   onDraftSegmentChange=(e)=>this.setState(s=>({draft:{...s.draft, segment:e.target.value, title:e.target.value}}));
   setDraftType(type){ this.setState(s=>({draft:{...s.draft, formType:type}})); }
   onDraftContinue=()=>{
     const d = this.state.draft;
-    if(!d.traineeId || !d.formType) return;
+    const isSmat = this.state.role==='smat';
+    if(!d.traineeId || !d.formType || (isSmat && !d.instructorId)) return;
     // d.traineeId is a real Supabase uuid (from state.draft, set via
     // onDraftTraineeChange off state.trainees) - traineeById(d.traineeId)
     // would always return undefined (TRAINEES only has small demo integer
@@ -1958,7 +2053,12 @@ class Component extends DCLogic {
     const dt = this.state.trainees.find(t=>t.id===d.traineeId);
     const seedCourses = coursesForType(d.formType).map(c=>c.name);
     const seedCourse = (dt && seedCourses.includes(dt.course))? dt.course : '';
-    const base = { feedbackId:null, status:'new', traineeId:d.traineeId, traineeName:d.traineeName, formType:d.formType, segment:'', course:seedCourse,
+    // instructorId/instructorName only carry a real value for smat (the
+    // instructor it picked above) - empty for an instructor's own draft,
+    // where onSaveEval always uses myProfileId instead regardless.
+    const base = { feedbackId:null, status:'new', traineeId:d.traineeId, traineeName:d.traineeName,
+      instructorId: isSmat? d.instructorId : '', instructorName: isSmat? d.instructorName : '',
+      formType:d.formType, segment:'', course:seedCourse,
       syllabusNumber:'', title:typeLabel(d.formType), validationMsg:'', date:new Date().toISOString().slice(0,10) };
     if(d.formType==='airCrew'){
       this.navigate('iEval', {evalForm:{...base, lessonNumber:'', aircraftType:'', instructorFullName:'', syllabusFull:'כן', syllabusContent:'', completionsNeeded:'',
@@ -2136,10 +2236,20 @@ class Component extends DCLogic {
       this.setState(s=>({evalForm:{...s.evalForm, validationMsg:'לא ניתן לשמור - המשתמש המחובר לא זוהה. נסה/י להתחבר מחדש.'}}));
       return;
     }
+    const isSmat = this.state.role==='smat';
+    // smat picked an instructor explicitly in the draft step
+    // (onDraftContinue already refuses to continue without one) - never
+    // myProfileId for smat, that would misattribute the feedback to the
+    // smat as if they were the instructor. An instructor is always
+    // themself, exactly as before.
+    if(isSmat && !toSave.instructorId){
+      this.setState(s=>({evalForm:{...s.evalForm, validationMsg:'יש לבחור מדריך.'}}));
+      return;
+    }
     this.setState(s=>({evalForm:{...s.evalForm, saving:true, validationMsg:''}}));
-    const { error } = await window.nimbusSupabase.from('feedbacks').insert({
+    const insertPayload = {
       trainee_id: toSave.traineeId,
-      instructor_id: this.state.myProfileId,
+      instructor_id: isSmat ? toSave.instructorId : this.state.myProfileId,
       form_type: toSave.formType,
       title: toSave.title,
       date: toSave.date,
@@ -2154,14 +2264,25 @@ class Component extends DCLogic {
       next_flight_notes: toSave.nextFlightNotes || null,
       summary_recommendations: toSave.summaryRecommendations || null,
       details: buildFeedbackDetails(toSave)
-    });
+    };
+    // Verified live against RLS (feedbacks_smat_all permits smat to insert
+    // with status='approved' directly) - only ever added for smat, never
+    // sent as undefined; instructor-created rows keep relying on the DB
+    // column default (pending) exactly as before.
+    if(isSmat) insertPayload.status = 'approved';
+    const { error } = await window.nimbusSupabase.from('feedbacks').insert(insertPayload);
     if(error){
       this.setState(s=>({evalForm:{...s.evalForm, saving:false, validationMsg:'שמירת הטופס נכשלה. הנתונים שמילאת נשמרו בטופס - אפשר לנסות שוב.'}}));
       return;
     }
     this.setState(s=>({evalForm:{...s.evalForm, saving:false}}));
-    this.showSuccessThenBack('הטופס נשמר ונשלח לאישור סמ"ט', 'iDash', {});
-    this.loadMyFeedbacks();
+    if(isSmat){
+      this.showSuccessThenBack('הדפית נשמרה בהצלחה', 'sDash', {});
+      this.loadAllFeedbacks();
+    } else {
+      this.showSuccessThenBack('הטופס נשמר ונשלח לאישור סמ"ט', 'iDash', {});
+      this.loadMyFeedbacks();
+    }
   };
   showSuccessThenBack(msg, screen, patch){
     this.setState({showSuccess:true, successMsg:msg});
@@ -2406,6 +2527,58 @@ class Component extends DCLogic {
       if(iErr){ this.setState(s=>({roleModal:{...s.roleModal, saving:false, error:'יצירת פרטי המדריך נכשלה: '+iErr.message}})); await this.loadAccounts(); return; }
     }
     this.setState({roleModal:null, showSuccess:true, successMsg:'העדכון בוצע בהצלחה'});
+    setTimeout(()=>this.setState({showSuccess:false}), 1000*this.speedMul());
+    await this.loadAccounts();
+  };
+  // Creates a brand-new, already-approved user in one step - smat-only.
+  // Real work (Auth user + profiles + role-specific extension row, with
+  // rollback on partial failure) happens entirely inside the
+  // admin-create-user Edge Function; this is just the form around it.
+  onOpenCreateUserModal=()=>{
+    if(this.state.role!=='smat') return;
+    this.setState({createUserModal:{username:'', password:'', fullName:'', selectedRole:null,
+      course:'', population:'', traineeClass:'', instructorPopulations:[], error:'', saving:false}});
+  };
+  onCloseCreateUserModal=()=>this.setState({createUserModal:null});
+  onCreateUserUsernameChange=(e)=>this.setState(s=>({createUserModal:{...s.createUserModal, username:e.target.value, error:''}}));
+  onCreateUserPasswordChange=(e)=>this.setState(s=>({createUserModal:{...s.createUserModal, password:e.target.value, error:''}}));
+  onCreateUserFullNameChange=(e)=>this.setState(s=>({createUserModal:{...s.createUserModal, fullName:e.target.value, error:''}}));
+  onPickCreateUserRole(roleKey){ this.setState(s=>({createUserModal:{...s.createUserModal, selectedRole:roleKey, error:''}})); }
+  onCreateUserCourseChange=(e)=>this.setState(s=>({createUserModal:{...s.createUserModal, course:e.target.value, error:''}}));
+  onPickCreateUserPopulation(popKey){ this.setState(s=>({createUserModal:{...s.createUserModal, population:popKey, error:''}})); }
+  onCreateUserClassChange=(e)=>this.setState(s=>({createUserModal:{...s.createUserModal, traineeClass:e.target.value, error:''}}));
+  onToggleCreateUserInstructorPopulation(popKey){
+    this.setState(s=>{
+      const cur = s.createUserModal.instructorPopulations||[];
+      const next = cur.includes(popKey)? cur.filter(x=>x!==popKey) : [...cur, popKey];
+      return {createUserModal:{...s.createUserModal, instructorPopulations:next, error:''}};
+    });
+  }
+  onConfirmCreateUser=async()=>{
+    if(this.state.role!=='smat') return;
+    const m = this.state.createUserModal;
+    if(!m) return;
+    // Client-side checks are a responsive-form convenience only - the real
+    // gate is the server-side validation inside admin-create-user.
+    if(!m.username.trim() || !m.password || !m.fullName.trim()){
+      this.setState(s=>({createUserModal:{...s.createUserModal, error:'יש למלא שם משתמש, סיסמה ושם מלא.'}})); return;
+    }
+    if(!m.selectedRole){
+      this.setState(s=>({createUserModal:{...s.createUserModal, error:'יש לבחור תפקיד'}})); return;
+    }
+    if(m.selectedRole==='trainee' && (!m.course.trim() || !m.population || !m.traineeClass.trim())){
+      this.setState(s=>({createUserModal:{...s.createUserModal, error:'יש למלא קורס, אוכלוסייה ומחזור'}})); return;
+    }
+    if(m.selectedRole==='instructor' && !(m.instructorPopulations||[]).length){
+      this.setState(s=>({createUserModal:{...s.createUserModal, error:'יש לבחור לפחות אוכלוסייה אחת'}})); return;
+    }
+    this.setState(s=>({createUserModal:{...s.createUserModal, saving:true, error:''}}));
+    const payload = {username:m.username.trim(), password:m.password, full_name:m.fullName.trim(), role:m.selectedRole};
+    if(m.selectedRole==='trainee'){ payload.course=m.course.trim(); payload.population=m.population; payload.class=m.traineeClass.trim(); }
+    if(m.selectedRole==='instructor'){ payload.populations=m.instructorPopulations; }
+    const res = await this.invokeAdminFn('admin-create-user', payload);
+    if(res.error){ this.setState(s=>({createUserModal:{...s.createUserModal, saving:false, error:res.error}})); return; }
+    this.setState({createUserModal:null, showSuccess:true, successMsg:'המשתמש נוצר בהצלחה'});
     setTimeout(()=>this.setState({showSuccess:false}), 1000*this.speedMul());
     await this.loadAccounts();
   };
@@ -2940,6 +3113,31 @@ class Component extends DCLogic {
       if(role==='smat'){
         out.scrIEval = s.screen==='iEval';
         this.buildEvalFormOut(out, s);
+        // New-feedback creation for smat - reuses the exact same
+        // iNewFeedback/iEval screens and evalForm shape the instructor
+        // branch's own (untouched) `if(s.draft)` block above builds, just
+        // sourced from s.accounts (already loaded for smat) instead of
+        // s.trainees/instructor_trainees, since smat isn't linked to anyone
+        // via that table. Kahad never reaches here (outer if is smat-only).
+        out.scrINewFeedback = s.screen==='iNewFeedback';
+        out.onOpenNewFeedback = this.onOpenNewFeedback;
+        if(s.draft){
+          out.assignedOptions = s.accounts.filter(a=>a.role==='trainee' && a.status==='approved').map(a=>({value:a.id, label:a.full_name||a.username}));
+          out.smatInstructorOptions = s.accounts.filter(a=>a.role==='instructor' && a.status==='approved').map(a=>({value:a.id, label:a.full_name||a.username}));
+          const draftReady = !!(s.draft.traineeId && s.draft.formType && s.draft.instructorId);
+          out.draft = { showTraineeSelect: !s.draft.traineeName, showTraineeName: !!s.draft.traineeName, traineeId: s.draft.traineeId, traineeName: s.draft.traineeName,
+            showInstructorSelect: !s.draft.instructorName, showInstructorName: !!s.draft.instructorName, instructorId: s.draft.instructorId||'', instructorName: s.draft.instructorName||'',
+            title: s.draft.title,
+            continueDisabled: !draftReady,
+            continueStyle: `width:100%; padding:16px; border:none; border-radius:16px; color:white; font-size:16px; font-weight:700; transition:transform 200ms; ${draftReady? 'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); cursor:pointer; box-shadow:0 10px 24px rgba(46,143,224,0.35);' : 'background:#C7D8E6; cursor:not-allowed;'}` };
+          out.onDraftTraineeChange = this.onDraftTraineeChange; out.onDraftInstructorChange = this.onDraftInstructorChange; out.onDraftTitleChange = this.onDraftTitleChange;
+          out.onDraftContinue = this.onDraftContinue;
+          out.formTypeOptions = FORM_TYPES.map(ft=>{
+            const selected = s.draft.formType===ft.key;
+            return {label:ft.label, onClick:()=>this.setDraftType(ft.key),
+              style:`padding:14px 16px; border-radius:14px; font-weight:700; font-size:14.5px; cursor:pointer; transition:all 180ms; ${selected?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; box-shadow:0 8px 18px rgba(46,143,224,0.3);':'background:#F2F8FE; color:#2E6FA8;'}`};
+          });
+        }
       }
       out.smatName = s.myProfileName || (role==='kahad'? KAHAD_NAME : SMAT_NAME);
       out.smatRoleLabel = role==='kahad'? 'קה"ד · צפייה בלבד' : 'מנהל/ת מערכת';
@@ -2973,7 +3171,10 @@ class Component extends DCLogic {
       out.noAllFeedbacks = !s.allFeedbacksLoading && s.allFeedbacks.length===0;
       out.allFeedbacksRows = s.allFeedbacks.map(f=>{
         const st = statusInfo(f.status);
-        return {title:f.title, traineeName:f.traineeName, dateLabel:fmtDate(f.date), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, onClick:()=>this.viewFeedback(f.id)};
+        // traineeName click opens openTrainee (real uuid) - same mechanism
+        // already used by smatPendingList/allFeedbacks above, not a new one.
+        return {title:f.title, traineeName:f.traineeName, dateLabel:fmtDate(f.date), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, onClick:()=>this.viewFeedback(f.id),
+          onTraineeClick:(e)=>{ e.stopPropagation(); this.openTrainee(f.trainee_id); }};
       });
 
       out.statusFilters = ['all','pending','approved','rejected'].map(st=>{
@@ -3035,6 +3236,33 @@ class Component extends DCLogic {
             onDeleteAccount: ()=>this.askDeleteAccount(a)
           };
         });
+        out.onOpenCreateUserModal = this.onOpenCreateUserModal;
+        if(s.createUserModal){
+          const m = s.createUserModal;
+          const showTraineeFields = m.selectedRole==='trainee';
+          const showInstructorFields = m.selectedRole==='instructor';
+          const selPops = m.instructorPopulations||[];
+          out.createUserModal = {...m,
+            hasError: !!m.error, notSaving: !m.saving, showTraineeFields, showInstructorFields,
+            roleOptions: ACCOUNT_ROLE_OPTIONS.map(ro=>{
+              const selected = m.selectedRole===ro.key;
+              return {label:ro.label, onClick:()=>this.onPickCreateUserRole(ro.key),
+                style:`padding:13px 16px; border-radius:14px; font-weight:700; font-size:14px; cursor:pointer; transition:all 180ms; ${selected?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; box-shadow:0 6px 14px rgba(46,143,224,0.3);':'background:#F2F8FE; color:#2E6FA8;'}`};
+            }),
+            onUsernameChange:this.onCreateUserUsernameChange, onPasswordChange:this.onCreateUserPasswordChange, onFullNameChange:this.onCreateUserFullNameChange,
+            onCourseChange:this.onCreateUserCourseChange, onClassChange:this.onCreateUserClassChange,
+            populationOptions: POPULATIONS.map(p=>{
+              const selected = m.population===p.key;
+              return {label:p.label, onClick:()=>this.onPickCreateUserPopulation(p.key),
+                style:`padding:10px 16px; border-radius:999px; font-size:13px; font-weight:700; cursor:pointer; transition:all 180ms; ${selected?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#F2F8FE; color:#2E6FA8;'}`};
+            }),
+            instructorPopulationOptions: POPULATIONS.map(p=>{
+              const on = selPops.includes(p.key);
+              return {label:p.label, onClick:()=>this.onToggleCreateUserInstructorPopulation(p.key),
+                style:`padding:10px 16px; border-radius:999px; font-size:13px; font-weight:700; cursor:pointer; transition:all 180ms; ${on?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#ffffff; color:#5C7A96; border:1.5px solid #E3EEF8;'}`};
+            }),
+            onCancel:this.onCloseCreateUserModal, onConfirm:this.onConfirmCreateUser};
+        }
         if(s.roleModal){
           const provisioning = s.roleModal.mode==='approve' || s.roleModal.mode==='complete';
           const showTraineeFields = provisioning && s.roleModal.selectedRole==='trainee';
