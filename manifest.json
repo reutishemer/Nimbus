@@ -6,6 +6,6 @@
   "background_color": "#F4F9FE",
   "theme_color": "#4FAEFF",
   "icons": [
-    { "src": "assets/app-icon.jpeg", "sizes": "1254x1254", "type": "image/jpeg", "purpose": "any" }
+    { "src": "assets/logo/לוגו נימבוס.jpeg", "sizes": "1254x1254", "type": "image/jpeg", "purpose": "any" }
   ]
 }
