@@ -106,7 +106,7 @@
     </div>
     </sc-if>
 
-    <div style="position:absolute; bottom:26px; left:28px; right:28px; text-align:center; font-size:10.5px; line-height:1.75; color:#93A9BC; text-wrap:pretty;">כל הזכויות שמורות ליחידת שה״ד<br>צוות תכנות - רב״ט עלמה ויקטור ריבלין, רב״ט רעות שמר<br>רת״ח AI ופיתוח - ניר לוי | מפקד גף אנימציה - סגן בר עם שלם<br>מפקד היחידה - ליאור אדלר</div>
+    <div style="position:absolute; bottom:26px; left:28px; right:28px; text-align:center; font-size:10.5px; line-height:1.75; color:#93A9BC; text-wrap:pretty;">  פותח ע"י יחידת שה״ד 339<br>צוות תכנות - רב״ט עלמה ויקטור ריבלין, רב״ט רעות שמר<br>רת״ח AI ופיתוח - ניר לוי | מפקדת גף עיצוב ודיגיטל - סגן בר עם שלם<br>מפקד היחידה - ליאור אדלר</div>
   </div>
   </sc-if>
 
@@ -272,10 +272,6 @@
           <div style="font-size:13px; color:#6B8399; margin-top:2px;">{{detail.course}} · {{detail.class}}</div>
           <div style="display:flex; gap:10px; margin-top:16px;">
             <div style="flex:1; background:#F2F8FE; border-radius:14px; padding:10px;">
-              <div style="font-size:18px; font-weight:800; color:#123A5E;">{{detail.avgLabel}}</div>
-              <div style="font-size:11px; color:#6B8399;">ציון ממוצע</div>
-            </div>
-            <div style="flex:1; background:#F2F8FE; border-radius:14px; padding:10px;">
               <div style="font-size:18px; font-weight:800; color:#123A5E;">{{detail.count}}</div>
               <div style="font-size:11px; color:#6B8399;">דפיות</div>
             </div>
@@ -284,32 +280,6 @@
 
         <sc-if value="{{detail.canAdd}}" hint-placeholder-val="{{true}}">
           <button onClick="{{onNewFeedbackForTrainee}}" style="width:100%; padding:15px; border:none; border-radius:16px; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-size:15px; font-weight:700; cursor:pointer; box-shadow:0 10px 22px rgba(46,143,224,0.3); margin-bottom:16px; transition:transform 200ms;" style-active="transform:scale(0.97);">+ דפית חדשה</button>
-        </sc-if>
-
-        <sc-if value="{{detail.hasStats}}" hint-placeholder-val="{{false}}">
-          <div style="font-size:16px; font-weight:700; color:#123A5E; margin-bottom:10px;">ניתוח סטטיסטי</div>
-          <div style="background:#ffffff; border-radius:18px; padding:16px; box-shadow:0 8px 18px rgba(30,90,140,0.06); margin-bottom:14px;">
-            <div style="font-size:12.5px; color:#6B8399; margin-bottom:8px;">מגמת שיפור</div>
-            <svg width="100%" height="90" viewBox="0 0 300 90" preserveAspectRatio="none">
-              <polyline points="{{detail.trendPoints}}" fill="none" stroke="#4FAEFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
-              <sc-for list="{{detail.trendDots}}" as="d" hint-placeholder-count="4">
-                <circle cx="{{d.x}}" cy="{{d.y}}" r="4" fill="#2E8FE0"></circle>
-              </sc-for>
-            </svg>
-          </div>
-          <div style="background:#ffffff; border-radius:18px; padding:16px; box-shadow:0 8px 18px rgba(30,90,140,0.06); margin-bottom:18px;">
-            <div style="font-size:12.5px; color:#6B8399; margin-bottom:10px;">חוזקות וחולשות</div>
-            <sc-for list="{{detail.catBars}}" as="c" hint-placeholder-count="5">
-              <div style="margin-bottom:10px;">
-                <div style="display:flex; justify-content:space-between; font-size:12.5px; color:#3A5977; margin-bottom:4px;">
-                  <span>{{c.label}}</span><span style="font-weight:700;">{{c.value}}</span>
-                </div>
-                <div style="height:9px; border-radius:999px; background:#EEF4FA; overflow:hidden;">
-                  <div style="height:100%; border-radius:999px; background:{{c.barColor}}; width:{{c.pct}}%; transition:width 800ms cubic-bezier(.22,1,.36,1);"></div>
-                </div>
-              </div>
-            </sc-for>
-          </div>
         </sc-if>
 
         <sc-if value="{{detail.hasHighlights}}" hint-placeholder-val="{{false}}">
@@ -396,16 +366,19 @@
           <div style="background:#F2F8FE; border-radius:14px; padding:12px 16px; margin-bottom:18px; font-size:14.5px; font-weight:700; color:#2E6FA8;">חניך: {{draft.traineeName}}</div>
         </sc-if>
         <sc-if value="{{draft.showInstructorSelect}}" hint-placeholder-val="{{false}}">
-          <div style="font-size:14px; font-weight:600; color:#3A5977; margin-bottom:8px;">בחר/י מדריך</div>
+          <div style="font-size:14px; font-weight:600; color:#3A5977; margin-bottom:8px;">מדריך (אופציונלי)</div>
           <select value="{{draft.instructorId}}" onChange="{{onDraftInstructorChange}}" style="width:100%; padding:14px 16px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:15px; color:#123A5E; outline:none; margin-bottom:18px;">
-            <option value="">- בחר מדריך -</option>
+            <option value="">ללא מדריך</option>
             <sc-for list="{{smatInstructorOptions}}" as="o" hint-placeholder-count="3">
               <option value="{{o.value}}">{{o.label}}</option>
             </sc-for>
           </select>
         </sc-if>
         <sc-if value="{{draft.showInstructorName}}" hint-placeholder-val="{{false}}">
-          <div style="background:#F2F8FE; border-radius:14px; padding:12px 16px; margin-bottom:18px; font-size:14.5px; font-weight:700; color:#2E6FA8;">מדריך: {{draft.instructorName}}</div>
+          <div style="background:#F2F8FE; border-radius:14px; padding:12px 16px; margin-bottom:18px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
+            <div style="font-size:14.5px; font-weight:700; color:#2E6FA8;">מדריך: {{draft.instructorName}}</div>
+            <div onClick="{{onClearDraftInstructor}}" style="font-size:12.5px; font-weight:700; color:#D14A38; cursor:pointer; white-space:nowrap;">הסרה</div>
+          </div>
         </sc-if>
 
         <div style="font-size:14px; font-weight:600; color:#3A5977; margin-bottom:8px;">סוג דפית</div>
@@ -481,15 +454,6 @@
               </sc-for>
             </div>
           </div>
-          <div style="margin-bottom:20px;">
-            <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px;"><div style="font-size:12px; color:#8CA3B8;">ציון</div><div onClick="{{onOpenRatingInfo}}" style="width:17px; height:17px; border-radius:50%; background:#E7F3FF; color:#2E8FE0; font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; cursor:pointer;">i</div></div>
-            <div style="display:flex; gap:6px;">
-              <sc-for list="{{airCrewScoreOptions}}" as="opt" hint-placeholder-count="10">
-                <div onClick="{{opt.onClick}}" style="{{opt.style}}">{{opt.n}}</div>
-              </sc-for>
-            </div>
-          </div>
-
           <div style="font-size:16px; font-weight:700; color:#123A5E; margin:16px 0 8px;">סילבוס</div>
           <div style="font-size:13px; font-weight:600; color:#3A5977; margin-bottom:6px;">מה תורגל? אווירי / קרקעי</div>
           <textarea value="{{evalForm.syllabusContent}}" onChange="{{onSyllabusContentChange}}" placeholder="תיאור מה תורגל בטיסה" style="width:100%; min-height:70px; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:14.5px; color:#123A5E; outline:none; resize:vertical; margin-bottom:14px;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);"></textarea>
@@ -531,15 +495,6 @@
               </sc-for>
             </div>
           </div>
-          <div style="margin-bottom:20px;">
-            <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px;"><div style="font-size:12px; color:#8CA3B8;">ציון</div><div onClick="{{onOpenRatingInfo}}" style="width:17px; height:17px; border-radius:50%; background:#E7F3FF; color:#2E8FE0; font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; cursor:pointer;">i</div></div>
-            <div style="display:flex; gap:6px;">
-              <sc-for list="{{airCrewScoreOptions}}" as="opt" hint-placeholder-count="8">
-                <div onClick="{{opt.onClick}}" style="{{opt.style}}">{{opt.n}}</div>
-              </sc-for>
-            </div>
-          </div>
-
           <div style="font-size:16px; font-weight:700; color:#123A5E; margin-bottom:8px;">עמידה ביעדים</div>
           <textarea value="{{evalForm.objectivesText}}" onChange="{{onObjectivesTextChange}}" placeholder="תיאור היעדים ועמידה בהם" style="width:100%; min-height:78px; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:14.5px; color:#123A5E; outline:none; resize:vertical; margin-bottom:18px;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);"></textarea>
 
@@ -582,13 +537,6 @@
               <input type="text" value="{{evalForm.mission}}" onChange="{{onMissionChange}}" placeholder="שם/סוג המשימה" style="width:100%; padding:9px 10px; border-radius:10px; border:1.5px solid #E3EEF8; font-size:13.5px; color:#123A5E; outline:none;">
             </div>
           </div>
-          <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px;"><div style="font-size:12px; color:#8CA3B8;">ציון</div><div onClick="{{onOpenRatingInfo}}" style="width:17px; height:17px; border-radius:50%; background:#E7F3FF; color:#2E8FE0; font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; cursor:pointer;">i</div></div>
-          <div style="display:flex; gap:6px; margin-bottom:20px;">
-            <sc-for list="{{airCrewScoreOptions}}" as="opt" hint-placeholder-count="7">
-              <div onClick="{{opt.onClick}}" style="{{opt.style}}">{{opt.n}}</div>
-            </sc-for>
-          </div>
-
           <div style="font-size:13px; font-weight:700; color:#3A5977; margin-bottom:6px;">הערות תוכן הגיחה ותרגולים (מה בוצע, מה לא בוצע)</div>
           <textarea value="{{evalForm.contentNotes}}" onChange="{{onContentNotesChange}}" style="width:100%; min-height:70px; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:14.5px; color:#123A5E; outline:none; resize:vertical; margin-bottom:18px;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);"></textarea>
 
@@ -694,7 +642,6 @@
           <div style="background:#F7FBFF; border-radius:14px; padding:14px; margin-bottom:14px; display:flex; flex-wrap:wrap; gap:10px 20px;">
             <div><div style="font-size:11.5px; color:#8CA3B8;">סוג מטוס</div><div style="font-size:13.5px; font-weight:700; color:#123A5E;">{{viewFb.aircraftType}}</div></div>
             <div><div style="font-size:11.5px; color:#8CA3B8;">סילבוס בוצע במלואו</div><div style="font-size:13.5px; font-weight:700; color:#123A5E;">{{viewFb.syllabusFull}}</div></div>
-            <div><div style="font-size:11.5px; color:#8CA3B8;">ציון</div><div style="font-size:13.5px; font-weight:700; color:#123A5E;">{{viewFb.scoreValue}}/9</div></div>
           </div>
 
           <div style="font-size:13px; font-weight:700; color:#3A5977; margin-bottom:4px;">סילבוס - מה תורגל? אווירי / קרקעי</div>
@@ -729,7 +676,6 @@
         <sc-if value="{{viewFb.isControllers}}" hint-placeholder-val="{{false}}">
           <div style="background:#F7FBFF; border-radius:14px; padding:14px; margin-bottom:14px; display:flex; flex-wrap:wrap; gap:10px 20px;">
             <div><div style="font-size:11.5px; color:#8CA3B8;">סוג הטיסה</div><div style="font-size:13.5px; font-weight:700; color:#123A5E;">{{viewFb.flightType}}</div></div>
-            <div><div style="font-size:11.5px; color:#8CA3B8;">ציון</div><div style="font-size:13.5px; font-weight:700; color:#123A5E;">{{viewFb.scoreValue}}</div></div>
           </div>
 
           <div style="font-size:13px; font-weight:700; color:#3A5977; margin-bottom:4px;">עמידה ביעדים</div>
@@ -760,7 +706,6 @@
         <div style="background:#F7FBFF; border-radius:14px; padding:14px; margin-bottom:14px; display:flex; flex-wrap:wrap; gap:10px 20px;">
           <div><div style="font-size:11.5px; color:#8CA3B8;">שם המדריך/ה</div><div style="font-size:13.5px; font-weight:700; color:#123A5E;">{{viewFb.instructorFullName}}</div></div>
           <div><div style="font-size:11.5px; color:#8CA3B8;">משימה</div><div style="font-size:13.5px; font-weight:700; color:#123A5E;">{{viewFb.mission}}</div></div>
-          <div><div style="font-size:11.5px; color:#8CA3B8;">ציון</div><div style="font-size:13.5px; font-weight:700; color:#123A5E;">{{viewFb.scoreValue}}</div></div>
         </div>
 
         <div style="font-size:13px; font-weight:700; color:#3A5977; margin-bottom:4px;">תוכן הגיחה ותרגולים</div>
@@ -825,8 +770,6 @@
         <div style="font-size:13.5px; color:#4A6479; line-height:1.6; margin-bottom:16px;">{{viewFb.summaryRecommendations}}</div>
         </sc-if>
 
-        <div style="text-align:center; padding:12px; border-radius:14px; background:{{viewFb.statusBg}}; color:{{viewFb.statusFg}}; font-weight:800; font-size:14px; margin-bottom:16px;">ציון כללי: {{viewFb.overallRating}}</div>
-
         <button onClick="{{viewFb.onExport}}" style="width:100%; padding:14px; border:1.5px solid #DCEBFA; border-radius:14px; background:#ffffff; color:#2E6FA8; font-weight:700; font-size:14px; cursor:pointer; margin-bottom:12px; display:flex; align-items:center; justify-content:center; gap:8px; transition:transform 180ms;" style-active="transform:scale(0.97);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E6FA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"></path><path d="M8 10.5 12 14.5l4-4"></path><path d="M5 17v2.5c0 .8.7 1.5 1.5 1.5h11c.8 0 1.5-.7 1.5-1.5V17"></path></svg>
           הורדה כ-PDF
@@ -854,8 +797,6 @@
         <div style="font-size:19px; font-weight:800; color:#123A5E;">{{profileName}}</div>
         <div style="font-size:13.5px; color:#6B8399; margin-top:2px;">{{profileSubtitle}}</div>
         <div style="text-align:right; margin-top:24px;">
-          <div style="background:#ffffff; border-radius:16px; padding:16px; margin-bottom:10px; box-shadow:0 8px 18px rgba(30,90,140,0.06); font-size:14.5px; font-weight:600; color:#123A5E;">הגדרות</div>
-          <div style="background:#ffffff; border-radius:16px; padding:16px; margin-bottom:10px; box-shadow:0 8px 18px rgba(30,90,140,0.06); font-size:14.5px; font-weight:600; color:#123A5E;">התראות</div>
           <div onClick="{{onOpenAddToHome}}" style="background:#ffffff; border-radius:16px; padding:16px; margin-bottom:10px; box-shadow:0 8px 18px rgba(30,90,140,0.06); font-size:14.5px; font-weight:600; color:#2E8FE0; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; transition:transform 180ms;" style-active="transform:scale(0.97);">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2E8FE0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4"></path><path d="M8 7.5 12 3.6l4 3.9"></path><path d="M5 14v4.5c0 1 .8 1.8 1.8 1.8h10.4c1 0 1.8-.8 1.8-1.8V14"></path></svg>
             הוספה למסך הבית
@@ -872,17 +813,8 @@
         <div style="font-size:14px; color:#6B8399; margin-bottom:18px;">{{traineeCourseLabel}}</div>
 
         <div style="background:linear-gradient(150deg,#4FAEFF,#2E8FE0); border-radius:20px; padding:18px; color:white; box-shadow:0 14px 28px rgba(46,143,224,0.3); margin-bottom:16px;">
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div>
-              <div style="font-size:13px; opacity:0.9;">ציון ממוצע</div>
-              <div style="font-size:30px; font-weight:800; margin-top:2px;">{{myAvg}}</div>
-            </div>
-            <svg width="64" height="64" viewBox="0 0 64 64">
-              <circle cx="32" cy="32" r="27" stroke="rgba(255,255,255,0.3)" stroke-width="6" fill="none"></circle>
-              <circle cx="32" cy="32" r="27" stroke="white" stroke-width="6" fill="none" stroke-linecap="round" transform="rotate(-90 32 32)" style="stroke-dasharray:{{ringCirc}} {{ringCirc}}; stroke-dashoffset:{{ringOffset}}; transition:stroke-dashoffset 700ms cubic-bezier(.22,1,.36,1);"></circle>
-            </svg>
-          </div>
-          <div style="font-size:12.5px; opacity:0.9; margin-top:10px;">{{progressLabel}} דפיות מאושרות</div>
+          <div style="font-size:30px; font-weight:800;">{{progressLabel}}</div>
+          <div style="font-size:13px; opacity:0.9; margin-top:4px;">דפיות מאושרות</div>
         </div>
 
         <div style="display:flex; justify-content:space-between; align-items:center; margin:8px 0 10px;">
@@ -893,7 +825,6 @@
           <div onClick="{{onOpenLatest}}" style="background:#ffffff; border-radius:18px; padding:16px; box-shadow:0 8px 18px rgba(30,90,140,0.07); cursor:pointer; transition:transform 200ms;" style-active="transform:scale(0.97);">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <div style="font-size:15px; font-weight:700; color:#123A5E;">{{latestFeedback.title}}</div>
-              <div style="font-size:12px; font-weight:700; padding:4px 10px; border-radius:999px; background:{{latestFeedback.ratingBg}}; color:{{latestFeedback.ratingFg}};">{{latestFeedback.overallRating}}</div>
             </div>
             <div style="font-size:12.5px; color:#6B8399; margin-top:4px;">{{latestFeedback.instructor}} · {{latestFeedback.dateLabel}}</div>
           </div>
@@ -919,7 +850,6 @@
                 <div style="font-size:15px; font-weight:700; color:#123A5E;">{{f.title}}</div>
                 <div style="font-size:12.5px; color:#6B8399; margin-top:2px;">{{f.instructor}} · {{f.typeLabel}} · {{f.dateLabel}}</div>
               </div>
-              <div style="font-size:12px; font-weight:700; padding:4px 10px; border-radius:999px; background:{{f.ratingBg}}; color:{{f.ratingFg}}; white-space:nowrap;">{{f.overallRating}}</div>
             </div>
             <div style="font-size:12.5px; font-weight:600; color:#2E8FE0; margin-top:10px;">צפייה בדפית המלאה ›</div>
           </div>
@@ -930,15 +860,6 @@
     <!-- TRAINEE STATS -->
     <sc-if value="{{scrTStats}}" hint-placeholder-val="{{false}}">
       <div style="animation:slideUp 340ms cubic-bezier(.22,1,.36,1) both;">
-        <div style="background:#ffffff; border-radius:20px; padding:20px; text-align:center; box-shadow:0 10px 24px rgba(30,90,140,0.08); margin-bottom:14px;">
-          <svg width="120" height="120" viewBox="0 0 120 120" style="margin:0 auto;">
-            <circle cx="60" cy="60" r="50" stroke="#EAF3FB" stroke-width="12" fill="none"></circle>
-            <circle cx="60" cy="60" r="50" stroke="#4FAEFF" stroke-width="12" fill="none" stroke-linecap="round" transform="rotate(-90 60 60)" style="stroke-dasharray:{{statCirc}} {{statCirc}}; stroke-dashoffset:{{statOffset}}; transition:stroke-dashoffset 900ms cubic-bezier(.22,1,.36,1);"></circle>
-            <text x="60" y="66" text-anchor="middle" font-size="28" font-weight="800" fill="#123A5E">{{myAvg}}</text>
-          </svg>
-          <div style="font-size:13.5px; color:#6B8399; margin-top:8px;">ציון ממוצע כולל</div>
-        </div>
-
         <div style="display:flex; gap:10px; margin-bottom:16px;">
           <div style="flex:1; background:#ffffff; border-radius:16px; padding:14px; text-align:center; box-shadow:0 8px 18px rgba(30,90,140,0.06);">
             <div style="font-size:20px; font-weight:800; color:#123A5E;">{{completedCount}}</div>
@@ -948,16 +869,6 @@
             <div style="font-size:20px; font-weight:800; color:#123A5E;">{{completionPct}}%</div>
             <div style="font-size:11.5px; color:#6B8399; margin-top:2px;">השלמת מסלול</div>
           </div>
-        </div>
-
-        <div style="font-size:15.5px; font-weight:700; color:#123A5E; margin-bottom:10px;">מגמת שיפור</div>
-        <div style="background:#ffffff; border-radius:18px; padding:16px; box-shadow:0 8px 18px rgba(30,90,140,0.06); margin-bottom:18px;">
-          <svg width="100%" height="90" viewBox="0 0 300 90" preserveAspectRatio="none">
-            <polyline points="{{trendPoints}}" fill="none" stroke="#4FAEFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
-            <sc-for list="{{trendDots}}" as="d" hint-placeholder-count="4">
-              <circle cx="{{d.x}}" cy="{{d.y}}" r="4" fill="#2E8FE0"></circle>
-            </sc-for>
-          </svg>
         </div>
 
         <sc-if value="{{hasHighlights}}" hint-placeholder-val="{{false}}">
@@ -975,18 +886,6 @@
             </sc-for>
           </div>
         </sc-if>
-
-        <div style="font-size:15.5px; font-weight:700; color:#123A5E; margin-bottom:10px;">חוזקות וחולשות</div>
-        <sc-for list="{{catBars}}" as="c" hint-placeholder-count="6">
-          <div style="margin-bottom:10px;">
-            <div style="display:flex; justify-content:space-between; font-size:12.5px; color:#3A5977; margin-bottom:4px;">
-              <span>{{c.label}}</span><span style="font-weight:700;">{{c.value}}</span>
-            </div>
-            <div style="height:9px; border-radius:999px; background:#EEF4FA; overflow:hidden;">
-              <div style="height:100%; border-radius:999px; background:{{c.barColor}}; width:{{c.pct}}%; transition:width 800ms cubic-bezier(.22,1,.36,1);"></div>
-            </div>
-          </div>
-        </sc-for>
       </div>
     </sc-if>
 
@@ -1036,6 +935,7 @@
         </sc-for>
 
         <div style="font-size:16px; font-weight:700; color:#123A5E; margin:20px 0 10px;">כל הדפיות</div>
+        <input value="{{feedbackSearchQuery}}" onChange="{{onFeedbackSearchChange}}" placeholder="חיפוש לפי חניך, מדריך או כותרת..." style="width:100%; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:14px; color:#123A5E; outline:none; margin-bottom:10px; transition:border-color 200ms, box-shadow 200ms;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);">
         <sc-if value="{{allFeedbacksLoading}}" hint-placeholder-val="{{false}}">
           <div style="text-align:center; padding:16px; color:#8CA3B8; font-size:13px;">טוען...</div>
         </sc-if>
@@ -1089,12 +989,33 @@
         <sc-if value="{{canManageUsers}}" hint-placeholder-val="{{true}}">
           <button onClick="{{onOpenCreateUserModal}}" style="width:100%; padding:14px; border:none; border-radius:16px; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-weight:700; font-size:14px; cursor:pointer; margin-bottom:14px; box-shadow:0 10px 22px rgba(46,143,224,0.3); transition:transform 180ms;" style-active="transform:scale(0.97);">+ משתמש חדש</button>
         </sc-if>
+        <input value="{{accountSearchQuery}}" onChange="{{onAccountSearchChange}}" placeholder="חיפוש לפי שם או שם משתמש..." style="width:100%; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:14px; color:#123A5E; outline:none; margin-bottom:10px; transition:border-color 200ms, box-shadow 200ms;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);">
+        <div style="display:flex; gap:8px; overflow-x:auto; padding-bottom:14px;">
+          <sc-for list="{{accountRoleFilters}}" as="rf" hint-placeholder-count="5">
+            <div onClick="{{rf.onClick}}" style="{{rf.style}}">{{rf.label}}</div>
+          </sc-for>
+        </div>
+        <sc-if value="{{showPopulationFilters}}" hint-placeholder-val="{{false}}">
+          <div style="display:flex; gap:8px; overflow-x:auto; padding-bottom:14px;">
+            <sc-for list="{{populationFilters}}" as="pf" hint-placeholder-count="4">
+              <div onClick="{{pf.onClick}}" style="{{pf.style}}">{{pf.label}}</div>
+            </sc-for>
+          </div>
+        </sc-if>
         <sc-for list="{{accountRows}}" as="a" hint-placeholder-count="4">
           <div style="background:#ffffff; border-radius:18px; padding:14px 16px; margin-bottom:10px; box-shadow:0 8px 18px rgba(30,90,140,0.07);">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; gap:8px;">
               <div style="min-width:0;">
-                <div style="font-size:14.5px; font-weight:700; color:#123A5E;">{{a.name}}</div>
+                <sc-if value="{{a.isTraineeRow}}" hint-placeholder-val="{{false}}">
+                  <div onClick="{{a.onNameClick}}" style="font-size:14.5px; font-weight:700; color:#2E8FE0; cursor:pointer; text-decoration:underline; text-underline-offset:3px;">{{a.name}}</div>
+                </sc-if>
+                <sc-if value="{{a.isNotTraineeRow}}" hint-placeholder-val="{{true}}">
+                  <div style="font-size:14.5px; font-weight:700; color:#123A5E;">{{a.name}}</div>
+                </sc-if>
                 <div style="font-size:12px; color:#6B8399; margin-top:1px;">{{a.username}} · {{a.roleLabel}}</div>
+                <sc-if value="{{a.hasPopulationLabel}}" hint-placeholder-val="{{false}}">
+                  <div style="font-size:11.5px; color:#8CA3B8; margin-top:1px;">{{a.populationLabel}}</div>
+                </sc-if>
               </div>
               <div style="font-size:11.5px; font-weight:700; padding:5px 10px; border-radius:999px; background:{{a.statusBg}}; color:{{a.statusFg}}; white-space:nowrap; flex-shrink:0;">{{a.statusLabel}}</div>
             </div>
@@ -1126,35 +1047,6 @@
           </div>
         </sc-for>
 
-        <sc-if value="{{canManageUsers}}" hint-placeholder-val="{{true}}">
-        <div style="font-size:16px; font-weight:700; color:#123A5E; margin:22px 0 10px;">שיוך מדריך↔חניך</div>
-        <sc-if value="{{hasLinksError}}" hint-placeholder-val="{{false}}">
-          <div style="background:#FDEAE7; color:#D14A38; border-radius:12px; padding:10px 12px; font-size:13px; font-weight:600; margin-bottom:12px; text-align:center;">{{linksError}}</div>
-        </sc-if>
-        <div style="background:#ffffff; border-radius:18px; padding:16px; margin-bottom:14px; box-shadow:0 8px 18px rgba(30,90,140,0.07);">
-          <div style="font-size:11.5px; color:#8CA3B8; margin-bottom:4px;">מדריך</div>
-          <select value="{{linkInstructorId}}" onChange="{{onLinkInstructorChange}}" style="width:100%; padding:11px 12px; border-radius:12px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:13.5px; color:#123A5E; outline:none; margin-bottom:10px;">
-            <option value="">בחירת מדריך</option>
-            <sc-for list="{{linkInstructorOptions}}" as="lo" hint-placeholder-count="3">
-              <option value="{{lo.value}}">{{lo.label}}</option>
-            </sc-for>
-          </select>
-          <div style="font-size:11.5px; color:#8CA3B8; margin-bottom:4px;">חניך</div>
-          <select value="{{linkTraineeId}}" onChange="{{onLinkTraineeChange}}" style="width:100%; padding:11px 12px; border-radius:12px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:13.5px; color:#123A5E; outline:none; margin-bottom:14px;">
-            <option value="">בחירת חניך</option>
-            <sc-for list="{{linkTraineeOptions}}" as="lo" hint-placeholder-count="3">
-              <option value="{{lo.value}}">{{lo.label}}</option>
-            </sc-for>
-          </select>
-          <button onClick="{{onAddLink}}" style="width:100%; padding:13px; border:none; border-radius:14px; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-weight:700; font-size:14px; cursor:pointer;">שיוך</button>
-        </div>
-        <sc-for list="{{linkRows}}" as="lr" hint-placeholder-count="3">
-          <div style="background:#ffffff; border-radius:14px; padding:12px 14px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 6px 14px rgba(30,90,140,0.06);">
-            <div style="font-size:13px; color:#123A5E; font-weight:600;">{{lr.instructorName}} → {{lr.traineeName}}</div>
-            <div onClick="{{lr.onRemove}}" style="width:30px; height:30px; border-radius:9px; background:#FDEAE7; display:flex; align-items:center; justify-content:center; font-size:13px; color:#D14A38; cursor:pointer; flex-shrink:0;">🗑</div>
-          </div>
-        </sc-for>
-        </sc-if>
       </div>
     </sc-if>
 
@@ -1193,7 +1085,7 @@
   </sc-if>
 
   <sc-if value="{{showSuccess}}" hint-placeholder-val="{{false}}">
-    <div style="position:absolute; inset:0; z-index:20; background:rgba(244,249,254,0.85); backdrop-filter:blur(6px); display:flex; flex-direction:column; align-items:center; justify-content:center; animation:fadeIn 200ms both;">
+    <div style="position:fixed; top:0; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:480px; z-index:20; background:rgba(244,249,254,0.85); backdrop-filter:blur(6px); display:flex; flex-direction:column; align-items:center; justify-content:center; animation:fadeIn 200ms both;">
       <div style="width:84px; height:84px; border-radius:50%; background:linear-gradient(150deg,#3FCE8E,#1FA86A); display:flex; align-items:center; justify-content:center; box-shadow:0 14px 30px rgba(31,168,106,0.35); animation:popIn 420ms cubic-bezier(.22,1,.36,1) both;">
         <svg width="40" height="40" viewBox="0 0 40 40"><path d="M10 21 L17 28 L30 12" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
       </div>
@@ -1220,7 +1112,7 @@
   </sc-if>
 
   <sc-if value="{{showAddToHome}}" hint-placeholder-val="{{false}}">
-    <div onClick="{{onCloseAddToHome}}" style="position:absolute; inset:0; z-index:31; background:rgba(18,58,94,0.35); display:flex; align-items:flex-end; justify-content:center; padding:20px; animation:fadeIn 180ms both;">
+    <div onClick="{{onCloseAddToHome}}" style="position:fixed; top:0; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:480px; z-index:31; background:rgba(18,58,94,0.35); display:flex; align-items:flex-end; justify-content:center; padding:20px; animation:fadeIn 180ms both;">
       <div style="width:100%; background:#ffffff; border-radius:24px; padding:22px 20px 20px; box-shadow:0 24px 50px rgba(0,0,0,0.2); animation:popIn 260ms cubic-bezier(.22,1,.36,1) both; text-align:right;">
         <div style="font-size:17px; font-weight:800; color:#123A5E; margin-bottom:4px;">הוספה למסך הבית</div>
         <div style="font-size:13px; color:#6B8399; margin-bottom:16px;">כך נימבוס ייפתח כמו אפליקציה רגילה</div>
@@ -1238,7 +1130,7 @@
   </sc-if>
 
   <sc-if value="{{infoModal}}" hint-placeholder-val="{{false}}">
-    <div onClick="{{onCloseInfo}}" style="position:absolute; inset:0; z-index:32; background:rgba(18,58,94,0.35); display:flex; align-items:flex-end; justify-content:center; padding:16px; animation:fadeIn 180ms both;">
+    <div onClick="{{onCloseInfo}}" style="position:fixed; top:0; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:480px; z-index:32; background:rgba(18,58,94,0.35); display:flex; align-items:flex-end; justify-content:center; padding:16px; animation:fadeIn 180ms both;">
       <div style="width:100%; max-height:80%; overflow-y:auto; background:#ffffff; border-radius:24px; padding:22px 20px 20px; box-shadow:0 24px 50px rgba(0,0,0,0.2); animation:popIn 260ms cubic-bezier(.22,1,.36,1) both; text-align:right;">
         <div style="font-size:17px; font-weight:800; color:#123A5E; margin-bottom:6px;">{{infoModal.title}}</div>
         <div style="font-size:13px; color:#5C7A96; line-height:1.7; margin-bottom:14px; white-space:pre-wrap;">{{infoModal.body}}</div>
@@ -1265,7 +1157,7 @@
   </sc-if>
 
   <sc-if value="{{confirmDialog}}" hint-placeholder-val="{{false}}">
-    <div style="position:absolute; inset:0; z-index:30; background:rgba(18,58,94,0.35); display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeIn 180ms both;">
+    <div style="position:fixed; top:0; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:480px; z-index:30; background:rgba(18,58,94,0.35); display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeIn 180ms both;">
       <div style="width:100%; background:#ffffff; border-radius:22px; padding:24px 20px; box-shadow:0 24px 50px rgba(0,0,0,0.2); animation:popIn 260ms cubic-bezier(.22,1,.36,1) both;">
         <div style="font-size:16px; font-weight:700; color:#123A5E; text-align:center; margin-bottom:20px; line-height:1.5;">{{confirmDialog.message}}</div>
         <div style="display:flex; gap:10px;">
@@ -1277,7 +1169,7 @@
   </sc-if>
 
   <sc-if value="{{roleModal}}" hint-placeholder-val="{{false}}">
-    <div style="position:absolute; inset:0; z-index:30; background:rgba(18,58,94,0.35); display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeIn 180ms both;">
+    <div style="position:fixed; top:0; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:480px; z-index:30; background:rgba(18,58,94,0.35); display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeIn 180ms both;">
       <div style="width:100%; max-height:85vh; overflow-y:auto; background:#ffffff; border-radius:22px; padding:24px 20px; box-shadow:0 24px 50px rgba(0,0,0,0.2); animation:popIn 260ms cubic-bezier(.22,1,.36,1) both;">
         <div style="font-size:16px; font-weight:800; color:#123A5E; margin-bottom:4px;">{{roleModal.title}}</div>
         <div style="font-size:13px; color:#6B8399; margin-bottom:16px;">{{roleModal.targetName}}</div>
@@ -1289,16 +1181,12 @@
           </div>
         </sc-if>
         <sc-if value="{{roleModal.showTraineeFields}}" hint-placeholder-val="{{false}}">
-          <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">קורס</div>
-          <input value="{{roleModal.course}}" onChange="{{roleModal.onCourseChange}}" placeholder="לדוגמה: הסבת ט&quot;מ שביט" style="width:100%; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:14px; color:#123A5E; outline:none; margin-bottom:12px;">
           <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">אוכלוסייה</div>
           <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
             <sc-for list="{{roleModal.populationOptions}}" as="po" hint-placeholder-count="3">
               <div onClick="{{po.onClick}}" style="{{po.style}}">{{po.label}}</div>
             </sc-for>
           </div>
-          <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">מחזור</div>
-          <input value="{{roleModal.traineeClass}}" onChange="{{roleModal.onClassChange}}" placeholder="לדוגמה: מחזור 112" style="width:100%; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:14px; color:#123A5E; outline:none; margin-bottom:12px;">
         </sc-if>
         <sc-if value="{{roleModal.showInstructorFields}}" hint-placeholder-val="{{false}}">
           <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">אוכלוסיות באחריות המדריך</div>
@@ -1320,7 +1208,7 @@
   </sc-if>
 
   <sc-if value="{{createUserModal}}" hint-placeholder-val="{{false}}">
-    <div style="position:absolute; inset:0; z-index:30; background:rgba(18,58,94,0.35); display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeIn 180ms both;">
+    <div style="position:fixed; top:0; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:480px; z-index:30; background:rgba(18,58,94,0.35); display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeIn 180ms both;">
       <div style="width:100%; max-height:85vh; overflow-y:auto; background:#ffffff; border-radius:22px; padding:24px 20px; box-shadow:0 24px 50px rgba(0,0,0,0.2); animation:popIn 260ms cubic-bezier(.22,1,.36,1) both;">
         <div style="font-size:16px; font-weight:800; color:#123A5E; margin-bottom:16px;">משתמש חדש</div>
         <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">שם משתמש</div>
@@ -1336,16 +1224,12 @@
           </sc-for>
         </div>
         <sc-if value="{{createUserModal.showTraineeFields}}" hint-placeholder-val="{{false}}">
-          <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">קורס</div>
-          <input value="{{createUserModal.course}}" onChange="{{createUserModal.onCourseChange}}" placeholder="לדוגמה: הסבת ט&quot;מ שביט" style="width:100%; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:14px; color:#123A5E; outline:none; margin-bottom:12px;">
           <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">אוכלוסייה</div>
           <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
             <sc-for list="{{createUserModal.populationOptions}}" as="po" hint-placeholder-count="3">
               <div onClick="{{po.onClick}}" style="{{po.style}}">{{po.label}}</div>
             </sc-for>
           </div>
-          <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">מחזור</div>
-          <input value="{{createUserModal.traineeClass}}" onChange="{{createUserModal.onClassChange}}" placeholder="לדוגמה: מחזור 112" style="width:100%; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#F7FBFF; font-size:14px; color:#123A5E; outline:none; margin-bottom:12px;">
         </sc-if>
         <sc-if value="{{createUserModal.showInstructorFields}}" hint-placeholder-val="{{false}}">
           <div style="font-size:12.5px; font-weight:600; color:#3A5977; margin-bottom:6px;">אוכלוסיות באחריות המדריך</div>
@@ -1370,7 +1254,7 @@
   </sc-if>
 
   <sc-if value="{{resetPwModal}}" hint-placeholder-val="{{false}}">
-    <div style="position:absolute; inset:0; z-index:30; background:rgba(18,58,94,0.35); display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeIn 180ms both;">
+    <div style="position:fixed; top:0; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:480px; z-index:30; background:rgba(18,58,94,0.35); display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeIn 180ms both;">
       <div style="width:100%; background:#ffffff; border-radius:22px; padding:24px 20px; box-shadow:0 24px 50px rgba(0,0,0,0.2); animation:popIn 260ms cubic-bezier(.22,1,.36,1) both;">
         <div style="font-size:16px; font-weight:800; color:#123A5E; margin-bottom:4px;">איפוס סיסמה</div>
         <div style="font-size:13px; color:#6B8399; margin-bottom:16px;">{{resetPwModal.targetName}}</div>
@@ -1387,7 +1271,7 @@
   </sc-if>
 
   <sc-if value="{{deleteUserModal}}" hint-placeholder-val="{{false}}">
-    <div style="position:absolute; inset:0; z-index:30; background:rgba(18,58,94,0.35); display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeIn 180ms both;">
+    <div style="position:fixed; top:0; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:480px; z-index:30; background:rgba(18,58,94,0.35); display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeIn 180ms both;">
       <div style="width:100%; background:#ffffff; border-radius:22px; padding:24px 20px; box-shadow:0 24px 50px rgba(0,0,0,0.2); animation:popIn 260ms cubic-bezier(.22,1,.36,1) both;">
         <div style="font-size:16px; font-weight:800; color:#D14A38; margin-bottom:4px;">מחיקת משתמש לצמיתות</div>
         <div style="font-size:13px; color:#6B8399; margin-bottom:14px; line-height:1.6;">פעולה זו בלתי הפיכה. כדי לאשר, הקלד/י את שם המשתמש (username) של <strong>{{deleteUserModal.targetName}}</strong> בדיוק כפי שהוא: <strong>{{deleteUserModal.targetUsername}}</strong></div>
@@ -1433,26 +1317,7 @@
 
 </x-dc>
 <script type="text/x-dc" data-dc-script>
-const AIR_CREW_CATS = [ {key:'overall', label:'ציון'} ];
 const AIRCRAFT_TYPES = ['שביט','צים','אודן'];
-const CONTROLLERS_CATS = [
-  {key:'preparation', label:'הכנה'}, {key:'systemOperation', label:'תפעול מערכות'},
-  {key:'missionOriented', label:'משימתיות'}, {key:'teamwork', label:'עבודת צוות'}, {key:'professionalJudgment', label:'דעות'}
-];
-const SCOUTS_CATS = [
-  {key:'briefing', label:'תדריך'}, {key:'ground', label:'על הקרקע'},
-  {key:'aircraftHandling', label:'טיפוס'}, {key:'missionRoute', label:'נתיב משימה'}, {key:'joining', label:'הצטרפות'}
-];
-const RATING_SCALE = [
-  {n:5, label:'חלש', def:'ביצוע חלש. נדרש חיזוק משמעותי בנושאים המרכזיים לשלב.'},
-  {n:6, label:'נמוך מהנדרש', def:'ביצוע נמוך מהרמה האופיינית לשלב, עם פערים בכמה נושאים.'},
-  {n:7, label:'אופייני לשלב', def:'ביצוע אופייני והישג נדרש לשלב, עם עקביות סבירה.'},
-  {n:8, label:'טוב מהאופייני', def:'ביצוע טוב מהרמה האופיינית לשלב ברוב הנושאים.'},
-  {n:9, label:'טוב מאוד', def:'ביצוע גבוה ועקבי בכל הנושאים, מעל לנדרש לשלב.'}
-];
-const SCORE_OPTIONS = [4,5,'6/7',7,8,9,10];
-const SCORE_RATING_LABELS = {4:'טעון שיפור',5:'חלש','6/7':'אופייני נמוך / באזור הרף התחתון להישג הנדרש',7:'אופייני לוותק / הישג נדרש',8:'טוב מהאופייני/הנדרש',9:'טוב מאוד',10:'מצטיין'};
-function ratingFromScore(v){ return SCORE_RATING_LABELS[v] || ''; }
 const SYLLABUS_SECTIONS = [
   {n:'1', name:'יסודות'}, {n:'2', name:'טיסת בסיס'}, {n:'3', name:'ניווט בסיסי'}, {n:'4', name:'טיפוס מתקדם'},
   {n:'5', name:'טיסות קבוצתיות'}, {n:'6', name:'נוהלי חירום'}, {n:'7', name:'טיסת לילה'}, {n:'8', name:'משימות מורכבות'},
@@ -1492,8 +1357,6 @@ function segmentLabelFor(n, course){
 }
 const POPULATIONS = [{key:'airCrew', label:'צוותי אוויר'}, {key:'controllers', label:'בקרים'}, {key:'scouts', label:'סיירים'}];
 function populationLabel(k){ const p = POPULATIONS.find(x=>x.key===k); return p? p.label : ''; }
-const RATING_INFO_TITLE = 'אופן מתן הציון (5–10)';
-const RATING_INFO_BODY = 'הציון משקף את רמת הביצוע ביחס לרמה האופיינית והנדרשת לשלב שבו נמצא החניך, ולא ביחס לחניכים אחרים. הציון ניתן על סמך רוב נושאי השיעור שהוגדרו לגיחה.';
 const COURSE_INFO_TITLE = 'שם הקורס';
 const COURSE_INFO_BODY = 'הקורס קובע את הסילבוס הרלוונטי ואת אוכלוסיית החניכים המשויכת לדפית. יש לבחור את הקורס שבו החניך מבצע את השלב הנוכחי.';
 const CONTROLLER_LEVEL_DEFS = [
@@ -1512,46 +1375,22 @@ const TOPIC_REFERENCE = [
   {group:'AEW', items:['בניית/שיוב התמונ\"א ובטחות','זיהוי וסיווג','מודעות מצבית','ניטור מערכת','סבבים','עומס','עבודת צוות','שיטת עבודה','שיקולי נתיב','תעדוף','תפעול עמדה','תפעול פונקציות תומכות משימה']}
 ];
 const FORM_TYPES = [
-  {key:'airCrew', label:'דפית צוות אוויר', cats:AIR_CREW_CATS},
-  {key:'controllers', label:'דפית בקרים', cats:CONTROLLERS_CATS},
-  {key:'scouts', label:'דפית סיירים', cats:SCOUTS_CATS}
+  {key:'airCrew', label:'דפית צוות אוויר'},
+  {key:'controllers', label:'דפית בקרים'},
+  {key:'scouts', label:'דפית סיירים'}
 ];
-function catsFor(type){ return (FORM_TYPES.find(t=>t.key===type)||FORM_TYPES[0]).cats; }
 function typeLabel(type){ return (FORM_TYPES.find(t=>t.key===type)||FORM_TYPES[0]).label; }
 
-const RATINGS = ['מצוין','טוב מאוד','טוב','טעון שיפור'];
 const INSTRUCTOR_NAME = 'סרן דנה שגיא';
 const SMAT_NAME = 'רב סרן טל ארבל';
 const KAHAD_NAME = 'רב סרן נועה גל';
 
-const TRAINEES = [
-  {id:1, name:'נועם כהן', course:'הסבת ט"מ שביט', population:'airCrew', class:'מחזור 112', avatarBg:'#4FAEFF', instructorId:1},
-  {id:2, name:'איתי לוי', course:'המרת G550', population:'airCrew', class:'מחזור 112', avatarBg:'#66C2FF', instructorId:1},
-  {id:3, name:'יעל מזרחי', course:'AEW', population:'controllers', class:'מחזור 108', avatarBg:'#8FD3FF', instructorId:1},
-  {id:4, name:'דניאל אברהם', course:'קורס קברניטים', population:'airCrew', class:'מחזור 112', avatarBg:'#4FAEFF', instructorId:1},
-  {id:5, name:'שירה בן דוד', course:'RDO', population:'scouts', class:'מחזור 108', avatarBg:'#66C2FF', instructorId:1},
-  {id:6, name:'עומר פרידמן', course:'קק"מ', population:'airCrew', class:'מחזור 110', avatarBg:'#8FD3FF', instructorId:2}
-];
-const INSTRUCTORS = [{id:1, name:INSTRUCTOR_NAME, populations:['airCrew','controllers']}, {id:2, name:'סרן עידו רם', populations:['airCrew']}];
-
-function num(v){ if(typeof v==='number') return v; if(v==='6/7') return 6.5; const p=parseFloat(v); return isNaN(p)? null : p; }
-function avg(scores){ const v=Object.values(scores||{}).map(num).filter(x=>x!==null); return v.length? v.reduce((a,b)=>a+b,0)/v.length : 0; }
 function fmtDate(d){ return new Date(d+'T00:00:00').toLocaleDateString('he-IL',{day:'numeric',month:'short'}); }
-function ratingColors(r){
-  if(r==='מצוין') return {bg:'#E4F8ED', fg:'#1FA86A'};
-  if(r==='טוב מאוד') return {bg:'#E7F3FF', fg:'#2E8FE0'};
-  if(r==='טוב') return {bg:'#FFF6E2', fg:'#B8791F'};
-  if(r==='טעון שיפור') return {bg:'#FDEAE7', fg:'#D14A38'};
-  return {bg:'#EEF4FA', fg:'#6B8399'};
-}
-function scoreColor(v){ return v>=8?'#1FA86A': v>=7?'#2E8FE0': v>=6?'#B8791F':'#D14A38'; }
 function statusInfo(st){
   if(st==='approved') return {label:'מאושר', bg:'#E4F8ED', fg:'#1FA86A'};
   if(st==='rejected') return {label:'נדחה', bg:'#FDEAE7', fg:'#D14A38'};
   return {label:'ממתין לאישור', bg:'#FFF1DA', fg:'#B8791F'};
 }
-function traineeById(id){ return TRAINEES.find(t=>t.id===id); }
-function instructorById(id){ return (INSTRUCTORS.find(i=>i.id===id)||{}).name || ''; }
 function isViewer(role){ return role==='kahad'; }
 function canManage(role){ return role==='smat'; }
 function sectionNumberOf(f){
@@ -1563,7 +1402,11 @@ function sectionNumberOf(f){
 }
 function segmentKey(formType, course, n){ return formType+'|'+course+'|'+String(n); }
 function segmentOf(f){ const n = sectionNumberOf(f); return n? segmentLabelFor(n, courseOf(f)) : '-'; }
-function courseOf(f){ if(f.course) return f.course; const t = traineeById(f.traineeId); return (t&&t.course)||'-'; }
+// f.traineeId is always a real Supabase uuid, never the demo TRAINEES
+// roster's small integer ids - the old traineeById(f.traineeId) fallback
+// here could therefore never resolve to anything, so it's removed; this is
+// the exact same outcome for every real call site, not a behavior change.
+function courseOf(f){ return f.course || '-'; }
 // Comparison-only helper: feedbacks.course (free text typed per feedback)
 // and trainee_profiles.course (free text set once on the profile) are two
 // independently-typed real columns, so trivial formatting drift (extra
@@ -1595,8 +1438,8 @@ function accountStatusInfo(st){
 // on the evalForm (type-specific fields like remarks/observations/sys*/team* etc.)
 // falls through into the `details` jsonb column automatically, so no field the
 // user filled in is ever dropped just because it lacks its own column.
-const FEEDBACK_COLUMN_FIELDS = ['feedbackId','status','traineeId','formType','segment','course','syllabusNumber','title','validationMsg',
-  'date','scores','overallRating','strengths','improvements','summary','recommendations','nextFlightNotes','summaryRecommendations'];
+const FEEDBACK_COLUMN_FIELDS = ['feedbackId','status','traineeId','instructorId','instructorName','formType','segment','course','syllabusNumber','title','validationMsg',
+  'date','scores','strengths','improvements','summary','recommendations','nextFlightNotes','summaryRecommendations'];
 function buildFeedbackDetails(f){
   const details = {};
   Object.keys(f).forEach(k=>{ if(!FEEDBACK_COLUMN_FIELDS.includes(k)) details[k] = f[k]; });
@@ -1604,38 +1447,44 @@ function buildFeedbackDetails(f){
 }
 // Inverse of buildFeedbackDetails: turns a public.feedbacks row (snake_case
 // columns + details jsonb) back into the flat camelCase shape the UI expects
-// (same field names as evalForm/viewFb). Spreading `details` last means every
+// (same field names as evalForm/viewFb). `details` is spread FIRST so every
 // type-specific field the user filled in (remarks, observations, sys*, etc.)
-// lands back exactly where the display code already looks for it.
+// still lands back exactly where the display code already looks for it -
+// but the real columns below are set AFTER, so they always win over any
+// stray same-named key that might exist in `details` (e.g. an older row
+// whose evalForm carried a blank instructorId/instructorName placeholder
+// before those were added to FEEDBACK_COLUMN_FIELDS - see buildFeedbackDetails
+// above). Every field set here maps 1:1 to a real feedbacks column, so none
+// of them should ever legitimately come from `details` instead.
 function mapFeedbackRow(row){
   const details = row.details || {};
   return {
+    ...details,
     id: row.id, traineeId: row.trainee_id, instructorId: row.instructor_id,
     formType: row.form_type, title: row.title, date: row.date, status: row.status,
     course: row.course, segment: row.segment, scores: row.scores || {},
-    overallRating: row.overall_rating, strengths: row.strengths, improvements: row.improvements,
+    strengths: row.strengths, improvements: row.improvements,
     summary: row.summary, recommendations: row.recommendations,
-    nextFlightNotes: row.next_flight_notes, summaryRecommendations: row.summary_recommendations,
-    ...details
+    nextFlightNotes: row.next_flight_notes, summaryRecommendations: row.summary_recommendations
   };
 }
 
 class Component extends DCLogic {
   state = {
     role: null, screen: 'intro', navHistory: [], loading: false,
-    currentTraineeId: 1,
     evalForm:null,
     searchQuery:'', filterCourse:'all', filterStatus:'all',
+    feedbackSearchQuery:'', accountSearchQuery:'', filterAccountRole:'all',
     draft:null,
     showSuccess:false, successMsg:'', confirmDialog:null, showWindTransition:false, showAddToHome:false,
     infoModal:null, printJob:null, printFrom:'', printTo:'',
     authMode:'signin', authUsername:'', authPassword:'', authFullName:'', authError:'', authLoading:false, authGate:null,
     accounts:[], accountsLoading:false, accountsError:'', roleModal:null, resetPwModal:null, createUserModal:null,
-    links:[], linksLoading:false, linksError:'', linkInstructorId:'', linkTraineeId:'',
     myProfileId:null, trainees:[], traineesLoading:false, myFeedbacks:[], feedbacksLoading:false,
     allFeedbacks:[], allFeedbacksLoading:false,
     myApprovedFeedbacks:[], myApprovedFeedbacksLoading:false,
     provisionedTraineeIds: new Set(), provisionedInstructorIds: new Set(),
+    traineePopulationById: {}, instructorPopulationsById: {}, filterPopulation: 'all',
     viewingFeedback: null, feedbackViewError: '',
     deleteUserModal: null,
     selectedTraineeId: null, traineeDetail: null, traineeDetailLoading: false, traineeDetailError: '',
@@ -1659,19 +1508,21 @@ class Component extends DCLogic {
       // profile - getSessionProfile() already returns it, it just wasn't
       // being kept anywhere before. Falls back to '' only if a profile
       // genuinely has neither full_name nor username set, in which case the
-      // existing demo-name fallbacks (INSTRUCTOR_NAME/SMAT_NAME/KAHAD_NAME,
-      // traineeById) below still apply exactly as before.
+      // existing demo-name fallbacks (INSTRUCTOR_NAME/SMAT_NAME/KAHAD_NAME)
+      // below still apply exactly as before - the trainee case has no such
+      // fallback anymore (it would have meant a different trainee's demo
+      // data), so it shows an empty label instead.
       this.setState({authGate:null, myProfileId:profile.id, myProfileName: profile.full_name || profile.username || ''});
       // trainees was previously only loaded lazily from openNewFeedback() -
       // iTrainees (below) needs it too, and is reachable directly from the
       // bottom nav tab without ever visiting the new-feedback flow first.
       if(profile.role==='instructor'){ this.loadMyFeedbacks(profile.id); this.loadMyTrainees(); }
-      // accounts/links were previously only loaded lazily from
-      // onOpenAccounts() (the sDash button, smat-only) - sAccounts is now
-      // also reachable directly from the bottom nav tab (for smat AND
-      // kahad, replacing the old demo sUsers tab), so both need it preloaded
-      // the same way every other real screen already is.
-      else if(profile.role==='smat' || profile.role==='kahad'){ this.loadAllFeedbacks(); this.loadAccounts(); this.loadLinks(); }
+      // accounts were previously only loaded lazily from onOpenAccounts()
+      // (the sDash button, smat-only) - sAccounts is now also reachable
+      // directly from the bottom nav tab (for smat AND kahad, replacing the
+      // old demo sUsers tab), so both need it preloaded the same way every
+      // other real screen already is.
+      else if(profile.role==='smat' || profile.role==='kahad'){ this.loadAllFeedbacks(); this.loadAccounts(); }
       else if(profile.role==='trainee'){ this.loadMyApprovedFeedbacks(profile.id); this.loadMyOwnTraineeProfile(profile.id); }
       return;
     }
@@ -1680,37 +1531,48 @@ class Component extends DCLogic {
   };
   // course/class for the signed-in trainee's own greeting/profile subtitle -
   // trainee_profiles is the same real source already used (for other
-  // trainees) by loadMyTrainees()/loadTraineeDetail(). Left '' on
-  // any failure so the existing demo fallback (traineeById) below still
-  // applies rather than showing a broken label.
+  // trainees) by loadMyTrainees()/loadTraineeDetail(). Left '' on any
+  // failure (or when the trainee simply has no course/class set, now the
+  // normal case for a population-only account) - shows an empty label,
+  // never another trainee's demo data.
   loadMyOwnTraineeProfile=async(profileId)=>{
     const { data: tprof } = await window.nimbusSupabase.from('trainee_profiles').select('course, class').eq('profile_id', profileId).maybeSingle();
     if(!tprof || (!tprof.course && !tprof.class)) return;
     this.setState({myProfileCourseLabel: [tprof.course, tprof.class].filter(Boolean).join(' · ')});
   };
+  // Population-based visibility: an instructor sees every approved trainee
+  // whose trainee_profiles.population is one of the instructor's own
+  // instructor_profiles.populations. Replaces the old instructor_trainees
+  // link table, which is no longer used as an authorization source anywhere
+  // (kept in the DB as legacy, untouched). Mirrors the RLS policies exactly
+  // (trainee_profiles_select_linked_instructor / profiles_select_linked_for_instructor),
+  // so this is what the instructor is allowed to see regardless.
   loadMyTrainees=async()=>{
     if(!this.state.myProfileId) return;
     this.setState({traineesLoading:true});
-    const { data: links, error: linksErr } = await window.nimbusSupabase.from('instructor_trainees').select('trainee_id').eq('instructor_id', this.state.myProfileId);
-    if(linksErr || !links || !links.length){ this.setState({traineesLoading:false, trainees:[]}); return; }
-    const ids = links.map(l=>l.trainee_id);
-    const { data: profs, error: profErr } = await window.nimbusSupabase.from('profiles').select('id, full_name, username').in('id', ids);
+    const { data: ip, error: ipErr } = await window.nimbusSupabase.from('instructor_profiles').select('populations').eq('profile_id', this.state.myProfileId).maybeSingle();
+    const populations = (!ipErr && ip && ip.populations) || [];
+    if(!populations.length){ this.setState({traineesLoading:false, trainees:[]}); return; }
+    // course/class come along for the ride (only needed by the real
+    // iTraineeDetail path/openTrainee below) - assignedOptions (the
+    // new-feedback draft picker) only reads id/name, so this addition is
+    // harmless to that existing use.
+    const { data: tprofs, error: tpErr } = await window.nimbusSupabase.from('trainee_profiles').select('profile_id, course, population, class').in('population', populations);
+    if(tpErr || !tprofs || !tprofs.length){ this.setState({traineesLoading:false, trainees:[]}); return; }
+    const ids = tprofs.map(r=>r.profile_id);
+    const tp = {}; tprofs.forEach(r=>{ tp[r.profile_id] = r; });
+    const { data: profs, error: profErr } = await window.nimbusSupabase.from('profiles').select('id, full_name, username').in('id', ids).eq('status','approved');
     if(profErr){ this.setState({traineesLoading:false, trainees:[]}); return; }
-    // course/population/class come from trainee_profiles, not profiles - only
-    // needed by the real iTraineeDetail path (openTrainee/buildDetail
-    // below); assignedOptions (the new-feedback draft picker) only reads
-    // id/name, so this addition is harmless to that existing use.
-    const { data: tprofs } = await window.nimbusSupabase.from('trainee_profiles').select('profile_id, course, population, class').in('profile_id', ids);
-    const tp = {}; (tprofs||[]).forEach(r=>{ tp[r.profile_id] = r; });
     this.setState({traineesLoading:false, trainees:(profs||[]).map(p=>({id:p.id, name:p.full_name||p.username,
       course:(tp[p.id]||{}).course||'', population:(tp[p.id]||{}).population||'', class:(tp[p.id]||{}).class||''}))});
   };
   // Real trainee-detail screen (iTraineeDetail with a real UUID) - loads the
   // trainee's own profile/trainee_profiles info plus their FULL feedback
   // history, deliberately with no instructor_id filter: the RLS SELECT
-  // policy for instructor already scopes this correctly via
-  // instructor_trainees (an instructor sees every feedback for a trainee
-  // they're linked to, including ones written by other instructors) - smat/
+  // policy for instructor already scopes this correctly via population
+  // (trainee_profiles.population = ANY(instructor_profiles.populations) -
+  // an instructor sees every feedback for a trainee in one of their
+  // populations, including ones written by other instructors) - smat/
   // kahad see everything via feedbacks_smat_all. Sorted by `date` in JS,
   // never relying on the query's created_at order (same pattern as tDash/
   // tStats/tFeedback).
@@ -1725,7 +1587,7 @@ class Component extends DCLogic {
     // ready feedback for the PDF export buttons below - not a new endpoint,
     // the same query just selects a few more real columns.
     const { data: rows, error: fbErr } = await window.nimbusSupabase.from('feedbacks')
-      .select('id, trainee_id, instructor_id, form_type, title, date, status, course, segment, scores, overall_rating, next_flight_notes, recommendations, strengths, improvements, summary, summary_recommendations, details')
+      .select('id, trainee_id, instructor_id, form_type, title, date, status, course, segment, scores, next_flight_notes, recommendations, strengths, improvements, summary, summary_recommendations, details')
       .eq('trainee_id', traineeId).order('created_at', {ascending:false});
     if(fbErr){ this.setState({traineeDetailLoading:false, traineeDetailError:'שגיאה בטעינת ההיסטוריה: '+fbErr.message}); return; }
     // Instructor name resolution for the PDF's "מדריך" field - one query for
@@ -1757,29 +1619,16 @@ class Component extends DCLogic {
   };
   // The only trainee-detail builder now (the demo buildDetail() it was
   // originally kept separate from has since been removed - it had no active
-  // caller left). Same generic helpers (avg/num/scoreColor/fmtDate/
-  // statusInfo/typeLabel), same output shape the iTraineeDetail template
-  // already expects. History always opens via viewFeedback (never
-  // editFeedback directly) - matches every other real list in the app; editing happens
-  // only from inside feedbackView, where the existing canEdit gating (smat,
-  // or the owning instructor while not approved) already applies unchanged.
+  // caller left). Same generic helpers (fmtDate/statusInfo/typeLabel), same
+  // output shape the iTraineeDetail template already expects. The overall-
+  // score statistics block (avg/trend/category bars) was removed along with
+  // the score itself - no replacement metric. History always opens via
+  // viewFeedback (never editFeedback directly) - matches every other real
+  // list in the app; editing happens only from inside feedbackView, where
+  // the existing canEdit gating (smat, or the owning instructor while not
+  // approved) already applies unchanged.
   buildDetail(rd){
     const hist = rd.history;
-    const doneHist = hist.filter(f=>f.status==='approved');
-    const statHist = (doneHist.length? doneHist : hist).filter(f=>f.scores && Object.keys(f.scores||{}).length);
-    const doneVals = doneHist.map(f=>avg(f.scores)).filter(v=>v>0);
-    const a = doneVals.length? doneVals.reduce((x,y)=>x+y,0)/doneVals.length : 0;
-    const chrono = [...statHist].sort((x,y)=>x.date<y.date?-1:1);
-    const pts = chrono.map(f=>avg(f.scores));
-    const minV = Math.min(...pts, 5), maxV = Math.max(...pts, 10);
-    const stepX = pts.length>1? 280/(pts.length-1) : 0;
-    const coords = pts.map((v,i)=>({x:10+i*stepX, y: 80 - ((v-minV)/((maxV-minV)||1))*60}));
-    const allCatKeys = {}; statHist.forEach(f=>Object.keys(f.scores||{}).forEach(k=>{ allCatKeys[k]=true; }));
-    const labelMap = {}; [...AIR_CREW_CATS,...CONTROLLERS_CATS,...SCOUTS_CATS].forEach(c=>labelMap[c.key]=c.label);
-    const catBars = Object.keys(allCatKeys).map(k=>{
-      const vals = statHist.map(f=>num((f.scores||{})[k])).filter(v=>v!==null); const av = vals.length? vals.reduce((x,y)=>x+y,0)/vals.length : 0;
-      return {label:labelMap[k]||k, value: vals.length? av.toFixed(1):'-', pct: vals.length? ((av-5)/4)*100 : 0, barColor:scoreColor(av)};
-    }).sort((x,y)=>y.pct-x.pct);
     const role = this.state.role;
     // syllabusStatusFor()'s course match is now whitespace/case-tolerant
     // (see normalizeCourseName) so trivial formatting drift between
@@ -1803,8 +1652,7 @@ class Component extends DCLogic {
       return {title:f.title, meta:(rd.name||'-')+' · '+typeLabel(f.formType)+' · '+fmtDate(f.date), rows:this.printRows(f)};
     });
     return { name:rd.name, initial:(rd.name||'-')[0], avatarBg:'#4FAEFF', course:rd.course||'-', class:rd.class||'-',
-      avgLabel: doneVals.length? a.toFixed(1):'-', count: hist.length, empty: hist.length===0, canAdd: role==='instructor',
-      hasStats: statHist.length>0,
+      count: hist.length, empty: hist.length===0, canAdd: role==='instructor',
       hasHighlights: hist.some(f=>(f.next_flight_notes||f.recommendations||'').trim()),
       highlights: hist.filter(f=>(f.next_flight_notes||f.recommendations||'').trim()).map(f=>({
         title: f.title, dateLabel: fmtDate(f.date), notes: f.next_flight_notes || f.recommendations, onClick: ()=>this.viewFeedback(f.id)})),
@@ -1826,7 +1674,6 @@ class Component extends DCLogic {
         const rangeLabel = from&&to? fmtDate(from)+' - '+fmtDate(to) : from? 'מ-'+fmtDate(from) : to? 'עד '+fmtDate(to) : 'כל הטווח';
         this.setState({printJob:{heading:rd.name||'-', subheading:'ייצוא לפי טווח תאריכים · '+rangeLabel+' · '+docs.length+' דפיות', docs, empty:docs.length===0}});
       },
-      trendPoints: coords.map(c=>`${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(' '), trendDots: coords, catBars,
       history: hist.map(f=>{ const st=statusInfo(f.status); return {title:f.title, typeLabel:typeLabel(f.form_type), dateLabel:fmtDate(f.date), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg,
         onClick: ()=>this.viewFeedback(f.id) }; })
     };
@@ -1835,7 +1682,7 @@ class Component extends DCLogic {
     const pid = profileId || this.state.myProfileId;
     if(!pid) return;
     this.setState({feedbacksLoading:true});
-    const { data, error } = await window.nimbusSupabase.from('feedbacks').select('id, trainee_id, form_type, title, date, status, overall_rating')
+    const { data, error } = await window.nimbusSupabase.from('feedbacks').select('id, trainee_id, form_type, title, date, status')
       .eq('instructor_id', pid).order('created_at', {ascending:false});
     if(error || !data){ this.setState({feedbacksLoading:false, myFeedbacks:[]}); return; }
     const traineeIds = Array.from(new Set(data.map(f=>f.trainee_id)));
@@ -1854,7 +1701,7 @@ class Component extends DCLogic {
   loadAllFeedbacks=async()=>{
     this.setState({allFeedbacksLoading:true});
     const { data, error } = await window.nimbusSupabase.from('feedbacks')
-      .select('id, trainee_id, instructor_id, form_type, title, date, status, course, segment, overall_rating')
+      .select('id, trainee_id, instructor_id, form_type, title, date, status, course, segment')
       .order('created_at', {ascending:false});
     if(error || !data){ this.setState({allFeedbacksLoading:false, allFeedbacks:[]}); return; }
     // Resolve trainee/instructor names generically from profiles by uuid -
@@ -1878,7 +1725,7 @@ class Component extends DCLogic {
     const pid = profileId || this.state.myProfileId;
     if(!pid) return;
     this.setState({myApprovedFeedbacksLoading:true});
-    const { data, error } = await window.nimbusSupabase.from('feedbacks').select('id, trainee_id, instructor_id, form_type, title, date, status, overall_rating, scores, next_flight_notes, recommendations')
+    const { data, error } = await window.nimbusSupabase.from('feedbacks').select('id, trainee_id, instructor_id, form_type, title, date, status, scores, next_flight_notes, recommendations')
       .eq('trainee_id', pid).eq('status','approved').order('created_at', {ascending:false});
     if(error || !data){ this.setState({myApprovedFeedbacksLoading:false, myApprovedFeedbacks:[]}); return; }
     const instructorIds = Array.from(new Set(data.map(f=>f.instructor_id).filter(Boolean)));
@@ -1911,7 +1758,7 @@ class Component extends DCLogic {
 
   loginAs(role){
     const home = role==='instructor'?'iDash': (role==='smat'||role==='kahad')?'sDash':'tDash';
-    this.setState({role, screen:home, navHistory:[], loading:(this.props.skeletonLoading ?? true), currentTraineeId:1});
+    this.setState({role, screen:home, navHistory:[], loading:(this.props.skeletonLoading ?? true)});
     if(this.props.skeletonLoading ?? true) setTimeout(()=>this.setState({loading:false}), 480*this.speedMul());
   }
   onLogout=async()=>{
@@ -1941,7 +1788,6 @@ class Component extends DCLogic {
   };
   onOpenAddToHome=()=>this.setState({showAddToHome:true});
   onOpenCourseInfo=()=>this.setState({infoModal:{title:'נושאי הקורס', body:'', rows:[], groups:TOPIC_REFERENCE}});
-  onOpenRatingInfo=()=>this.setState({infoModal:{title:RATING_INFO_TITLE, body:RATING_INFO_BODY, rows:CONTROLLER_LEVEL_DEFS, groups:[]}});
   onCloseInfo=()=>this.setState({infoModal:null});
   onPrintFromChange=(e)=>this.setState({printFrom:e.target.value});
   onPrintToChange=(e)=>this.setState({printTo:e.target.value});
@@ -1952,8 +1798,11 @@ class Component extends DCLogic {
       {label:'מקטע', value:segmentOf(f)},
       {label:'קורס', value:courseOf(f)},
       {label:'סוג דפית', value:typeLabel(f.formType)},
-      {label:'מדריך', value:f.instructorFullName || instructorById(f.instructorId) || '-'},
-      {label:'ציון', value:(f.scores&&f.scores.overall!==undefined)? String(f.scores.overall)+' · '+(f.overallRating||'') : '-'}
+      // f.instructorId is always a real Supabase uuid (or null, for a smat-
+      // created feedback with no instructor assigned) - the old
+      // instructorById(f.instructorId) fallback here could never resolve to
+      // anything either way, so it's removed; same outcome as before.
+      {label:'מדריך', value:f.instructorFullName || '-'}
     ];
     if(f.formType==='airCrew'){
       const r = f.remarks||{};
@@ -1997,6 +1846,13 @@ class Component extends DCLogic {
   onSearchChange=(e)=>this.setState({searchQuery:e.target.value});
   setFilterCourse(c){ this.setState({filterCourse:c}); }
   setFilterStatus(st){ this.setState({filterStatus:st}); }
+  onFeedbackSearchChange=(e)=>this.setState({feedbackSearchQuery:e.target.value});
+  onAccountSearchChange=(e)=>this.setState({accountSearchQuery:e.target.value});
+  // Resets filterPopulation whenever the role filter changes, since the
+  // population filter chips (only shown for trainee/instructor) would
+  // otherwise silently keep applying a stale value from a previous role.
+  setFilterAccountRole(r){ this.setState({filterAccountRole:r, filterPopulation:'all'}); }
+  setFilterPopulation(p){ this.setState({filterPopulation:p}); }
 
   openNewFeedback(){
     // Trainee must be chosen from the real, Supabase-linked list (assignedOptions) -
@@ -2005,18 +1861,20 @@ class Component extends DCLogic {
     // instructorId/instructorName are only ever filled in for smat (picked in
     // the draft step below) - unused, harmless empty fields for instructor.
     this.navigate('iNewFeedback', {draft:{ traineeId:'', traineeName:'', instructorId:'', instructorName:'', formType:'', title:'' }});
-    // smat has no instructor_trainees link of its own - the trainee/instructor
-    // pickers for smat are built from s.accounts (already loaded) instead,
-    // so this real query is only useful (and only run) for an instructor.
+    // smat isn't scoped by population like an instructor is - the trainee/
+    // instructor pickers for smat are built from s.accounts (already loaded)
+    // instead, so this real query is only useful (and only run) for an
+    // instructor.
     if(this.state.role==='instructor') this.loadMyTrainees();
   }
   onOpenNewFeedback=()=>this.openNewFeedback();
   onNewFeedbackForTrainee=()=>this.openNewFeedback();
   onDraftTraineeChange=(e)=>{
     const id = e.target.value || '';
-    // Instructor's own trainees come from s.trainees (instructor_trainees
-    // link); smat has no such link, so its trainee list/lookup comes from
-    // s.accounts (already loaded) instead - never touches s.trainees.
+    // Instructor's own trainees come from s.trainees (population-based, see
+    // loadMyTrainees); smat isn't scoped by population, so its trainee
+    // list/lookup comes from s.accounts (already loaded) instead - never
+    // touches s.trainees.
     let name = '';
     if(id){
       if(this.state.role==='smat'){
@@ -2037,13 +1895,24 @@ class Component extends DCLogic {
     const a = id? this.state.accounts.find(x=>x.id===id) : null;
     this.setState(s=>({draft:{...s.draft, instructorId:id, instructorName: a?(a.full_name||a.username):''}}));
   };
+  // Lets smat clear an already-picked instructor back to "no instructor" -
+  // the <select> itself is replaced by a static div once instructorName is
+  // set (same pattern as the trainee picker above), so without this there
+  // would be no way back to the empty/optional state once an instructor had
+  // been chosen. Resets both fields - never leaves a stale id with no name
+  // or vice versa.
+  onClearDraftInstructor=()=>this.setState(s=>({draft:{...s.draft, instructorId:'', instructorName:''}}));
   onDraftTitleChange=(e)=>this.setState(s=>({draft:{...s.draft, title:e.target.value}}));
   onDraftSegmentChange=(e)=>this.setState(s=>({draft:{...s.draft, segment:e.target.value, title:e.target.value}}));
   setDraftType(type){ this.setState(s=>({draft:{...s.draft, formType:type}})); }
   onDraftContinue=()=>{
     const d = this.state.draft;
     const isSmat = this.state.role==='smat';
-    if(!d.traineeId || !d.formType || (isSmat && !d.instructorId)) return;
+    // Instructor selection is optional for smat (a feedback may be created
+    // with no instructor assigned at all) - never required here, for either
+    // role. An instructor's own draft never had an instructorId requirement
+    // in the first place (it isn't shown the picker at all).
+    if(!d.traineeId || !d.formType) return;
     // d.traineeId is a real Supabase uuid (from state.draft, set via
     // onDraftTraineeChange off state.trainees) - traineeById(d.traineeId)
     // would always return undefined (TRAINEES only has small demo integer
@@ -2062,20 +1931,19 @@ class Component extends DCLogic {
       syllabusNumber:'', title:typeLabel(d.formType), validationMsg:'', date:new Date().toISOString().slice(0,10) };
     if(d.formType==='airCrew'){
       this.navigate('iEval', {evalForm:{...base, lessonNumber:'', aircraftType:'', instructorFullName:'', syllabusFull:'כן', syllabusContent:'', completionsNeeded:'',
-        remarks:{briefing:'',ground:'',postFlight:'',aircraftHandling:'',missionRoute:'',takeoffLanding:'',additional:''}, nextFlightNotes:'', summaryRecommendations:'', scores:{overall:5}, overallRating:''}});
+        remarks:{briefing:'',ground:'',postFlight:'',aircraftHandling:'',missionRoute:'',takeoffLanding:'',additional:''}, nextFlightNotes:'', summaryRecommendations:'', scores:{}}});
     } else if(d.formType==='controllers'){
       this.navigate('iEval', {evalForm:{...base, courseName:'', controllerSyllabus:'', instructorFullName:'', flightType:'מבצעי', flightName:'',
         objectivesText:'', syllabusCompletion:'', improveNotes:'', keepNotes:'', nextFlightNotes:'', summaryRecommendations:'',
         observations:[{time:'',topic:'',description:''},{time:'',topic:'',description:''},{time:'',topic:'',description:''},{time:'',topic:'',description:''}],
-        scores:{overall:5}, overallRating:''}});
+        scores:{}}});
     } else {
-      const scores = Object.fromEntries(catsFor(d.formType).map(c=>[c.key,0]));
       this.navigate('iEval', {evalForm:{...base, nextFlightNotes:'', syllabusSection:'', instructorFullName:'', mission:'', contentNotes:'', prepBriefingTransfer:'', prepStationSetup:'',
         sysFamiliarity:'', sysIVA:'', sysMSDC:'', sysLauncher:'', sysFaults:'',
         missionConnect:'', missionSA:'', missionSARoutes:'', missionSAFaults:'',
         teamExternal:'', teamMC:'', teamOSO:'', teamRDO:'', teamMPO:'',
         traitIndependence:'', traitConfidence:'', traitPressure:'', traitOrder:'', traitDebrief:'',
-        summaryRecommendations:'', scores:{overall:5}, strengths:'', improvements:'', summary:'', recommendations:'', overallRating:''}});
+        summaryRecommendations:'', scores:{}, strengths:'', improvements:'', summary:'', recommendations:''}});
     }
   };
 
@@ -2118,7 +1986,6 @@ class Component extends DCLogic {
   onTraitPressureChange=(e)=>this.setEvalField('traitPressure', e.target.value);
   onTraitOrderChange=(e)=>this.setEvalField('traitOrder', e.target.value);
   onTraitDebriefChange=(e)=>this.setEvalField('traitDebrief', e.target.value);
-  setEvalScore(key,n){ this.setState(s=>({evalForm:{...s.evalForm, scores:{...s.evalForm.scores,[key]:n}}})); }
   onEvalDateChange=(e)=>this.setEvalField('date', e.target.value);
   onStrengthsChange=(e)=>this.setEvalField('strengths', e.target.value);
   onImprovementsChange=(e)=>this.setEvalField('improvements', e.target.value);
@@ -2163,14 +2030,11 @@ class Component extends DCLogic {
     // existing title as-is for isEditing instead of recomputing it.
     let toSave = {...f, validationMsg:'', title: f.isEditing ? f.title : segmentLabelFor(f.segment, f.course)};
     if(f.formType==='airCrew'){
-      const scoreVal = (f.scores&&f.scores.overall)||7;
-      toSave = {...toSave, overallRating: ratingFromScore(scoreVal), strengths: f.remarks.additional, improvements: f.completionsNeeded, summary: f.summaryRecommendations, recommendations: f.nextFlightNotes};
+      toSave = {...toSave, strengths: f.remarks.additional, improvements: f.completionsNeeded, summary: f.summaryRecommendations, recommendations: f.nextFlightNotes};
     } else if(f.formType==='controllers'){
-      const scoreVal = (f.scores&&f.scores.overall)||7;
-      toSave = {...toSave, overallRating: ratingFromScore(scoreVal), strengths: f.keepNotes||'', improvements: f.improveNotes||'', summary: f.summaryRecommendations, recommendations: f.nextFlightNotes};
+      toSave = {...toSave, strengths: f.keepNotes||'', improvements: f.improveNotes||'', summary: f.summaryRecommendations, recommendations: f.nextFlightNotes};
     } else if(f.formType==='scouts'){
-      const scoreVal = (f.scores&&f.scores.overall)||7;
-      toSave = {...toSave, overallRating: ratingFromScore(scoreVal), strengths: f.contentNotes, improvements: '', summary: f.summaryRecommendations, recommendations: f.nextFlightNotes};
+      toSave = {...toSave, strengths: f.contentNotes, improvements: '', summary: f.summaryRecommendations, recommendations: f.nextFlightNotes};
     }
     // Editing an existing feedback - loaded via viewFeedback/editFeedback
     // (isEditing:true; the only place that ever sets feedbackId on an existing
@@ -2194,8 +2058,10 @@ class Component extends DCLogic {
         date: toSave.date,
         course: toSave.course,
         segment: toSave.segment,
-        scores: toSave.scores || {},
-        overall_rating: toSave.overallRating || null,
+        // Score removed - scores is NOT NULL with a {} default, so this must
+        // stay {} (never null); overall_rating is legacy (kept, nullable) and
+        // is never written by the app anymore.
+        scores: {},
         strengths: toSave.strengths || null,
         improvements: toSave.improvements || null,
         summary: toSave.summary || null,
@@ -2237,26 +2103,28 @@ class Component extends DCLogic {
       return;
     }
     const isSmat = this.state.role==='smat';
-    // smat picked an instructor explicitly in the draft step
-    // (onDraftContinue already refuses to continue without one) - never
-    // myProfileId for smat, that would misattribute the feedback to the
-    // smat as if they were the instructor. An instructor is always
-    // themself, exactly as before.
-    if(isSmat && !toSave.instructorId){
-      this.setState(s=>({evalForm:{...s.evalForm, validationMsg:'יש לבחור מדריך.'}}));
-      return;
-    }
+    // smat may optionally pick an instructor in the draft step - never
+    // required (a feedback can be created with no instructor assigned at
+    // all). Never myProfileId for smat, that would misattribute the
+    // feedback to the smat as if they were the instructor. An instructor is
+    // always themself, exactly as before.
     this.setState(s=>({evalForm:{...s.evalForm, saving:true, validationMsg:''}}));
     const insertPayload = {
       trainee_id: toSave.traineeId,
-      instructor_id: isSmat ? toSave.instructorId : this.state.myProfileId,
+      // instructor_id is optional for smat (null = no instructor assigned -
+      // requires instructor_id to be nullable in the DB, see the migration)
+      // but never for an instructor's own feedback, which always keeps
+      // myProfileId exactly as before.
+      instructor_id: isSmat ? (toSave.instructorId || null) : this.state.myProfileId,
       form_type: toSave.formType,
       title: toSave.title,
       date: toSave.date,
       course: toSave.course,
       segment: toSave.segment,
-      scores: toSave.scores || {},
-      overall_rating: toSave.overallRating || null,
+      // Score removed - scores is NOT NULL with a {} default, so this must
+      // stay {} (never null); overall_rating is legacy (kept, nullable) and
+      // is never written by the app anymore.
+      scores: {},
       strengths: toSave.strengths || null,
       improvements: toSave.improvements || null,
       summary: toSave.summary || null,
@@ -2335,7 +2203,7 @@ class Component extends DCLogic {
     const base = { feedbackId:fb.id, isEditing:true, status:fb.status, traineeId:fb.traineeId, instructorId:fb.instructorId,
       traineeName:fb.traineeName||'', formType:fb.formType, title:fb.title, date:fb.date,
       segment: fb.segment||'', course: fb.course||'', syllabusNumber: fb.syllabusNumber||'', validationMsg:'',
-      scores:{...(fb.scores||{})}, overallRating:fb.overallRating };
+      scores:{} };
     if(fb.formType==='airCrew'){
       this.navigate('iEval', {evalForm:{...base, lessonNumber:fb.lessonNumber||'', aircraftType:fb.aircraftType||'', instructorFullName:fb.instructorFullName||'', syllabusFull:fb.syllabusFull||'כן',
         syllabusContent:fb.syllabusContent||'', completionsNeeded:fb.completionsNeeded||'',
@@ -2354,12 +2222,12 @@ class Component extends DCLogic {
         missionConnect:fb.missionConnect||'', missionSA:fb.missionSA||'', missionSARoutes:fb.missionSARoutes||'', missionSAFaults:fb.missionSAFaults||'',
         teamExternal:fb.teamExternal||'', teamMC:fb.teamMC||'', teamOSO:fb.teamOSO||'', teamRDO:fb.teamRDO||'', teamMPO:fb.teamMPO||'',
         traitIndependence:fb.traitIndependence||'', traitConfidence:fb.traitConfidence||'', traitPressure:fb.traitPressure||'', traitOrder:fb.traitOrder||'', traitDebrief:fb.traitDebrief||'',
-        summaryRecommendations:fb.summaryRecommendations||'', strengths:fb.strengths||'', improvements:fb.improvements||'', summary:fb.summary||'', recommendations:fb.recommendations||'', overallRating:fb.overallRating||''}});
+        summaryRecommendations:fb.summaryRecommendations||'', strengths:fb.strengths||'', improvements:fb.improvements||'', summary:fb.summary||'', recommendations:fb.recommendations||''}});
     }
   }
   // Feedback deletion - smat only (matches feedbacks_smat_all; no RLS policy
   // grants delete to any other role). Uses the existing confirmDialog
-  // mechanism, same as onRemoveLink.
+  // mechanism, same as askDisableAccount/askReactivateAccount.
   askDeleteFeedback(id){
     if(this.state.role!=='smat') return;
     this.setState({confirmDialog:{ message:'האם למחוק את המשוב לצמיתות? פעולה זו אינה הפיכה.',
@@ -2443,13 +2311,28 @@ class Component extends DCLogic {
     if(error){ this.setState({accountsLoading:false, accounts:[], accountsError:'שגיאה בטעינת המשתמשים: '+error.message}); return; }
     this.setState({accountsLoading:false, accounts:data||[]});
     this.loadProvisionedIds();
+    this.loadAccountPopulations();
+  };
+  // Population per account, for the sAccounts list/filter - same two-query,
+  // map-by-profile_id pattern as loadProvisionedIds. trainee_profiles.population
+  // is a single value; instructor_profiles.populations is an array (an
+  // instructor can cover more than one). Kept as separate lookups (not merged
+  // into `accounts` itself) so accounts stays a plain mirror of `profiles`.
+  loadAccountPopulations=async()=>{
+    if(this.state.role!=='smat' && this.state.role!=='kahad') return;
+    const [tp, ip] = await Promise.all([
+      window.nimbusSupabase.from('trainee_profiles').select('profile_id, population'),
+      window.nimbusSupabase.from('instructor_profiles').select('profile_id, populations')
+    ]);
+    const traineePopulationById = {}; (tp.data||[]).forEach(r=>{ traineePopulationById[r.profile_id] = r.population; });
+    const instructorPopulationsById = {}; (ip.data||[]).forEach(r=>{ instructorPopulationsById[r.profile_id] = r.populations||[]; });
+    this.setState({ traineePopulationById, instructorPopulationsById });
   };
   // Tracks which approved trainee/instructor profiles actually have their
   // matching trainee_profiles/instructor_profiles row. A profile can end up
   // approved without one (e.g. role was changed on an already-approved user,
-  // which today doesn't provision it) - this lets the UI avoid ever offering
-  // such a profile in the link picker, which is what was violating the
-  // instructor_trainees foreign keys.
+  // which today doesn't provision it) - this feeds the "השלמת פרטים חסרים"
+  // repair badge in accountRows below.
   loadProvisionedIds=async()=>{
     if(this.state.role!=='smat') return;
     const [tp, ip] = await Promise.all([
@@ -2461,21 +2344,10 @@ class Component extends DCLogic {
       provisionedInstructorIds: new Set(((ip.data)||[]).map(r=>r.profile_id))
     });
   };
-  loadLinks=async()=>{
-    // Same read-only reasoning as loadAccounts() above - kahad only ever
-    // sees this data if canManageUsers hides the link-management section for
-    // it in the template; onAddLink/onRemoveLink keep their own smat-only
-    // guards unchanged.
-    if(this.state.role!=='smat' && this.state.role!=='kahad') return;
-    this.setState({linksLoading:true, linksError:''});
-    const { data, error } = await window.nimbusSupabase.from('instructor_trainees').select('instructor_id, trainee_id, created_at');
-    if(error){ this.setState({linksLoading:false, links:[], linksError:'שגיאה בטעינת השיוכים: '+error.message}); return; }
-    this.setState({linksLoading:false, links:data||[]});
-  };
   onOpenRoleModal(u, mode){
     if(this.state.role!=='smat') return;
     this.setState({roleModal:{targetId:u.id, targetName:u.full_name||u.username, mode, selectedRole: mode==='change'? u.role : null,
-      course:'', population:'', traineeClass:'', instructorPopulations:[], error:'', saving:false}});
+      population:'', instructorPopulations:[], error:'', saving:false}});
   }
   // Repair path for a profile that is approved with role trainee/instructor
   // but has no matching trainee_profiles/instructor_profiles row (see
@@ -2484,12 +2356,10 @@ class Component extends DCLogic {
   onOpenCompleteProfile(u){
     if(this.state.role!=='smat') return;
     this.setState({roleModal:{targetId:u.id, targetName:u.full_name||u.username, mode:'complete', selectedRole:u.role,
-      course:'', population:'', traineeClass:'', instructorPopulations:[], error:'', saving:false}});
+      population:'', instructorPopulations:[], error:'', saving:false}});
   }
   onCloseRoleModal=()=>this.setState({roleModal:null});
   onPickRole(roleKey){ this.setState(s=>({roleModal:{...s.roleModal, selectedRole:roleKey, error:''}})); }
-  onRoleModalCourseChange=(e)=>this.setState(s=>({roleModal:{...s.roleModal, course:e.target.value, error:''}}));
-  onRoleModalClassChange=(e)=>this.setState(s=>({roleModal:{...s.roleModal, traineeClass:e.target.value, error:''}}));
   onPickRoleModalPopulation(popKey){ this.setState(s=>({roleModal:{...s.roleModal, population:popKey, error:''}})); }
   onToggleRoleModalInstructorPopulation(popKey){
     this.setState(s=>{
@@ -2506,26 +2376,28 @@ class Component extends DCLogic {
     // but is missing its extension row (see loadProvisionedIds) - same field
     // requirements as a fresh approval, but profiles.role/status is untouched.
     const provisioning = m.mode==='approve' || m.mode==='complete';
-    if(provisioning && m.selectedRole==='trainee' && (!m.course.trim() || !m.population || !m.traineeClass.trim())){
-      this.setState(s=>({roleModal:{...s.roleModal, error:'יש למלא קורס, אוכלוסייה ומחזור'}})); return;
+    if(provisioning && m.selectedRole==='trainee' && !m.population){
+      this.setState(s=>({roleModal:{...s.roleModal, error:'יש לבחור אוכלוסייה'}})); return;
     }
     if(provisioning && m.selectedRole==='instructor' && !(m.instructorPopulations||[]).length){
       this.setState(s=>({roleModal:{...s.roleModal, error:'יש לבחור לפחות אוכלוסייה אחת'}})); return;
     }
     this.setState(s=>({roleModal:{...s.roleModal, saving:true, error:''}}));
-    if(m.mode!=='complete'){
-      const patch = m.mode==='approve' ? {role:m.selectedRole, status:'approved'} : {role:m.selectedRole};
-      const { error } = await window.nimbusSupabase.from('profiles').update(patch).eq('id', m.targetId);
-      if(error){ this.setState(s=>({roleModal:{...s.roleModal, saving:false, error:error.message}})); return; }
-    }
-    if(provisioning && m.selectedRole==='trainee'){
-      const { error: tErr } = await window.nimbusSupabase.from('trainee_profiles').upsert({profile_id:m.targetId, course:m.course.trim(), population:m.population, class:m.traineeClass.trim()}, {onConflict:'profile_id'});
-      if(tErr){ this.setState(s=>({roleModal:{...s.roleModal, saving:false, error:'יצירת פרטי החניך נכשלה: '+tErr.message}})); await this.loadAccounts(); return; }
-    }
-    if(provisioning && m.selectedRole==='instructor'){
-      const { error: iErr } = await window.nimbusSupabase.from('instructor_profiles').upsert({profile_id:m.targetId, populations:m.instructorPopulations}, {onConflict:'profile_id'});
-      if(iErr){ this.setState(s=>({roleModal:{...s.roleModal, saving:false, error:'יצירת פרטי המדריך נכשלה: '+iErr.message}})); await this.loadAccounts(); return; }
-    }
+    // Single atomic RPC replaces what used to be up to 3 separate Supabase
+    // calls (profiles.update + trainee_profiles/instructor_profiles.upsert).
+    // A single RPC call is one PostgREST transaction, so a failure partway
+    // through smat_set_user_role() can no longer leave profiles.role updated
+    // with no matching extension row - the whole call rolls back together.
+    // The client-side checks above remain a responsive-form convenience only
+    // - the real gate (role/mode/field validation) is inside the function.
+    const { error } = await window.nimbusSupabase.rpc('smat_set_user_role', {
+      _target_id: m.targetId,
+      _mode: m.mode,
+      _role: m.selectedRole,
+      _population: m.selectedRole==='trainee' ? m.population : null,
+      _populations: m.selectedRole==='instructor' ? m.instructorPopulations : null
+    });
+    if(error){ this.setState(s=>({roleModal:{...s.roleModal, saving:false, error:error.message}})); return; }
     this.setState({roleModal:null, showSuccess:true, successMsg:'העדכון בוצע בהצלחה'});
     setTimeout(()=>this.setState({showSuccess:false}), 1000*this.speedMul());
     await this.loadAccounts();
@@ -2537,16 +2409,14 @@ class Component extends DCLogic {
   onOpenCreateUserModal=()=>{
     if(this.state.role!=='smat') return;
     this.setState({createUserModal:{username:'', password:'', fullName:'', selectedRole:null,
-      course:'', population:'', traineeClass:'', instructorPopulations:[], error:'', saving:false}});
+      population:'', instructorPopulations:[], error:'', saving:false}});
   };
   onCloseCreateUserModal=()=>this.setState({createUserModal:null});
   onCreateUserUsernameChange=(e)=>this.setState(s=>({createUserModal:{...s.createUserModal, username:e.target.value, error:''}}));
   onCreateUserPasswordChange=(e)=>this.setState(s=>({createUserModal:{...s.createUserModal, password:e.target.value, error:''}}));
   onCreateUserFullNameChange=(e)=>this.setState(s=>({createUserModal:{...s.createUserModal, fullName:e.target.value, error:''}}));
   onPickCreateUserRole(roleKey){ this.setState(s=>({createUserModal:{...s.createUserModal, selectedRole:roleKey, error:''}})); }
-  onCreateUserCourseChange=(e)=>this.setState(s=>({createUserModal:{...s.createUserModal, course:e.target.value, error:''}}));
   onPickCreateUserPopulation(popKey){ this.setState(s=>({createUserModal:{...s.createUserModal, population:popKey, error:''}})); }
-  onCreateUserClassChange=(e)=>this.setState(s=>({createUserModal:{...s.createUserModal, traineeClass:e.target.value, error:''}}));
   onToggleCreateUserInstructorPopulation(popKey){
     this.setState(s=>{
       const cur = s.createUserModal.instructorPopulations||[];
@@ -2566,15 +2436,15 @@ class Component extends DCLogic {
     if(!m.selectedRole){
       this.setState(s=>({createUserModal:{...s.createUserModal, error:'יש לבחור תפקיד'}})); return;
     }
-    if(m.selectedRole==='trainee' && (!m.course.trim() || !m.population || !m.traineeClass.trim())){
-      this.setState(s=>({createUserModal:{...s.createUserModal, error:'יש למלא קורס, אוכלוסייה ומחזור'}})); return;
+    if(m.selectedRole==='trainee' && !m.population){
+      this.setState(s=>({createUserModal:{...s.createUserModal, error:'יש לבחור אוכלוסייה'}})); return;
     }
     if(m.selectedRole==='instructor' && !(m.instructorPopulations||[]).length){
       this.setState(s=>({createUserModal:{...s.createUserModal, error:'יש לבחור לפחות אוכלוסייה אחת'}})); return;
     }
     this.setState(s=>({createUserModal:{...s.createUserModal, saving:true, error:''}}));
     const payload = {username:m.username.trim(), password:m.password, full_name:m.fullName.trim(), role:m.selectedRole};
-    if(m.selectedRole==='trainee'){ payload.course=m.course.trim(); payload.population=m.population; payload.class=m.traineeClass.trim(); }
+    if(m.selectedRole==='trainee'){ payload.population=m.population; }
     if(m.selectedRole==='instructor'){ payload.populations=m.instructorPopulations; }
     const res = await this.invokeAdminFn('admin-create-user', payload);
     if(res.error){ this.setState(s=>({createUserModal:{...s.createUserModal, saving:false, error:res.error}})); return; }
@@ -2666,55 +2536,6 @@ class Component extends DCLogic {
     this.setState({resetPwModal:null, showSuccess:true, successMsg:'הסיסמה אופסה בהצלחה'});
     setTimeout(()=>this.setState({showSuccess:false}), 1000*this.speedMul());
   };
-  onLinkInstructorChange=(e)=>this.setState({linkInstructorId:e.target.value, linksError:''});
-  onLinkTraineeChange=(e)=>this.setState({linkTraineeId:e.target.value, linksError:''});
-  onAddLink=async()=>{
-    if(this.state.role!=='smat') return;
-    const {linkInstructorId, linkTraineeId} = this.state;
-    if(!linkInstructorId || !linkTraineeId){ this.setState({linksError:'יש לבחור גם מדריך וגם חניך'}); return; }
-    this.setState({linksLoading:true, linksError:''});
-    // Re-check directly against trainee_profiles/instructor_profiles right
-    // before inserting, instead of trusting the (possibly stale) client-side
-    // provisionedTraineeIds/provisionedInstructorIds used to filter the
-    // dropdowns. instructor_trainees.trainee_id references
-    // trainee_profiles(profile_id) - not profiles(id) directly - so this is
-    // the exact row that must exist for the insert to satisfy that FK.
-    const [tpCheck, ipCheck] = await Promise.all([
-      window.nimbusSupabase.from('trainee_profiles').select('profile_id').eq('profile_id', linkTraineeId).maybeSingle(),
-      window.nimbusSupabase.from('instructor_profiles').select('profile_id').eq('profile_id', linkInstructorId).maybeSingle()
-    ]);
-    if(!tpCheck.data){ this.setState({linksLoading:false, linksError:'לחניך שנבחר אין עדיין רשומת trainee_profiles - יש להשתמש בכפתור "השלמת פרטים חסרים" קודם.'}); return; }
-    if(!ipCheck.data){ this.setState({linksLoading:false, linksError:'למדריך שנבחר אין עדיין רשומת instructor_profiles - יש להשתמש בכפתור "השלמת פרטים חסרים" קודם.'}); return; }
-    const { error } = await window.nimbusSupabase.from('instructor_trainees').insert({instructor_id:linkInstructorId, trainee_id:linkTraineeId});
-    if(error){ this.setState({linksLoading:false, linksError:'שגיאה בשיוך: '+error.message}); return; }
-    this.setState({linkInstructorId:'', linkTraineeId:''});
-    await this.loadLinks();
-  };
-  onRemoveLink(l){
-    if(this.state.role!=='smat') return;
-    this.setState({confirmDialog:{ message:'האם להסיר את השיוך בין '+l.instructorName+' ל-'+l.traineeName+'?',
-      onCancel:()=>this.setState({confirmDialog:null}),
-      onConfirm: async ()=>{
-        this.setState({confirmDialog:null});
-        const { error } = await window.nimbusSupabase.from('instructor_trainees').delete().eq('instructor_id', l.instructor_id).eq('trainee_id', l.trainee_id);
-        if(error){ this.setState({linksError:'שגיאה בהסרת שיוך: '+error.message}); return; }
-        await this.loadLinks();
-      } }});
-  }
-
-  scoreOptionsFor(cats, scores, setFn){
-    return cats.map(c=>({
-      key:c.key, label:c.label,
-      options:RATING_SCALE.map(r=>{
-        const selected = scores[c.key]===r.n;
-        const style = selected
-          ? 'flex:1; text-align:center; padding:11px 0; border-radius:12px; font-weight:800; font-size:15px; cursor:pointer; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; box-shadow:0 6px 14px rgba(46,143,224,0.35); transform:scale(1.04); transition:all 180ms;'
-          : 'flex:1; text-align:center; padding:11px 0; border-radius:12px; font-weight:700; font-size:15px; cursor:pointer; background:#F2F8FE; color:#5C7A96; transition:all 180ms;';
-        return {n:r.n, style, onClick: ()=>setFn(c.key, r.n)};
-      })
-    }));
-  }
-
   // Builds every out.* field the iEval template (create/edit form) needs from
   // s.evalForm. Originally lived only inside the role==='instructor' branch
   // of renderVals(), which meant out.scrIEval/out.evalForm/etc. were never
@@ -2739,7 +2560,17 @@ class Component extends DCLogic {
       // field and empty the segment list on every real edit. Keep the
       // existing course as-is, and offer segments from the generic
       // SYLLABUS_SECTIONS list instead of course-specific ones.
-      out.courseOptions = [{value: s.evalForm.course||'', label: s.evalForm.course||'-'}];
+      // If the feedback has no course at all (e.g. a row created directly
+      // in Supabase without one), there is no existing value to preserve -
+      // fall back to the same catalogue the creation form offers, so
+      // editing never leaves the picker with a single unusable '-' option.
+      if(s.evalForm.course){
+        out.courseOptions = [{value: s.evalForm.course, label: s.evalForm.course}];
+      } else {
+        const editTypeCourses = coursesForType(s.evalForm.formType);
+        const editValidCourses = editTypeCourses.length? editTypeCourses.map(c=>c.name) : COURSES;
+        out.courseOptions = editValidCourses.map(x=>({value:x, label:x}));
+      }
       out.segmentOptions = SYLLABUS_SECTIONS.map(sec=>({value:sec.n, label:sec.n+' - '+sec.name, disabled:false, style:'color:#123A5E;'}));
       out.evalForm.segmentDisabled = locked;
     } else {
@@ -2769,14 +2600,6 @@ class Component extends DCLogic {
     out.onSegmentChange = this.onSegmentChange; out.onEvalCourseChange = this.onEvalCourseChange; out.onSyllabusNumberChange = this.onSyllabusNumberChange;
     out.onObjectivesTextChange = this.onObjectivesTextChange; out.onImproveNotesChange = this.onImproveNotesChange; out.onKeepNotesChange = this.onKeepNotesChange;
     out.onEvalDateChange = this.onEvalDateChange;
-    out.evalScoreRows = this.scoreOptionsFor(catsFor(s.evalForm.formType), s.evalForm.scores, (k,n)=>this.setEvalScore(k,n));
-    out.airCrewScoreOptions = SCORE_OPTIONS.map(n=>{
-      const selected = s.evalForm.scores && s.evalForm.scores.overall===n;
-      return {n, onClick:()=>this.setEvalScore('overall', n),
-        style: selected
-          ? 'flex:1; text-align:center; padding:11px 0; border-radius:12px; font-weight:800; font-size:14px; cursor:pointer; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; box-shadow:0 6px 14px rgba(46,143,224,0.35); transform:scale(1.04); transition:all 180ms;'
-          : 'flex:1; text-align:center; padding:11px 0; border-radius:12px; font-weight:700; font-size:14px; cursor:pointer; background:#F2F8FE; color:#5C7A96; transition:all 180ms;'};
-    });
     out.onAircraftTypeChange = this.onAircraftTypeChange;
     out.onInstructorFullNameChange = this.onInstructorFullNameChange;
     out.onCourseNameChange = this.onCourseNameChange; out.onControllerSyllabusChange = this.onControllerSyllabusChange;
@@ -2843,11 +2666,6 @@ class Component extends DCLogic {
       return {label:v, onClick:()=>this.setSyllabusFull(v),
         style:`padding:9px 16px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; transition:all 180ms; ${selected?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#F2F8FE; color:#2E6FA8;'}`};
     });
-    out.overallRatingOptions = RATINGS.map(r=>{
-      const selected = s.evalForm.overallRating===r; const rc = ratingColors(r);
-      return {label:r, onClick:()=>this.setEvalField('overallRating', r),
-        style:`padding:14px 16px; border-radius:14px; font-weight:700; font-size:14.5px; cursor:pointer; transition:all 180ms; ${selected? `background:${rc.fg}; color:white; box-shadow:0 8px 18px rgba(0,0,0,0.12);` : `background:${rc.bg}; color:${rc.fg};`}`};
-    });
     out.onSaveEval = this.onSaveEval;
   }
 
@@ -2887,7 +2705,7 @@ class Component extends DCLogic {
       // through to the destructive default below.
       confirmDialog: s.confirmDialog ? {...s.confirmDialog, confirmLabel: s.confirmDialog.confirmLabel || 'מחיקה', confirmBg: s.confirmDialog.confirmBg || '#D14A38'} : null,
       showAddToHome: s.showAddToHome, onCloseAddToHome: this.onCloseAddToHome,
-      infoModal: s.infoModal, onCloseInfo: this.onCloseInfo, onOpenCourseInfo: this.onOpenCourseInfo, onOpenRatingInfo: this.onOpenRatingInfo,
+      infoModal: s.infoModal, onCloseInfo: this.onCloseInfo, onOpenCourseInfo: this.onOpenCourseInfo,
       printJob: s.printJob, onDoPrint: this.onDoPrint, onClosePrint: this.onClosePrint,
       printFrom: s.printFrom, printTo: s.printTo, onPrintFromChange: this.onPrintFromChange, onPrintToChange: this.onPrintToChange,
       segmentOptions: SYLLABUS_SECTIONS.map(sec=>({value:sec.n, label:sec.n+' - '+sec.name, disabled:false})), courseOptions: COURSES.map(x=>({value:x, label:x})),
@@ -2931,7 +2749,11 @@ class Component extends DCLogic {
       if(role==='instructor'){ const nm=s.myProfileName||INSTRUCTOR_NAME; out.profileInitial=nm[0]; out.profileName=nm; out.profileSubtitle='מדריך · חיל האוויר'; }
       else if(role==='smat'){ const nm=s.myProfileName||SMAT_NAME; out.profileInitial=nm[0]; out.profileName=nm; out.profileSubtitle='מנהל/ת מערכת (סמ"ט)'; }
       else if(role==='kahad'){ const nm=s.myProfileName||KAHAD_NAME; out.profileInitial=nm[0]; out.profileName=nm; out.profileSubtitle='קה"ד · צפייה בלבד'; }
-      else { const me=traineeById(s.currentTraineeId); const nm=s.myProfileName||me.name; out.profileInitial=nm[0]; out.profileName=nm; out.profileSubtitle=s.myProfileCourseLabel||(me.course+' · '+me.class); }
+      // Never falls back to the demo TRAINEES roster - a trainee with no
+      // course/class set in trainee_profiles (population-only, now the
+      // normal case - see the simplified creation flow) must show an empty
+      // subtitle, never another trainee's demo data.
+      else { const nm=s.myProfileName||''; out.profileInitial=nm[0]||''; out.profileName=nm; out.profileSubtitle=s.myProfileCourseLabel||''; }
       out.onLogout = this.onLogout;
       out.onOpenAddToHome = this.onOpenAddToHome;
     }
@@ -2945,8 +2767,9 @@ class Component extends DCLogic {
       out.instructorName = s.myProfileName || INSTRUCTOR_NAME;
       out.todayLabel = new Date().toLocaleDateString('he-IL',{weekday:'long', day:'numeric', month:'long'});
       // iDash is now real-only: stats/recentTrainees/myFeedbacksRows come
-      // from s.trainees (instructor_trainees+profiles+trainee_profiles,
-      // already loaded at bootstrap via loadMyTrainees()) and
+      // from s.trainees (population-based - profiles+trainee_profiles
+      // matched against instructor_profiles.populations, already loaded at
+      // bootstrap via loadMyTrainees()) and
       // s.myFeedbacks (already loaded via loadMyFeedbacks()) -
       // never TRAINEES/visibleTrainees/traineeById/FEEDBACKS/s.feedbacks.
       // Loading/empty flags reuse the same traineesLoading/
@@ -2968,8 +2791,8 @@ class Component extends DCLogic {
 
       const q = s.searchQuery.trim();
       // iTrainees ("החניכים שלי") is now real-data-backed: s.trainees
-      // (instructor_trainees + profiles + trainee_profiles, already loaded at
-      // bootstrap and reused as-is from the new-feedback picker) - never
+      // (population-based, already loaded at bootstrap and reused as-is
+      // from the new-feedback picker) - never
       // TRAINEES/visibleTrainees/traineeById. courseFilters stays the same
       // generic mechanism, just built from the real, free-text course values
       // instead of the demo catalogue - it still works because it only ever
@@ -3025,33 +2848,23 @@ class Component extends DCLogic {
 
     if(role==='trainee'){
       out.scrTDash = s.screen==='tDash'; out.scrTFeedback = s.screen==='tFeedback'; out.scrTStats = s.screen==='tStats';
-      const me = traineeById(s.currentTraineeId);
-      out.traineeName = s.myProfileName || me.name; out.traineeCourseLabel = s.myProfileCourseLabel || (me.course+' · '+me.class);
+      // Never falls back to the demo TRAINEES roster - see the matching
+      // fix on the profile screen above for why.
+      out.traineeName = s.myProfileName || ''; out.traineeCourseLabel = s.myProfileCourseLabel || '';
       const hr = new Date().getHours(); out.greeting = hr<12?'בוקר טוב': hr<18?'צהריים טובים':'ערב טוב';
-      // circ is a pure geometric constant (not derived from any feedback
-      // data) - still needed below for ringOffset. The demo mine/mineVals/a
-      // this block used to also compute here were removed: every out.*
-      // below already reads mine/mineAvg (real), not them - they had
-      // become dead (myApprovedFeedbacks()'s only other caller, the demo
-      // onOpenLatest, was already dead too).
-      const circ = 2*Math.PI*27; out.ringCirc = circ.toFixed(1);
 
-      // tDash real data. myAvg comes from scores (avg/num, generic - never
-      // overall_rating, which is known-unreliable for controllers/scouts -
-      // that gap is tracked separately, not fixed here). "latest" is sorted
-      // by date (flight date), matching myApprovedFeedbacks()'s own sort -
-      // never relying on the query's created_at order. instructorName is
-      // already resolved by loadMyApprovedFeedbacks() - never
-      // instructorById. onOpenLatest opens it via viewFeedback.
+      // tDash real data. "latest" is sorted by date (flight date), matching
+      // myApprovedFeedbacks()'s own sort - never relying on the query's
+      // created_at order. instructorName is already resolved by
+      // loadMyApprovedFeedbacks() - never instructorById. onOpenLatest opens
+      // it via viewFeedback. The overall-score ring/average this block used
+      // to also compute (mineVals/mineAvg/ringCirc/ringOffset) was removed
+      // along with the score itself - no replacement metric.
       const mine = s.myApprovedFeedbacks;
-      const mineVals = mine.map(f=>avg(f.scores)).filter(v=>v>0);
-      const mineAvg = mineVals.length? mineVals.reduce((x,y)=>x+y,0)/mineVals.length : 0;
-      out.myAvg = mineVals.length? mineAvg.toFixed(1) : '-';
       out.progressLabel = mine.length;
-      out.ringOffset = (circ*(1-(mine.length?(mineAvg-5)/4:0))).toFixed(1);
       out.noFeedbackYet = mine.length===0;
       const latest = [...mine].sort((x,y)=>x.date<y.date?1:-1)[0];
-      out.latestFeedback = latest? (()=>{ const rc=ratingColors(latest.overall_rating); return {title:latest.title, instructor:latest.instructorName, dateLabel:fmtDate(latest.date), overallRating:latest.overall_rating, ratingBg:rc.bg, ratingFg:rc.fg}; })() : null;
+      out.latestFeedback = latest? {title:latest.title, instructor:latest.instructorName, dateLabel:fmtDate(latest.date)} : null;
       out.onGoFeedback = this.onGoFeedback;
       out.onOpenLatest = ()=>{ if(latest) this.viewFeedback(latest.id); };
 
@@ -3062,43 +2875,19 @@ class Component extends DCLogic {
       const q = s.searchQuery.trim();
       const filtered = s.myApprovedFeedbacks.filter(f=>!q||f.title.includes(q));
       out.timelineEmpty = filtered.length===0;
-      out.timeline = filtered.map(f=>{
-        const rc = ratingColors(f.overallRating);
-        return {title:f.title, instructor:f.instructorName, typeLabel:typeLabel(f.form_type), dateLabel:fmtDate(f.date), overallRating:f.overallRating,
-          ratingBg:rc.bg, ratingFg:rc.fg, onOpen:()=>this.viewFeedback(f.id)};
-      });
+      out.timeline = filtered.map(f=>({title:f.title, instructor:f.instructorName, typeLabel:typeLabel(f.form_type), dateLabel:fmtDate(f.date), onOpen:()=>this.viewFeedback(f.id)}));
 
-      // tStats real data - reuses mine/mineAvg already computed for tDash
-      // above, so there's only one real average, not two.
-      // next_flight_notes/recommendations/scores are already resolved by
-      // loadMyApprovedFeedbacks().
+      // tStats real data - reuses mine already computed for tDash above.
+      // next_flight_notes/recommendations are already resolved by
+      // loadMyApprovedFeedbacks(). The overall-score trend graph/category
+      // bars this block used to also compute were removed along with the
+      // score itself - no replacement metric.
       const highlights = mine.filter(f=>(f.next_flight_notes||f.recommendations||'').trim());
       out.hasHighlights = highlights.length>0;
       out.highlights = highlights.map(f=>({title:f.title, dateLabel:fmtDate(f.date),
         notes: f.next_flight_notes || f.recommendations, onClick: ()=>this.viewFeedback(f.id)}));
       out.completedCount = mine.length;
       out.completionPct = Math.min(100, Math.round((mine.length/8)*100));
-      const statCirc = 2*Math.PI*50; out.statCirc = statCirc.toFixed(1); out.statOffset = (statCirc*(1-(mine.length?(mineAvg-5)/4:0))).toFixed(1);
-      // Sorted by date (descending) then reversed to chronological (oldest ->
-      // newest) - same as mine's own sort inside myApprovedFeedbacks(), never
-      // relying on the query's created_at order.
-      const sorted = [...mine].sort((x,y)=>x.date<y.date?1:-1);
-      const pts = sorted.length? [...sorted].reverse().map(f=>avg(f.scores)) : [5];
-      const minV = Math.min(...pts,5), maxV = Math.max(...pts,9);
-      const stepX = pts.length>1? 280/(pts.length-1) : 0;
-      const coords = pts.map((v,i)=>({x:10+i*stepX, y: 80 - ((v-minV)/((maxV-minV)||1))*60}));
-      out.trendPoints = coords.map(c=>`${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(' ');
-      out.trendDots = coords;
-      // Object.keys(f.scores||{}) - not f.scores directly - guards against a
-      // theoretical null scores value that onSaveEval itself never writes
-      // (it always sends scores:{} at minimum) but that isn't provable for
-      // every historical row without querying the database directly.
-      const allCatKeys = {}; mine.forEach(f=>Object.keys(f.scores||{}).forEach(k=>{ allCatKeys[k]=true; }));
-      const labelMap = {}; [...AIR_CREW_CATS,...CONTROLLERS_CATS,...SCOUTS_CATS].forEach(c=>labelMap[c.key]=c.label);
-      out.catBars = Object.keys(allCatKeys).map(k=>{
-        const vals = mine.map(f=>num((f.scores||{})[k])).filter(v=>v!==null); const av = vals.length? vals.reduce((a,b)=>a+b,0)/vals.length : 0;
-        return {label:labelMap[k]||k, value: vals.length? av.toFixed(1):'-', pct: vals.length? ((av-5)/4)*100 : 0, barColor:scoreColor(av)};
-      });
     }
 
     if(role==='smat' || role==='kahad'){
@@ -3117,20 +2906,21 @@ class Component extends DCLogic {
         // iNewFeedback/iEval screens and evalForm shape the instructor
         // branch's own (untouched) `if(s.draft)` block above builds, just
         // sourced from s.accounts (already loaded for smat) instead of
-        // s.trainees/instructor_trainees, since smat isn't linked to anyone
-        // via that table. Kahad never reaches here (outer if is smat-only).
+        // s.trainees, since smat isn't scoped by population like an
+        // instructor is. Kahad never reaches here (outer if is smat-only).
         out.scrINewFeedback = s.screen==='iNewFeedback';
         out.onOpenNewFeedback = this.onOpenNewFeedback;
         if(s.draft){
           out.assignedOptions = s.accounts.filter(a=>a.role==='trainee' && a.status==='approved').map(a=>({value:a.id, label:a.full_name||a.username}));
           out.smatInstructorOptions = s.accounts.filter(a=>a.role==='instructor' && a.status==='approved').map(a=>({value:a.id, label:a.full_name||a.username}));
-          const draftReady = !!(s.draft.traineeId && s.draft.formType && s.draft.instructorId);
+          // Instructor is optional for smat - never part of readiness.
+          const draftReady = !!(s.draft.traineeId && s.draft.formType);
           out.draft = { showTraineeSelect: !s.draft.traineeName, showTraineeName: !!s.draft.traineeName, traineeId: s.draft.traineeId, traineeName: s.draft.traineeName,
             showInstructorSelect: !s.draft.instructorName, showInstructorName: !!s.draft.instructorName, instructorId: s.draft.instructorId||'', instructorName: s.draft.instructorName||'',
             title: s.draft.title,
             continueDisabled: !draftReady,
             continueStyle: `width:100%; padding:16px; border:none; border-radius:16px; color:white; font-size:16px; font-weight:700; transition:transform 200ms; ${draftReady? 'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); cursor:pointer; box-shadow:0 10px 24px rgba(46,143,224,0.35);' : 'background:#C7D8E6; cursor:not-allowed;'}` };
-          out.onDraftTraineeChange = this.onDraftTraineeChange; out.onDraftInstructorChange = this.onDraftInstructorChange; out.onDraftTitleChange = this.onDraftTitleChange;
+          out.onDraftTraineeChange = this.onDraftTraineeChange; out.onDraftInstructorChange = this.onDraftInstructorChange; out.onClearDraftInstructor = this.onClearDraftInstructor; out.onDraftTitleChange = this.onDraftTitleChange;
           out.onDraftContinue = this.onDraftContinue;
           out.formTypeOptions = FORM_TYPES.map(ft=>{
             const selected = s.draft.formType===ft.key;
@@ -3169,7 +2959,10 @@ class Component extends DCLogic {
       // "דפיות" list on iDash.
       out.allFeedbacksLoading = s.allFeedbacksLoading;
       out.noAllFeedbacks = !s.allFeedbacksLoading && s.allFeedbacks.length===0;
-      out.allFeedbacksRows = s.allFeedbacks.map(f=>{
+      out.feedbackSearchQuery = s.feedbackSearchQuery;
+      out.onFeedbackSearchChange = this.onFeedbackSearchChange;
+      const fq = s.feedbackSearchQuery.trim();
+      out.allFeedbacksRows = s.allFeedbacks.filter(f=>!fq || (f.traineeName||'').includes(fq) || (f.instructorName||'').includes(fq) || (f.title||'').includes(fq)).map(f=>{
         const st = statusInfo(f.status);
         // traineeName click opens openTrainee (real uuid) - same mechanism
         // already used by smatPendingList/allFeedbacks above, not a new one.
@@ -3210,15 +3003,41 @@ class Component extends DCLogic {
       if(role==='smat' || role==='kahad'){
         out.accountsLoading = s.accountsLoading;
         out.hasAccountsError = !!s.accountsError; out.accountsError = s.accountsError;
-        out.accountRows = s.accounts.map(a=>{
+        out.accountSearchQuery = s.accountSearchQuery;
+        out.onAccountSearchChange = this.onAccountSearchChange;
+        const ACCOUNT_FILTER_OPTIONS = [{key:'all', label:'הכל'}, {key:'trainee', label:'חניכים'}, {key:'instructor', label:'מדריכים'}, {key:'kahad', label:'קה"דים'}, {key:'smat', label:'סמ"טים'}];
+        out.accountRoleFilters = ACCOUNT_FILTER_OPTIONS.map(o=>({label:o.label, onClick:()=>this.setFilterAccountRole(o.key),
+          style:`padding:9px 16px; border-radius:999px; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; transition:all 180ms; ${s.filterAccountRole===o.key?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#ffffff; color:#5C7A96;'}`}));
+        // Population filter - only meaningful (and only shown) for trainee/
+        // instructor, where accounts actually carry a population.
+        out.showPopulationFilters = s.filterAccountRole==='trainee' || s.filterAccountRole==='instructor';
+        const POPULATION_FILTER_OPTIONS = [{key:'all', label:'הכל'}, ...POPULATIONS];
+        out.populationFilters = POPULATION_FILTER_OPTIONS.map(p=>({label:p.label, onClick:()=>this.setFilterPopulation(p.key),
+          style:`padding:9px 16px; border-radius:999px; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; transition:all 180ms; ${s.filterPopulation===p.key?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#ffffff; color:#5C7A96;'}`}));
+        const aq = s.accountSearchQuery.trim();
+        out.accountRows = s.accounts.filter(a=>{
+          if(s.filterAccountRole!=='all' && a.role!==s.filterAccountRole) return false;
+          if(aq && !((a.full_name||'').includes(aq) || (a.username||'').includes(aq))) return false;
+          if(s.filterPopulation!=='all'){
+            if(s.filterAccountRole==='trainee' && (s.traineePopulationById[a.id]||'')!==s.filterPopulation) return false;
+            if(s.filterAccountRole==='instructor' && !(s.instructorPopulationsById[a.id]||[]).includes(s.filterPopulation)) return false;
+          }
+          return true;
+        }).map(a=>{
           const st = accountStatusInfo(a.status);
           const missingProfile = a.status==='approved' &&
             ((a.role==='trainee' && !s.provisionedTraineeIds.has(a.id)) || (a.role==='instructor' && !s.provisionedInstructorIds.has(a.id)));
           const canManageThis = canManage(role);
+          const popLabel = a.role==='trainee' ? populationLabel(s.traineePopulationById[a.id]||'')
+            : a.role==='instructor' ? (s.instructorPopulationsById[a.id]||[]).map(populationLabel).join(' · ')
+            : '';
           return {
             id:a.id, name:a.full_name||'(ללא שם)', username:a.username||'-', roleLabel: accountRoleLabel(a.role),
             statusLabel:st.label, statusBg:st.bg, statusFg:st.fg,
             canManage: canManageThis,
+            isTraineeRow: a.role==='trainee', isNotTraineeRow: a.role!=='trainee',
+            onNameClick: a.role==='trainee' ? ()=>this.openTrainee(a.id) : ()=>{},
+            populationLabel: popLabel, hasPopulationLabel: !!popLabel,
             isPending: a.status==='pending', isApproved: a.status==='approved', isDisabled: a.status==='disabled',
             canResetPw: a.status==='approved' || a.status==='disabled',
             missingProfile,
@@ -3250,7 +3069,6 @@ class Component extends DCLogic {
                 style:`padding:13px 16px; border-radius:14px; font-weight:700; font-size:14px; cursor:pointer; transition:all 180ms; ${selected?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; box-shadow:0 6px 14px rgba(46,143,224,0.3);':'background:#F2F8FE; color:#2E6FA8;'}`};
             }),
             onUsernameChange:this.onCreateUserUsernameChange, onPasswordChange:this.onCreateUserPasswordChange, onFullNameChange:this.onCreateUserFullNameChange,
-            onCourseChange:this.onCreateUserCourseChange, onClassChange:this.onCreateUserClassChange,
             populationOptions: POPULATIONS.map(p=>{
               const selected = m.population===p.key;
               return {label:p.label, onClick:()=>this.onPickCreateUserPopulation(p.key),
@@ -3277,7 +3095,6 @@ class Component extends DCLogic {
               return {label:ro.label, onClick:()=>this.onPickRole(ro.key),
                 style:`padding:13px 16px; border-radius:14px; font-weight:700; font-size:14px; cursor:pointer; transition:all 180ms; ${selected?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; box-shadow:0 6px 14px rgba(46,143,224,0.3);':'background:#F2F8FE; color:#2E6FA8;'}`};
             }),
-            onCourseChange:this.onRoleModalCourseChange, onClassChange:this.onRoleModalClassChange,
             populationOptions: POPULATIONS.map(p=>{
               const selected = s.roleModal.population===p.key;
               return {label:p.label, onClick:()=>this.onPickRoleModalPopulation(p.key),
@@ -3296,18 +3113,6 @@ class Component extends DCLogic {
         if(s.deleteUserModal){
           out.deleteUserModal = {...s.deleteUserModal, hasError: !!s.deleteUserModal.error, onConfirmTextChange:this.onDeleteUserConfirmTextChange, onCancel:this.onCloseDeleteUserModal, onConfirm:this.onConfirmDeleteUser};
         }
-        out.linksLoading = s.linksLoading; out.hasLinksError = !!s.linksError; out.linksError = s.linksError;
-        out.linkInstructorId = s.linkInstructorId; out.linkTraineeId = s.linkTraineeId;
-        out.onLinkInstructorChange = this.onLinkInstructorChange; out.onLinkTraineeChange = this.onLinkTraineeChange; out.onAddLink = this.onAddLink;
-        out.linkInstructorOptions = s.accounts.filter(a=>a.role==='instructor' && a.status==='approved' && s.provisionedInstructorIds.has(a.id)).map(a=>({value:a.id, label:a.full_name||a.username}));
-        out.linkTraineeOptions = s.accounts.filter(a=>a.role==='trainee' && a.status==='approved' && s.provisionedTraineeIds.has(a.id)).map(a=>({value:a.id, label:a.full_name||a.username}));
-        out.linkRows = s.links.map(l=>{
-          const ins = s.accounts.find(a=>a.id===l.instructor_id);
-          const tr = s.accounts.find(a=>a.id===l.trainee_id);
-          const instructorName = ins? (ins.full_name||ins.username) : '-';
-          const traineeName = tr? (tr.full_name||tr.username) : '-';
-          return { instructorName, traineeName, onRemove: ()=>this.onRemoveLink({instructor_id:l.instructor_id, trainee_id:l.trainee_id, instructorName, traineeName}) };
-        });
       }
     }
 
@@ -3326,10 +3131,10 @@ class Component extends DCLogic {
       // traineeDetail arrives, out.detail must still be a well-formed
       // object, never undefined.
       out.detail = s.traineeDetail ? this.buildDetail(s.traineeDetail) : {
-        name:'', initial:'', avatarBg:'#4FAEFF', course:'-', class:'-', avgLabel:'-', count:0, empty:true, canAdd:false,
-        hasStats:false, hasHighlights:false, highlights:[], hasPatterns:false, patterns:[],
+        name:'', initial:'', avatarBg:'#4FAEFF', course:'-', class:'-', count:0, empty:true, canAdd:false,
+        hasHighlights:false, highlights:[], hasPatterns:false, patterns:[],
         showSyllabusOverview:false, syllabusSummary:'', syllabusItems:[],
-        onExportAll:()=>{}, onExportRange:()=>{}, trendPoints:'', trendDots:[], catBars:[], history:[]
+        onExportAll:()=>{}, onExportRange:()=>{}, history:[]
       };
       out.onNewFeedbackForTrainee = this.onNewFeedbackForTrainee;
     }
@@ -3341,16 +3146,14 @@ class Component extends DCLogic {
     // so it works from any role's entry point.
     if(s.screen==='feedbackView' && s.viewingFeedback){
       const f = s.viewingFeedback;
-      const st = statusInfo(f.status); const cats = catsFor(f.formType); const isAC = f.formType==='airCrew'; const isCtl = f.formType==='controllers';
+      const st = statusInfo(f.status); const isAC = f.formType==='airCrew'; const isCtl = f.formType==='controllers';
       out.scrFeedbackView = true;
       out.viewFb = {
         title:f.title, typeLabel:typeLabel(f.formType), traineeName:f.traineeName||'-', instructor:f.instructorName||'-',
-        dateLabel:fmtDate(f.date), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, overallRating:f.overallRating||'ללא ציון',
+        dateLabel:fmtDate(f.date), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg,
         isAirCrew:isAC, isControllers:isCtl, isStandard:!isAC && !isCtl,
         strengths:f.strengths||'-', improvements:f.improvements||'-', summary:f.summary||'-', recommendations:f.recommendations||'-',
-        scoreRows: cats.map(c=>{ const v=num((f.scores||{})[c.key]); return {label:c.label, value:(f.scores||{})[c.key], pct: v===null?0:((v-5)/4)*100, barColor:scoreColor(v===null?0:v)}; }),
         lessonNumber:syllabusSectionLabel(f.lessonNumber), aircraftType:f.aircraftType||'-', instructorFullName:f.instructorFullName||'-', syllabusFull:f.syllabusFull||'-',
-        scoreValue: (f.scores&&f.scores.overall!==undefined)? f.scores.overall : '-',
         syllabusContent:f.syllabusContent||'-', completionsNeeded:f.completionsNeeded||'-',
         remarks: f.remarks||{briefing:'-',ground:'-',postFlight:'-',aircraftHandling:'-',missionRoute:'-',takeoffLanding:'-',additional:'-'},
         nextFlightNotes:f.nextFlightNotes||f.recommendations||'-', summaryRecommendations:f.summaryRecommendations||f.summary||'-',

@@ -91,17 +91,13 @@ Deno.serve(async (req) => {
       return json({ error: "תפקיד לא חוקי." }, 400);
     }
 
-    let course = "";
     let population = "";
-    let traineeClass = "";
     let populations: string[] = [];
 
     if (role === "trainee") {
-      course = typeof body?.course === "string" ? body.course.trim() : "";
       population = typeof body?.population === "string" ? body.population : "";
-      traineeClass = typeof body?.class === "string" ? body.class.trim() : "";
-      if (!course || !population || !traineeClass) {
-        return json({ error: "יש למלא קורס, אוכלוסייה ומחזור." }, 400);
+      if (!population) {
+        return json({ error: "יש לבחור אוכלוסייה." }, 400);
       }
       if (!VALID_POPULATIONS.includes(population)) {
         return json({ error: "אוכלוסייה לא חוקית." }, 400);
@@ -167,7 +163,7 @@ Deno.serve(async (req) => {
     if (role === "trainee") {
       const { error: tErr } = await callerClient
         .from("trainee_profiles")
-        .upsert({ profile_id: newUserId, course, population, class: traineeClass }, { onConflict: "profile_id" });
+        .upsert({ profile_id: newUserId, population }, { onConflict: "profile_id" });
       if (tErr) {
         await adminClient.auth.admin.deleteUser(newUserId).catch(() => {});
         return json({ error: "יצירת פרטי החניך נכשלה: " + tErr.message }, 500);

@@ -1,0 +1,21 @@
+-- Allow feedbacks.instructor_id to be NULL, so smat can create a feedback
+-- with no instructor assigned at all.
+--
+-- Business rule (confirmed): instructor_id still means "who wrote it" -
+-- unchanged everywhere. An instructor's own feedback must always keep a
+-- real instructor_id (the app enforces this client-side via
+-- this.state.myProfileId, never touched by this migration). Only smat may
+-- leave it empty.
+--
+-- Not touched by this migration:
+--   - RLS policies (feedbacks_smat_all already has no instructor_id
+--     condition at all - this column was the only thing blocking a NULL
+--     instructor_id, not RLS)
+--   - triggers (trg_prevent_feedback_reassignment's IS DISTINCT FROM checks
+--     already handle NULL correctly)
+--   - any other table or column
+--   - the feedbacks_instructor_id_fkey foreign key itself (ON DELETE
+--     RESTRICT, references profiles(id)) - a NULL value simply has no FK to
+--     satisfy, same as any other nullable FK column.
+
+ALTER TABLE public.feedbacks ALTER COLUMN instructor_id DROP NOT NULL;
