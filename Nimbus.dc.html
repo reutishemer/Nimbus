@@ -45,7 +45,7 @@
 
   <sc-if value="{{scrIntro}}" hint-placeholder-val="{{false}}">
   <div onClick="{{onSkipIntro}}" style="position:relative; z-index:2; width:100%; height:100vh; background:#0B1E33; overflow:hidden; cursor:pointer;">
-    <video src="assets/openingVideo.mp4" preload="auto" autoPlay="{{true}}" muted="{{true}}" playsInline="{{true}}" onEnded="{{onIntroEnded}}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></video>
+    <video src="assets/openingVideo.mp4" preload="auto" autoPlay="{{true}}" muted="{{true}}" playsInline="{{true}}" onEnded="{{onIntroEnded}}" onLoadedMetadata="{{onIntroVideoReady}}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></video>
     <div style="position:absolute; bottom:22px; left:0; right:0; text-align:center; font-size:12.5px; font-weight:600; color:rgba(255,255,255,0.75); letter-spacing:0.3px;">לדילוג - הקש במסך</div>
   </div>
   </sc-if>
@@ -1759,6 +1759,19 @@ class Component extends DCLogic {
 
   onIntroEnded=()=>{ if(this.state.screen==='intro') this.setState({screen:'login'}); };
   onSkipIntro=()=>{ if(this.state.screen==='intro') this.setState({screen:'login'}); };
+  // Defensive fallback for mobile autoplay policies (iOS Safari in
+  // particular): the autoPlay/muted/playsInline props above are the
+  // standards-compliant way to request silent autoplay, and already worked
+  // in desktop testing, but some mobile browsers only honor autoplay
+  // reliably once .play() is called explicitly after the element actually
+  // has metadata, rather than relying on the attributes alone at mount
+  // time. e.target is the real <video> DOM node (native event, not a
+  // framework ref - this component tree has no ref mechanism). Re-asserting
+  // .muted here costs nothing and guarantees play() is never attempted
+  // unmuted. The catch() swallows a browser still refusing autoplay (e.g.
+  // low-power mode) - onClick="{{onSkipIntro}}" on the wrapping div already
+  // covers that case by letting the user tap through.
+  onIntroVideoReady=(e)=>{ try{ const v=e.target; v.muted=true; const p=v.play(); if(p&&p.catch) p.catch(()=>{}); }catch(err){} };
 
   loginAs(role){
     const home = role==='instructor'?'iDash': (role==='smat'||role==='kahad')?'sDash':'tDash';
@@ -2686,7 +2699,7 @@ class Component extends DCLogic {
     const NO_BACK = ['iDash','tDash','sDash'];
 
     let out = {
-      scrIntro, onIntroEnded:this.onIntroEnded, onSkipIntro:this.onSkipIntro,
+      scrIntro, onIntroEnded:this.onIntroEnded, onSkipIntro:this.onSkipIntro, onIntroVideoReady:this.onIntroVideoReady,
       scrLogin, scrApp,
       showLoginCard: !s.authGate,
       showAuthGatePending: s.authGate==='pending', showAuthGateDisabled: s.authGate==='disabled', onAuthSignOut:this.onAuthSignOut,
