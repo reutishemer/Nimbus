@@ -249,7 +249,14 @@
           <div onClick="{{f.onClick}}" style="background:#ffffff; border-radius:18px; padding:16px; margin-bottom:12px; box-shadow:0 8px 18px rgba(30,90,140,0.07); cursor:pointer; transition:transform 200ms;" style-active="transform:scale(0.97);">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
               <div style="font-size:15px; font-weight:700; color:#123A5E;">{{f.title}}</div>
-              <div style="font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:999px; background:{{f.statusBg}}; color:{{f.statusFg}}; white-space:nowrap;">{{f.statusLabel}}</div>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <div style="font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:999px; background:{{f.statusBg}}; color:{{f.statusFg}}; white-space:nowrap;">{{f.statusLabel}}</div>
+                <sc-if value="{{f.isDraft}}" hint-placeholder-val="{{false}}">
+                  <div onClick="{{f.onDeleteDraft}}" title="מחיקת טיוטה" aria-label="מחיקת טיוטה" style="cursor:pointer; display:flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:8px; background:#FDEAE7; border:1px solid #F6D5CF; flex-shrink:0;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A38" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1.5 14a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+                  </div>
+                </sc-if>
+              </div>
             </div>
             <div style="font-size:13px; color:#6B8399;">{{f.traineeName}} · {{f.typeLabel}} · {{f.dateLabel}}</div>
           </div>
@@ -615,10 +622,14 @@
         <sc-if value="{{evalForm.validationMsg}}" hint-placeholder-val="{{false}}">
           <div style="background:#FDEAE7; border:1.5px solid #F6D5CF; border-radius:14px; padding:12px 14px; margin-bottom:12px; font-size:13px; font-weight:600; color:#C0453D; line-height:1.6;">{{evalForm.validationMsg}}</div>
         </sc-if>
-        <button onClick="{{onSaveEval}}" style="width:100%; padding:16px; border:none; border-radius:16px; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-size:16px; font-weight:700; cursor:pointer; box-shadow:0 10px 24px rgba(46,143,224,0.35); transition:transform 200ms;" style-active="transform:scale(0.96);">
+        <button onClick="{{onSaveEval}}" style="width:100%; padding:16px; border:none; border-radius:16px; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; font-size:16px; font-weight:700; cursor:pointer; box-shadow:0 10px 24px rgba(46,143,224,0.35); transition:transform 200ms; margin-bottom:10px;" style-active="transform:scale(0.96);">
           <sc-if value="{{evalForm.saving}}" hint-placeholder-val="{{false}}"><span>שומר...</span></sc-if>
           <sc-if value="{{evalForm.notSaving}}" hint-placeholder-val="{{true}}"><span>שמירת טופס</span></sc-if>
         </button>
+        <button onClick="{{evalForm.onSaveDraft}}" style="width:100%; padding:13px; border:1.5px solid #DCEBFA; border-radius:16px; background:#ffffff; color:#2E6FA8; font-size:14px; font-weight:700; cursor:pointer; transition:transform 200ms;" style-active="transform:scale(0.97);">שמירת טיוטה</button>
+        <sc-if value="{{evalForm.draftStatusVisible}}" hint-placeholder-val="{{false}}">
+          <div style="text-align:center; font-size:12px; color:#8CA3B8; margin-top:8px;">{{evalForm.draftStatusLabel}}</div>
+        </sc-if>
       </div>
     </sc-if>
 
@@ -968,7 +979,14 @@
           <div onClick="{{f.onClick}}" style="background:#ffffff; border-radius:18px; padding:16px; margin-bottom:12px; box-shadow:0 8px 18px rgba(30,90,140,0.07); cursor:pointer; transition:transform 200ms;" style-active="transform:scale(0.97);">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
               <div style="font-size:15px; font-weight:700; color:#123A5E;">{{f.title}}</div>
-              <div style="font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:999px; background:{{f.statusBg}}; color:{{f.statusFg}}; white-space:nowrap;">{{f.statusLabel}}</div>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <div style="font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:999px; background:{{f.statusBg}}; color:{{f.statusFg}}; white-space:nowrap;">{{f.statusLabel}}</div>
+                <sc-if value="{{f.isDraft}}" hint-placeholder-val="{{false}}">
+                  <div onClick="{{f.onDeleteDraft}}" title="מחיקת טיוטה" aria-label="מחיקת טיוטה" style="cursor:pointer; display:flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:8px; background:#FDEAE7; border:1px solid #F6D5CF; flex-shrink:0;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D14A38" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1.5 14a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+                  </div>
+                </sc-if>
+              </div>
             </div>
             <div style="font-size:13px; color:#6B8399;"><span onClick="{{f.onTraineeClick}}" style="color:#2E8FE0; font-weight:700; cursor:pointer; text-decoration:underline; text-underline-offset:3px;">{{f.traineeName}}</span> · {{f.instructor}} · {{f.typeLabel}}</div>
           </div>
@@ -1393,6 +1411,10 @@ function fmtDate(d){ return new Date(d+'T00:00:00').toLocaleDateString('he-IL',{
 function statusInfo(st){
   if(st==='approved') return {label:'מאושר', bg:'#E4F8ED', fg:'#1FA86A'};
   if(st==='rejected') return {label:'נדחה', bg:'#FDEAE7', fg:'#D14A38'};
+  // 'draft' is a client-side-only display tag (see feedback_drafts below) -
+  // it never exists as a real feedbacks.status value, so this branch never
+  // affects the real status CHECK constraint or any RLS condition.
+  if(st==='draft') return {label:'טיוטה', bg:'#EDEBFC', fg:'#6B5FCC'};
   return {label:'ממתין לאישור', bg:'#FFF1DA', fg:'#B8791F'};
 }
 function isViewer(role){ return role==='kahad'; }
@@ -1473,6 +1495,57 @@ function mapFeedbackRow(row){
   };
 }
 
+// Local-only draft persistence for the feedback form (evalForm), added to
+// survive an accidental refresh/tab-close mid-fill - never touches Supabase.
+// Keyed per profile AND per draft instance (never a single shared key per
+// user) so a brand-new feedback and an edit of an existing one - or two
+// separate new-feedback attempts over time - never overwrite each other.
+// "active" pointer is the one the restore logic on bootstrap actually reads;
+// older abandoned draft keys are simply never pointed to again (left as
+// harmless orphan entries rather than chased down - out of scope here).
+const DRAFT_PREFIX = 'nimbus_draft_';
+function draftActiveKey(profileId){ return DRAFT_PREFIX+'active_'+profileId; }
+function draftKey(profileId, draftId){ return DRAFT_PREFIX+profileId+'__'+draftId; }
+// Must be a real uuid (not just a locally-unique string) - this same id is
+// now also the primary key of the feedback_drafts row in Supabase, upserted
+// by id (never by a (created_by, feedback_id) uniqueness trick, which
+// cannot distinguish between multiple brand-new drafts since Postgres never
+// treats two NULLs as equal - see the migration).
+function genDraftId(){
+  try{ if(window.crypto && window.crypto.randomUUID) return window.crypto.randomUUID(); }catch(e){}
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c=>{
+    const r = Math.random()*16|0; return (c==='x'? r : (r&0x3|0x8)).toString(16);
+  });
+}
+function draftStatusLabelFor(st){
+  if(st==='saving') return 'שומר טיוטה בענן...';
+  if(st==='saved') return 'הטיוטה נשמרה בענן';
+  if(st==='error') return 'שמירת הטיוטה בענן נכשלה - נשמרה מקומית בלבד';
+  return '';
+}
+
+// Sibling mechanism to the draft keys above, same per-profile localStorage
+// approach: remembers only which *screen* a user was on (plus, for the two
+// screens that need it, the real Supabase id to re-load), so backgrounding
+// the app/switching tabs on a phone - which often throws away the whole JS
+// context - can land back where the user was instead of the role's home
+// screen. Never stores query results, passwords, or modal state - only ever
+// one of these screen names, never 'intro'/'login'/'iNewFeedback'/'iEval'
+// (iEval has its own, already-existing draft mechanism above, which always
+// takes precedence - see bootstrapAuth).
+const RESTORABLE_SCREENS = ['iDash','iTrainees','iTraineeDetail','iFeed','feedbackView','tDash','tFeedback','tStats','sDash','sFeedbacks','sAccounts','profile'];
+function lastScreenKey(profileId){ return 'nimbus_lastscreen_'+profileId; }
+// Tracks draft ids whose cloud cleanup-delete (after a successful real
+// save, or an explicit user-requested delete) failed and still needs
+// retrying - a small array, never draft content itself. Deliberately a
+// DIFFERENT key shape than draftKey()'s "nimbus_draft_<id>__<draftId>" -
+// clearAllDraftsForProfile's prefix match is scoped to that exact shape,
+// so a pending-delete list is never swept up/lost by the logout wipe (it
+// needs to survive logout so the *next* login by the same user can still
+// retry it - deleting an already-redundant cloud row is unrelated to
+// which session happens to be open when the retry succeeds).
+function pendingDraftDeletesKey(profileId){ return 'nimbus_draft_pendingdelete_'+profileId; }
+
 class Component extends DCLogic {
   state = {
     role: null, screen: 'intro', navHistory: [], loading: false,
@@ -1492,17 +1565,431 @@ class Component extends DCLogic {
     viewingFeedback: null, feedbackViewError: '',
     deleteUserModal: null,
     selectedTraineeId: null, traineeDetail: null, traineeDetailLoading: false, traineeDetailError: '',
-    myProfileName: '', myProfileCourseLabel: ''
+    myProfileName: '', myProfileCourseLabel: '',
+    draftCloudStatus: '', myDrafts: [], myDraftsLoading: false
   };
 
   componentDidMount(){
     this.bootstrapAuth();
     this._authSub = window.NimbusAuth.onAuthStateChange(()=>{ this.bootstrapAuth(); });
+    // Flushes any pending debounced draft save synchronously right before an
+    // actual page unload/refresh, so the very last keystroke before a
+    // refresh isn't lost to the debounce window (localStorage.setItem is
+    // synchronous, so this is reliable even this late in the page lifecycle).
+    this._onBeforeUnload = ()=>this.saveDraftNow();
+    window.addEventListener('beforeunload', this._onBeforeUnload);
+    // Retries a failed cloud draft save once connectivity/visibility comes
+    // back - never retries on a mere timer, only on these two concrete
+    // "the user might be back" signals. Guarded by _draftCloudSyncFailed so
+    // this is a no-op when there's nothing to retry.
+    this._onOnline = ()=>{ if(this._draftCloudSyncFailed) this.saveDraftToCloud(); this.retryPendingDraftDeletes(); };
+    this._onVisible = ()=>{ if(document.visibilityState==='visible'){ if(this._draftCloudSyncFailed) this.saveDraftToCloud(); this.retryPendingDraftDeletes(); } };
+    window.addEventListener('online', this._onOnline);
+    document.addEventListener('visibilitychange', this._onVisible);
   }
   componentWillUnmount(){
     const sub = this._authSub && this._authSub.data && this._authSub.data.subscription;
     if(sub) sub.unsubscribe();
+    window.removeEventListener('beforeunload', this._onBeforeUnload);
+    window.removeEventListener('online', this._onOnline);
+    document.removeEventListener('visibilitychange', this._onVisible);
   }
+  // Fires after every state update (framework-provided hook, see support.js)
+  // - used only to detect evalForm being replaced with a new object (every
+  // field-edit handler does `setState(s=>({evalForm:{...s.evalForm,...}}))`,
+  // which always creates a new reference) and schedule a debounced draft
+  // save. Deliberately not wired into each of the many individual
+  // onXChange/setEvalField-style handlers - this single hook catches all of
+  // them without touching any of that existing code.
+  componentDidUpdate(){
+    if(this.state.evalForm !== this._lastEvalFormRef){
+      this._lastEvalFormRef = this.state.evalForm;
+      if(this.state.evalForm){ this.scheduleDraftSave(); this.scheduleDraftCloudSave(); }
+    }
+    // Same idea, for the last-screen-visited mechanism below: screen changes
+    // are discrete user actions (never a keystroke), so no debounce needed -
+    // just write immediately whenever it actually changes.
+    const screenChanged = this.state.screen !== this._lastScreenTracked;
+    if(screenChanged) this._lastScreenTracked = this.state.screen;
+    // myProfileId often becomes available in a LATER state update than the
+    // one that first set `screen` (bootstrapAuth calls loginAs(), which sets
+    // screen, *before* myProfileId is set) - saveLastScreenNow's own guard
+    // silently no-ops without a profile id, so without this the very first
+    // landing screen of a session would never get recorded at all (audit
+    // finding). Catch that up the moment myProfileId arrives, even though
+    // `screen` itself didn't change in this particular update.
+    const profileJustSet = !!this.state.myProfileId && this.state.myProfileId !== this._lastProfileIdTracked;
+    this._lastProfileIdTracked = this.state.myProfileId;
+    if(screenChanged || profileJustSet) this.saveLastScreenNow();
+  }
+  // Short debounce so fast typing doesn't call localStorage.setItem on every
+  // keystroke - beforeunload above still guarantees the latest value is
+  // flushed immediately before an actual refresh/close.
+  scheduleDraftSave=()=>{
+    clearTimeout(this._draftTimer);
+    this._draftTimer = setTimeout(this.saveDraftNow, 500);
+  };
+  saveDraftNow=()=>{
+    const { evalForm, myProfileId } = this.state;
+    if(!evalForm || !myProfileId || !this._activeDraftId) return;
+    try{
+      localStorage.setItem(draftKey(myProfileId, this._activeDraftId), JSON.stringify({v:1, updatedAt:new Date().toISOString(), evalForm}));
+      localStorage.setItem(draftActiveKey(myProfileId), this._activeDraftId);
+    }catch(e){}
+  };
+  // Longer debounce than the local save above - this goes over the network,
+  // so it deliberately doesn't fire on every single keystroke the way the
+  // local save's shorter debounce does.
+  scheduleDraftCloudSave=()=>{
+    clearTimeout(this._draftCloudTimer);
+    this._draftCloudTimer = setTimeout(this.saveDraftToCloud, 2500);
+  };
+  // Upserts the current evalForm into feedback_drafts, by id (never by
+  // (created_by, feedback_id) - see the migration for why that pair can't
+  // reliably dedupe brand-new drafts). RLS enforces created_by = auth.uid()
+  // on both the USING and WITH CHECK side, so this can never write - or
+  // read back - another user's draft, smat included.
+  //
+  // Sequence-numbered against concurrent/out-of-order calls (the explicit
+  // "שמירת טיוטה" button calls this immediately, on top of whatever the
+  // debounce above already scheduled) - a response is only trusted if no
+  // newer call has started since, so a slow stale response can never
+  // overwrite the status shown for a save that started later with a more
+  // current evalForm. The upsert itself is still always the current
+  // this.state.evalForm at call time, never a value captured earlier, so
+  // even an "ignored" response already wrote the right row - only the UI
+  // status label is guarded here, not correctness of the data itself.
+  saveDraftToCloud=async(explicit)=>{
+    const { evalForm, myProfileId } = this.state;
+    if(!evalForm || !myProfileId || !this._activeDraftId || !window.nimbusSupabase) return;
+    this._draftCloudSeq = (this._draftCloudSeq||0) + 1;
+    const seq = this._draftCloudSeq;
+    this.setState({draftCloudStatus:'saving'});
+    try{
+      const { error } = await window.nimbusSupabase.from('feedback_drafts').upsert({
+        id: this._activeDraftId,
+        created_by: myProfileId,
+        feedback_id: evalForm.isEditing ? evalForm.feedbackId : null,
+        payload: evalForm
+      }, {onConflict:'id'});
+      if(seq !== this._draftCloudSeq) return;
+      this._draftCloudSyncFailed = !!error;
+      this.setState({draftCloudStatus: error? 'error' : 'saved'});
+      if(!error) this.upsertLocalDraftsListEntry(this._activeDraftId, evalForm);
+      if(explicit && !error){
+        this.setState({showSuccess:true, successMsg:'הטיוטה נשמרה'});
+        setTimeout(()=>this.setState({showSuccess:false}), 1000*this.speedMul());
+      }
+    }catch(e){
+      if(seq !== this._draftCloudSeq) return;
+      this._draftCloudSyncFailed = true;
+      this.setState({draftCloudStatus:'error'});
+    }
+  };
+  // Explicit "שמירת טיוטה" button handler - bypasses the debounce so the
+  // user gets an immediate result instead of waiting up to 2.5s.
+  onSaveDraft=()=>{
+    clearTimeout(this._draftCloudTimer);
+    this.saveDraftToCloud(true);
+    this.saveDraftNow();
+  };
+  // Keeps the feedbacks-list "טיוטות" filter in sync with the latest saved
+  // content without a full re-fetch after every autosave - patches the one
+  // row that changed (or appends it, the first time this specific draft
+  // id's save succeeds) in place.
+  upsertLocalDraftsListEntry=(draftId, evalForm)=>{
+    this.setState(s=>{
+      const idx = s.myDrafts.findIndex(d=>d.id===draftId);
+      const row = { id:draftId, created_by:s.myProfileId, feedback_id: evalForm.isEditing? evalForm.feedbackId : null, payload: evalForm, updated_at: new Date().toISOString() };
+      const next = idx>=0 ? s.myDrafts.map((d,i)=>i===idx? row : d) : [row, ...s.myDrafts];
+      return {myDrafts: next};
+    });
+  };
+  // Called once from bootstrapAuth, only for roles that can reach iEval at
+  // all (instructor/smat) - looks up the "active" pointer for this profile,
+  // then the draft payload it points to. Never re-fetches the feedback from
+  // Supabase for an edit-in-progress draft - the local copy is trusted as-is
+  // (no conflict resolution here by design; see audit). Silently does
+  // nothing if no draft (or a corrupt one) is found - the existing
+  // loginAs()-driven dashboard routing from bootstrapAuth is left untouched
+  // in that case.
+  restoreDraftIfAny=async(profileId, role)=>{
+    const home = role==='instructor'?'iDash':'sDash';
+    const applyRestored=(draftId, evalForm)=>{
+      this._activeDraftId = draftId;
+      this._lastEvalFormRef = evalForm;
+      this.setState({screen:'iEval', evalForm, navHistory:[home]});
+      this.setState({showSuccess:true, successMsg:'טיוטה קודמת שוחזרה'});
+      setTimeout(()=>this.setState({showSuccess:false}), 1000*this.speedMul());
+    };
+    // Local-only "active pointer" first (instant, no round-trip) - this is
+    // the same device that was just working on it, so it's almost always
+    // the freshest copy available.
+    try{
+      const activeId = localStorage.getItem(draftActiveKey(profileId));
+      if(activeId){
+        const raw = localStorage.getItem(draftKey(profileId, activeId));
+        const parsed = raw && JSON.parse(raw);
+        if(parsed && parsed.evalForm && parsed.evalForm.formType){
+          applyRestored(activeId, parsed.evalForm);
+          return true;
+        }
+      }
+    }catch(e){}
+    // No local pointer (e.g. a different device, or this browser's storage
+    // was cleared) - fall back to the cloud: the most recently updated
+    // draft this exact profile owns (RLS: created_by = auth.uid()).
+    if(window.nimbusSupabase){
+      try{
+        const { data, error } = await window.nimbusSupabase.from('feedback_drafts')
+          .select('id, payload').eq('created_by', profileId).order('updated_at', {ascending:false}).limit(1).maybeSingle();
+        if(!error && data && data.payload && data.payload.formType){
+          applyRestored(data.id, data.payload);
+          return true;
+        }
+      }catch(e){}
+    }
+    return false;
+  };
+  // Writes only the current screen name (plus, for the two screens that
+  // need it, the real id to re-load - never any fetched data itself) -
+  // skipped entirely for any screen not in RESTORABLE_SCREENS, so
+  // 'intro'/'login'/'iNewFeedback'/'iEval'/every modal (which isn't a
+  // `screen` value at all - modals are separate state fields) never get
+  // written here.
+  saveLastScreenNow=()=>{
+    const { screen, myProfileId } = this.state;
+    if(!myProfileId || !RESTORABLE_SCREENS.includes(screen)) return;
+    try{
+      const payload = { screen, updatedAt:new Date().toISOString() };
+      if(screen==='iTraineeDetail' && this.state.selectedTraineeId) payload.traineeId = this.state.selectedTraineeId;
+      if(screen==='feedbackView' && this.state.viewingFeedback && this.state.viewingFeedback.id) payload.feedbackId = this.state.viewingFeedback.id;
+      localStorage.setItem(lastScreenKey(myProfileId), JSON.stringify(payload));
+    }catch(e){}
+  };
+  // Called from bootstrapAuth only when restoreDraftIfAny did NOT restore an
+  // iEval draft (that always wins - see bootstrapAuth). Reuses the existing
+  // openTrainee()/viewFeedback() functions as-is for the two id-based
+  // screens - both already re-fetch fresh from Supabase themselves (RLS
+  // applies exactly as it would from a normal click), nothing is read from
+  // localStorage beyond the id. Any other saved screen is just set directly
+  // (its own data already loads unconditionally elsewhere in bootstrapAuth).
+  restoreLastScreenIfAny=(profileId, role)=>{
+    try{
+      const raw = localStorage.getItem(lastScreenKey(profileId));
+      if(!raw) return;
+      const parsed = JSON.parse(raw);
+      if(!parsed || !RESTORABLE_SCREENS.includes(parsed.screen)) return;
+      if(parsed.screen==='iTraineeDetail' && parsed.traineeId){
+        this.openTrainee(parsed.traineeId);
+      } else if(parsed.screen==='feedbackView' && parsed.feedbackId){
+        // viewFeedback() only navigates to 'feedbackView' once its fetch
+        // resolves, so without this the role's home dashboard would stay
+        // visible (and flash) for the whole round-trip - showing the
+        // existing loading skeleton instead is a strict improvement and
+        // doesn't touch viewFeedback()/its normal click-triggered behavior
+        // at all. feedbackViewError handling inside viewFeedback() is
+        // completely unchanged either way.
+        this.setState({loading:true});
+        this.viewFeedback(parsed.feedbackId).then(()=>this.setState({loading:false})).catch(()=>this.setState({loading:false}));
+      } else if(parsed.screen!=='iTraineeDetail' && parsed.screen!=='feedbackView'){
+        const home = role==='instructor'?'iDash': (role==='smat'||role==='kahad')?'sDash':'tDash';
+        this.setState({screen:parsed.screen, navHistory:[home]});
+      }
+    }catch(e){}
+  };
+  // Called only after a successful save (insert or update) in onSaveEval -
+  // never on a failed save, so a failed write never loses the user's work.
+  // Local cleanup happens immediately and unconditionally (the local copy
+  // is genuinely redundant the moment the real feedback was saved,
+  // regardless of whether the cloud row's cleanup succeeds); the cloud
+  // row's deletion goes through deleteCloudDraft(), which retries on
+  // failure instead of leaving it unhandled - see security audit.
+  clearActiveDraft=()=>{
+    const pid = this.state.myProfileId;
+    const id = this._activeDraftId;
+    try{
+      if(pid && id) localStorage.removeItem(draftKey(pid, id));
+      if(pid) localStorage.removeItem(draftActiveKey(pid));
+    }catch(e){}
+    this._activeDraftId = null;
+    clearTimeout(this._draftCloudTimer);
+    this.setState({draftCloudStatus:''});
+    if(id && pid) this.deleteCloudDraft(id, pid);
+  };
+  // Deletes one draft row from the cloud. RLS (created_by = auth.uid()) is
+  // the real gate regardless of which id is passed in - this can never
+  // delete a different draft or another user's draft even if called with
+  // a wrong/stale id, since the DB simply won't match any row that isn't
+  // this caller's own. Only removed from the visible myDrafts list (and
+  // only shown as actually gone) once the delete is CONFIRMED - never
+  // optimistically, so nothing is ever shown as "deleted" before Supabase
+  // actually agrees. On failure (network, offline, or any other reason),
+  // the id is persisted to a small per-profile "still needs deleting" list
+  // so retryPendingDraftDeletes() (wired to online/visibilitychange/next
+  // bootstrap, same as the autosave retry) can finish the job later -
+  // never left silently unhandled.
+  deleteCloudDraft=async(id, pid)=>{
+    if(!window.nimbusSupabase){ this.addPendingDraftDelete(pid, id); return; }
+    try{
+      const { error } = await window.nimbusSupabase.from('feedback_drafts').delete().eq('id', id);
+      if(error){ this.addPendingDraftDelete(pid, id); return; }
+      this.removePendingDraftDelete(pid, id);
+      this.setState(s=>({myDrafts: s.myDrafts.filter(d=>d.id!==id)}));
+    }catch(e){
+      this.addPendingDraftDelete(pid, id);
+    }
+  };
+  addPendingDraftDelete=(pid, id)=>{
+    try{
+      const raw = localStorage.getItem(pendingDraftDeletesKey(pid));
+      const list = raw? JSON.parse(raw) : [];
+      if(!list.includes(id)) list.push(id);
+      localStorage.setItem(pendingDraftDeletesKey(pid), JSON.stringify(list));
+    }catch(e){}
+  };
+  removePendingDraftDelete=(pid, id)=>{
+    try{
+      const raw = localStorage.getItem(pendingDraftDeletesKey(pid));
+      if(!raw) return;
+      const list = JSON.parse(raw).filter(x=>x!==id);
+      if(list.length) localStorage.setItem(pendingDraftDeletesKey(pid), JSON.stringify(list));
+      else localStorage.removeItem(pendingDraftDeletesKey(pid));
+    }catch(e){}
+  };
+  retryPendingDraftDeletes=()=>{
+    const pid = this.state.myProfileId;
+    if(!pid || !window.nimbusSupabase) return;
+    try{
+      const raw = localStorage.getItem(pendingDraftDeletesKey(pid));
+      const list = raw? JSON.parse(raw) : [];
+      list.forEach(id=>this.deleteCloudDraft(id, pid));
+    }catch(e){}
+  };
+  // Loads every draft this profile owns (RLS: created_by = auth.uid()) -
+  // only ever called for instructor/smat, from bootstrapAuth, same as
+  // loadMyFeedbacks/loadAllFeedbacks. Used purely for the "טיוטות" filter
+  // in the existing feedbacks-list screens - never creates a separate
+  // drafts screen or nav entry.
+  loadMyDrafts=async()=>{
+    if(!this.state.myProfileId || !window.nimbusSupabase) return;
+    this.setState({myDraftsLoading:true});
+    const { data, error } = await window.nimbusSupabase.from('feedback_drafts')
+      .select('id, feedback_id, payload, updated_at').eq('created_by', this.state.myProfileId).order('updated_at', {ascending:false});
+    if(error || !data){ this.setState({myDraftsLoading:false, myDrafts:[]}); return; }
+    this.setState({myDraftsLoading:false, myDrafts:data});
+  };
+  // Opens a draft row straight from the feedbacks-list filter. A brand-new
+  // draft (no source feedback yet) has nothing to re-check and opens
+  // immediately, same as before. An edit-draft re-checks CURRENT
+  // permission on its source feedback first - never trusts the draft's own
+  // frozen payload.status snapshot (security audit finding: editFeedback()
+  // already re-checked this when entered from feedbackView, but opening a
+  // draft straight from the list skipped that check entirely). This can
+  // never let a draft bypass feedbacks' RLS - it only decides whether to
+  // let the user back into the edit screen at all; the real save in
+  // onSaveEval re-checks feedbacks_update_instructor/feedbacks_smat_all
+  // independently regardless of what happens here.
+  //
+  // payload.feedbackId (the client's own frozen copy) is used to look up
+  // the source - never draft.feedback_id, which the DB sets to NULL the
+  // moment the source is deleted (ON DELETE SET NULL - see migration) and
+  // would otherwise make a genuinely orphaned edit-draft indistinguishable
+  // from a brand-new one, silently letting it be "submitted" as a new
+  // feedback instead - explicitly disallowed.
+  openDraftForEdit=async(draft)=>{
+    if(!draft || !draft.payload || !draft.payload.formType) return;
+    const sourceId = draft.payload.isEditing ? draft.payload.feedbackId : null;
+    if(!sourceId){
+      this._activeDraftId = draft.id;
+      this._lastEvalFormRef = draft.payload;
+      this.navigate('iEval', {evalForm: draft.payload});
+      return;
+    }
+    const { data, error } = await window.nimbusSupabase.from('feedbacks').select('id, instructor_id, status').eq('id', sourceId).maybeSingle();
+    if(error || !data){
+      // Genuinely deleted (ON DELETE SET NULL left payload.feedbackId as
+      // the only remaining trace), or RLS no longer lets this caller see
+      // it at all (e.g. the population link changed) - never silently
+      // reinterpret this as a brand-new draft. The draft content itself is
+      // left completely untouched in both Supabase and localStorage - only
+      // informational, no data is modified or deleted here.
+      this.setState({infoModal:{title:'הדפית המקורית לא נמצאה', body:'הדפית שהטיוטה הזו נועדה לעדכן נמחקה, או שאין לך יותר גישה אליה. תוכן הטיוטה נשאר שמור, אך לא ניתן לשלוח אותו כעדכון לדפית שאינה קיימת.', rows:[], groups:[]}});
+      return;
+    }
+    const role = this.state.role;
+    const allowed = role==='smat' || (role==='instructor' && data.instructor_id===this.state.myProfileId && data.status!=='approved');
+    if(!allowed){
+      this.setState({infoModal:{title:'לא ניתן לשלוח את הטיוטה', body:'הדפית המקורית אושרה בינתיים, או שאין לך יותר הרשאה לעדכן אותה. תוכן הטיוטה נשאר שמור.', rows:[], groups:[]}});
+      return;
+    }
+    // Permission confirmed live - open with the draft's own payload
+    // exactly as saved, never rebuilt/overwritten from the `data` just
+    // fetched (that query was only to verify permission/existence).
+    this._activeDraftId = draft.id;
+    this._lastEvalFormRef = draft.payload;
+    this.navigate('iEval', {evalForm: draft.payload});
+  };
+  // Deletes one draft the caller owns - RLS (created_by = auth.uid()) is
+  // the real gate; this never touches public.feedbacks in any way, only
+  // feedback_drafts. Uses the same confirmDialog pattern already used by
+  // askDeleteFeedback/askDisableAccount.
+  askDeleteDraft=(draft)=>{
+    if(!draft || !draft.id) return;
+    this.setState({confirmDialog:{ message:'האם למחוק את הטיוטה?',
+      onCancel:()=>this.setState({confirmDialog:null}),
+      onConfirm: async ()=>{
+        this.setState({confirmDialog:null});
+        const pid = this.state.myProfileId;
+        const { error } = await window.nimbusSupabase.from('feedback_drafts').delete().eq('id', draft.id);
+        if(error){
+          // Never shown as deleted before Supabase actually confirms it -
+          // registered for a background retry instead of left unhandled
+          // (same mechanism clearActiveDraft's cloud cleanup uses).
+          this.setState({feedbackViewError:'מחיקת הטיוטה נכשלה, ננסה שוב ברקע: '+error.message});
+          if(pid) this.addPendingDraftDelete(pid, draft.id);
+          return;
+        }
+        if(pid) this.removePendingDraftDelete(pid, draft.id);
+        this.setState(s=>({myDrafts: s.myDrafts.filter(d=>d.id!==draft.id)}));
+        try{
+          if(pid) localStorage.removeItem(draftKey(pid, draft.id));
+          // Only clear the active pointer/status if the draft just deleted
+          // is the one currently open for editing - never another user's,
+          // and never a different draft of the same user that happens to
+          // still be active.
+          if(this._activeDraftId===draft.id){
+            if(pid) localStorage.removeItem(draftActiveKey(pid));
+            this._activeDraftId = null;
+            this.setState({draftCloudStatus:''});
+          }
+        }catch(e){}
+        this.setState({showSuccess:true, successMsg:'הטיוטה נמחקה'});
+        setTimeout(()=>this.setState({showSuccess:false}), 1000*this.speedMul());
+      } }});
+  };
+  // Called from onLogout with the departing user's own profile id, captured
+  // before sign-out - removes every draft key namespaced to that profile id
+  // plus its active pointer and its last-screen key, so the next person on
+  // this device (if shared) never sees any of it. Only ever touches keys
+  // prefixed with this exact profile id - never another user's drafts/last
+  // screen that might also be on this device.
+  clearAllDraftsForProfile=(profileId)=>{
+    if(!profileId) return;
+    try{
+      const prefix = DRAFT_PREFIX+profileId+'__';
+      const toRemove = [];
+      for(let i=0;i<localStorage.length;i++){
+        const k = localStorage.key(i);
+        if(k && k.indexOf(prefix)===0) toRemove.push(k);
+      }
+      toRemove.forEach(k=>localStorage.removeItem(k));
+      localStorage.removeItem(draftActiveKey(profileId));
+      localStorage.removeItem(lastScreenKey(profileId));
+    }catch(e){}
+    this._activeDraftId = null;
+    this._draftCloudSyncFailed = false;
+  };
   bootstrapAuth=async()=>{
     const {session, profile} = await window.NimbusAuth.getSessionProfile();
     if(!session || !profile){ this.setState({authGate:null, myProfileId:null, myProfileName:''}); return; }
@@ -1517,16 +2004,32 @@ class Component extends DCLogic {
       // fallback anymore (it would have meant a different trainee's demo
       // data), so it shows an empty label instead.
       this.setState({authGate:null, myProfileId:profile.id, myProfileName: profile.full_name || profile.username || ''});
+      // Local-only draft restore (localStorage, never Supabase) - only
+      // instructor/smat can ever reach iEval in the first place, so this is
+      // a no-op lookup for trainee/kahad (no draft key would ever exist for
+      // them). Runs after loginAs() above - if a draft is found, it
+      // overrides the screen/evalForm loginAs() just set; if not, today's
+      // exact dashboard-routing behavior is completely unchanged.
+      // restoreLastScreenIfAny only runs when no iEval draft was restored -
+      // an in-progress form always wins over "which screen was I looking
+      // at" (required precedence - see audit). restoreDraftIfAny is now
+      // async (it may fall back to a cloud lookup) - must be awaited, or
+      // `draftRestored` would be a Promise (always truthy) and
+      // restoreLastScreenIfAny would never run at all.
+      const draftRestored = (profile.role==='instructor' || profile.role==='smat') && await this.restoreDraftIfAny(profile.id, profile.role);
+      if(!draftRestored) this.restoreLastScreenIfAny(profile.id, profile.role);
       // trainees was previously only loaded lazily from openNewFeedback() -
       // iTrainees (below) needs it too, and is reachable directly from the
       // bottom nav tab without ever visiting the new-feedback flow first.
-      if(profile.role==='instructor'){ this.loadMyFeedbacks(profile.id); this.loadMyTrainees(); }
+      if(profile.role==='instructor'){ this.loadMyFeedbacks(profile.id); this.loadMyTrainees(); this.loadMyDrafts(); this.retryPendingDraftDeletes(); }
       // accounts were previously only loaded lazily from onOpenAccounts()
       // (the sDash button, smat-only) - sAccounts is now also reachable
       // directly from the bottom nav tab (for smat AND kahad, replacing the
       // old demo sUsers tab), so both need it preloaded the same way every
-      // other real screen already is.
-      else if(profile.role==='smat' || profile.role==='kahad'){ this.loadAllFeedbacks(); this.loadAccounts(); }
+      // other real screen already is. Drafts only for smat, never kahad -
+      // kahad can never create/edit a feedback in the first place.
+      else if(profile.role==='smat'){ this.loadAllFeedbacks(); this.loadAccounts(); this.loadMyDrafts(); this.retryPendingDraftDeletes(); }
+      else if(profile.role==='kahad'){ this.loadAllFeedbacks(); this.loadAccounts(); }
       else if(profile.role==='trainee'){ this.loadMyApprovedFeedbacks(profile.id); this.loadMyOwnTraineeProfile(profile.id); }
       return;
     }
@@ -1779,9 +2282,39 @@ class Component extends DCLogic {
     if(this.props.skeletonLoading ?? true) setTimeout(()=>this.setState({loading:false}), 480*this.speedMul());
   }
   onLogout=async()=>{
+    // Captured once, synchronously, before any await below - every step
+    // of this function acts on this exact value, never a re-read of
+    // this.state.myProfileId, so a different user logging in on the same
+    // tab mid-logout (no page reload) could never cause a later step here
+    // to touch the wrong profile's data.
+    const pid = this.state.myProfileId;
+    // Cancel the debounce timers first (so nothing re-fires mid-flush
+    // below with a seq() race), then flush the latest edit - local AND
+    // cloud - BEFORE wiping anything. The cloud draft (feedback_drafts) is
+    // never deleted by logout at all (only localStorage is cleared below)
+    // - this flush just makes sure the cloud copy, which is what survives
+    // the local wipe and is still there on this user's next login, has the
+    // most recent content instead of whatever the debounce last managed to
+    // save a few seconds ago.
+    clearTimeout(this._draftTimer);
+    clearTimeout(this._draftCloudTimer);
+    if(this.state.evalForm && this._activeDraftId){
+      this.saveDraftNow();
+      await this.saveDraftToCloud();
+    }
+    this._activeDraftId = null;
+    this._lastEvalFormRef = null;
+    this._draftCloudSyncFailed = false;
+    // Local-only privacy wipe for this (departing) profile - never touches
+    // feedback_drafts in Supabase. Runs only now, after the flush above
+    // has already landed, and only ever on `pid` captured at the top - so
+    // it can neither lose the just-flushed content nor ever reach a
+    // different, next user's keys.
+    this.clearAllDraftsForProfile(pid);
     try{ await window.NimbusAuth.signOut(); }catch(e){}
     this.setState({role:null, screen:'login', navHistory:[], showAddToHome:false,
-      authGate:null, authMode:'signin', authUsername:'', authPassword:'', authFullName:'', authError:''});
+      authGate:null, authMode:'signin', authUsername:'', authPassword:'', authFullName:'', authError:'',
+      evalForm:null, draftCloudStatus:'', myDrafts:[]});
   };
   onAuthUsernameChange=(e)=>this.setState({authUsername:e.target.value, authError:''});
   onAuthPasswordChange=(e)=>this.setState({authPassword:e.target.value, authError:''});
@@ -1930,6 +2463,11 @@ class Component extends DCLogic {
     // role. An instructor's own draft never had an instructorId requirement
     // in the first place (it isn't shown the picker at all).
     if(!d.traineeId || !d.formType) return;
+    // A fresh local draft id for this brand-new feedback attempt (never a
+    // real Supabase id - none exists yet) - componentDidUpdate picks up the
+    // evalForm this function is about to set via navigate() and persists it
+    // under this id from here on.
+    this._activeDraftId = genDraftId();
     // d.traineeId is a real Supabase uuid (from state.draft, set via
     // onDraftTraineeChange off state.trainees) - traineeById(d.traineeId)
     // would always return undefined (TRAINEES only has small demo integer
@@ -2059,13 +2597,14 @@ class Component extends DCLogic {
     // below - not to branch demo vs real here anymore.
     if(toSave.isEditing && toSave.feedbackId){
       const role = this.state.role;
-      const allowed = role==='smat' || (role==='instructor' && toSave.instructorId===this.state.myProfileId && toSave.status!=='approved');
+      const isSmat = role==='smat';
+      const allowed = isSmat || (role==='instructor' && toSave.instructorId===this.state.myProfileId && toSave.status!=='approved');
       if(!allowed){
         this.setState(s=>({evalForm:{...s.evalForm, validationMsg:'אין לך הרשאה לערוך משוב זה.'}}));
         return;
       }
       this.setState(s=>({evalForm:{...s.evalForm, saving:true, validationMsg:''}}));
-      const { data, error } = await window.nimbusSupabase.from('feedbacks').update({
+      const updatePayload = {
         // instructor_id/trainee_id are re-sent unchanged on purpose - the row
         // keeps whoever it already belonged to, never reassigned by an edit.
         trainee_id: toSave.traineeId,
@@ -2085,11 +2624,28 @@ class Component extends DCLogic {
         recommendations: toSave.recommendations || null,
         next_flight_notes: toSave.nextFlightNotes || null,
         summary_recommendations: toSave.summaryRecommendations || null,
-        details: buildFeedbackDetails(toSave),
-        // UPDATE never applies a column default the way INSERT does - the RLS
-        // with-check for instructor edits requires status='pending' explicitly.
-        status: 'pending'
-      }).eq('id', toSave.feedbackId).select();
+        details: buildFeedbackDetails(toSave)
+      };
+      // instructor: unchanged from before - always explicitly sent back to
+      // 'pending' (feedbacks_update_instructor's WITH CHECK requires this).
+      //
+      // smat: `status` is deliberately left OUT of this object entirely,
+      // not set to toSave.status or any other value computed here. A
+      // Supabase/PostgREST .update() only touches the columns present in
+      // the payload - omitting the key means the live row's current status
+      // is left exactly as it already is in the database, atomically, as
+      // part of this same UPDATE statement. This is the one reliable way
+      // to "preserve the previous status": toSave.status is the form's own
+      // frozen snapshot (captured whenever the form/draft was first
+      // opened, possibly long before this save - e.g. a draft reopened
+      // days later), so writing it back could reintroduce a stale value;
+      // not writing to the column at all has no snapshot to go stale in
+      // the first place. Never auto-approves a pending/rejected feedback
+      // and never un-approves an already-approved one just because smat
+      // edited it - approving/rejecting remains exclusively the existing,
+      // deliberate approveFeedback()/rejectFeedback() actions.
+      if(!isSmat) updatePayload.status = 'pending';
+      const { data, error } = await window.nimbusSupabase.from('feedbacks').update(updatePayload).eq('id', toSave.feedbackId).select();
       if(error){
         this.setState(s=>({evalForm:{...s.evalForm, saving:false, validationMsg:'שמירת המשוב נכשלה. הנתונים שמילאת נשמרו בטופס - אפשר לנסות שוב.'}}));
         return;
@@ -2101,8 +2657,13 @@ class Component extends DCLogic {
         this.setState(s=>({evalForm:{...s.evalForm, saving:false, validationMsg:'העדכון לא בוצע - אין לך הרשאה לערוך משוב זה כרגע.'}}));
         return;
       }
+      // Save confirmed - the local draft is now redundant (the real update
+      // already landed in Supabase). Only cleared on success; the two
+      // return-early branches above (error / zero rows updated) never reach
+      // this, so a failed save always leaves the draft intact.
+      this.clearActiveDraft();
       this.setState(s=>({evalForm:{...s.evalForm, saving:false}}));
-      this.setState({showSuccess:true, successMsg:'המשוב עודכן ונשלח לאישור סמ"ט'});
+      this.setState({showSuccess:true, successMsg: isSmat ? 'הדפית עודכנה בהצלחה' : 'המשוב עודכן ונשלח לאישור סמ"ט'});
       setTimeout(async ()=>{
         this.setState({showSuccess:false});
         await this.viewFeedback(toSave.feedbackId);
@@ -2160,6 +2721,9 @@ class Component extends DCLogic {
       this.setState(s=>({evalForm:{...s.evalForm, saving:false, validationMsg:'שמירת הטופס נכשלה. הנתונים שמילאת נשמרו בטופס - אפשר לנסות שוב.'}}));
       return;
     }
+    // Same rule as the update path above - only clear the local draft once
+    // the insert into Supabase actually succeeded.
+    this.clearActiveDraft();
     this.setState(s=>({evalForm:{...s.evalForm, saving:false}}));
     if(isSmat){
       this.showSuccessThenBack('הדפית נשמרה בהצלחה', 'sDash', {});
@@ -2207,12 +2771,50 @@ class Component extends DCLogic {
   // this mirrors the feedbacks_update_instructor RLS policy exactly (smat:
   // unrestricted; instructor: only their own, only while not approved;
   // trainee/kahad: never allowed).
-  editFeedback(){
+  editFeedback=async()=>{
     const fb = this.state.viewingFeedback;
     if(!fb) return;
     const role = this.state.role;
     const allowed = role==='smat' || (role==='instructor' && fb.instructorId===this.state.myProfileId && fb.status!=='approved');
     if(!allowed) return;
+    // Cloud draft for this exact feedback (feedback_id) is checked first -
+    // it is the cross-device source of truth (see feedback_drafts). RLS
+    // (created_by = auth.uid()) already guarantees this can only ever
+    // return a draft that belongs to the caller - no extra permission
+    // check is needed on the result itself.
+    if(this.state.myProfileId && window.nimbusSupabase){
+      try{
+        const { data } = await window.nimbusSupabase.from('feedback_drafts')
+          .select('id, payload').eq('created_by', this.state.myProfileId).eq('feedback_id', fb.id).maybeSingle();
+        if(data && data.payload && data.payload.feedbackId===fb.id){
+          this._activeDraftId = data.id;
+          this._lastEvalFormRef = data.payload;
+          this.navigate('iEval', {evalForm: data.payload});
+          return;
+        }
+      }catch(e){}
+    }
+    // Falls back to the locally-cached draft only if no cloud draft was
+    // found (offline, or the first cloud save for this edit hasn't landed
+    // yet) - same "trust the local copy as-is" rule as the refresh restore
+    // path in bootstrapAuth, never re-fetches/compares against the fb row.
+    try{
+      const activeLocal = this.state.myProfileId && localStorage.getItem(draftActiveKey(this.state.myProfileId));
+      const raw = activeLocal && localStorage.getItem(draftKey(this.state.myProfileId, activeLocal));
+      if(raw){
+        const parsed = JSON.parse(raw);
+        if(parsed && parsed.evalForm && parsed.evalForm.feedbackId===fb.id){
+          this._activeDraftId = activeLocal;
+          this._lastEvalFormRef = parsed.evalForm;
+          this.navigate('iEval', {evalForm: parsed.evalForm});
+          return;
+        }
+      }
+    }catch(e){}
+    // Neither a cloud nor a local draft exists yet for this feedback - a
+    // fresh draft id is generated now, used by every save (local + cloud)
+    // of this edit from here on.
+    this._activeDraftId = genDraftId();
     // isEditing:true tells buildEvalFormOut() (see renderVals) to treat course
     // as an already-committed free-text value (skip the fixed-catalogue
     // validation that new-feedback creation still needs) - kept, not demo-
@@ -2567,6 +3169,7 @@ class Component extends DCLogic {
     out.evalForm = {...s.evalForm, typeLabel: typeLabel(s.evalForm.formType), traineeName: s.evalForm.traineeName||'', notSaving: !s.evalForm.saving,
       isAirCrew: s.evalForm.formType==='airCrew', isControllers: s.evalForm.formType==='controllers', isStandard: s.evalForm.formType==='scouts',
       syllabusLocked: locked,
+      onSaveDraft: this.onSaveDraft, draftStatusVisible: !!s.draftCloudStatus, draftStatusLabel: draftStatusLabelFor(s.draftCloudStatus),
       segmentStyle: 'width:100%; padding:9px 10px; border-radius:10px; border:1.5px solid #E3EEF8; font-size:13.5px; outline:none; '+(locked||!s.evalForm.course? 'background:#F1F5F9; color:#8CA3B8; cursor:not-allowed;' : 'background:white; color:#123A5E;'),
       segmentPlaceholder: s.evalForm.course? 'בחר גיחה' : 'בחר קורס תחילה',
       lockStyle: 'width:100%; padding:9px 10px; border-radius:10px; border:1.5px solid #E3EEF8; font-size:13.5px; outline:none; '+(locked? 'background:#F1F5F9; color:#8CA3B8; cursor:not-allowed;' : 'background:white; color:#123A5E;')};
@@ -2828,7 +3431,7 @@ class Component extends DCLogic {
         avgLabel:'-', avgColor:'#B7C5D2', onClick:()=>this.openTrainee(t.id)
       }));
 
-      out.statusFilters = ['all','pending','approved','rejected'].map(st=>{
+      out.statusFilters = ['all','pending','approved','rejected','draft'].map(st=>{
         const label = st==='all'?'הכל':statusInfo(st).label;
         return {label, onClick:()=>this.setFilterStatus(st),
           style:`padding:9px 16px; border-radius:999px; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; transition:all 180ms; ${s.filterStatus===st?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#ffffff; color:#5C7A96;'}`};
@@ -2836,10 +3439,19 @@ class Component extends DCLogic {
       // s.myFeedbacks already loaded at bootstrap (loadMyFeedbacks(),
       // unchanged). traineeName is already resolved from profiles there -
       // never traineeById. Opens via viewFeedback, same pattern used for
-      // sFeedbacks.
-      out.feedFeed = [...s.myFeedbacks].filter(f=>s.filterStatus==='all'||f.status===s.filterStatus).sort((a,b)=>a.date<b.date?1:-1).map(f=>{
+      // sFeedbacks. s.myDrafts (feedback_drafts, RLS: created_by=auth.uid())
+      // is merged in with a client-side-only status:'draft' tag - never
+      // written to feedbacks.status, see statusInfo(). draftRows carries
+      // everything straight from the draft's own payload snapshot, not a
+      // second query.
+      const draftRows = s.myDrafts.map(d=>({ id:d.id, status:'draft', title: (d.payload&&d.payload.title)||'טיוטה ללא שם',
+        traineeName: (d.payload&&d.payload.traineeName)||'-', form_type: d.payload&&d.payload.formType, date: (d.payload&&d.payload.date)||d.updated_at,
+        isDraft:true, draftRef:d }));
+      out.feedFeed = [...s.myFeedbacks, ...draftRows].filter(f=>s.filterStatus==='all'||f.status===s.filterStatus).sort((a,b)=>a.date<b.date?1:-1).map(f=>{
         const st=statusInfo(f.status);
-        return {title:f.title, traineeName:f.traineeName, typeLabel:typeLabel(f.form_type), dateLabel:fmtDate(f.date), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, onClick:()=>this.viewFeedback(f.id)};
+        if(f.isDraft) return {title:f.title, traineeName:f.traineeName, typeLabel:typeLabel(f.form_type), dateLabel:fmtDate(f.date), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg,
+          isDraft:true, onClick:()=>this.openDraftForEdit(f.draftRef), onDeleteDraft:(e)=>{ e.stopPropagation(); this.askDeleteDraft(f.draftRef); }};
+        return {title:f.title, traineeName:f.traineeName, typeLabel:typeLabel(f.form_type), dateLabel:fmtDate(f.date), statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, isDraft:false, onClick:()=>this.viewFeedback(f.id)};
       });
 
       if(s.draft){
@@ -2987,7 +3599,7 @@ class Component extends DCLogic {
           onTraineeClick:(e)=>{ e.stopPropagation(); this.openTrainee(f.trainee_id); }};
       });
 
-      out.statusFilters = ['all','pending','approved','rejected'].map(st=>{
+      out.statusFilters = ['all','pending','approved','rejected','draft'].map(st=>{
         const label = st==='all'?'הכל':statusInfo(st).label;
         return {label, onClick:()=>this.setFilterStatus(st),
           style:`padding:9px 16px; border-radius:999px; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; transition:all 180ms; ${s.filterStatus===st?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#ffffff; color:#5C7A96;'}`};
@@ -2995,14 +3607,23 @@ class Component extends DCLogic {
       // sFeedbacks is now real-data-backed: both the cards and the status
       // filter/count logic above run against s.allFeedbacks, never the
       // demo `feedbacks` array. Opens via the same viewFeedback used
-      // everywhere else - fully independent from s.feedbacks.
-      out.allFeedbacks = [...s.allFeedbacks].filter(f=>s.filterStatus==='all'||f.status===s.filterStatus).sort((a,b)=>a.date<b.date?1:-1).map(f=>{
+      // everywhere else - fully independent from s.feedbacks. s.myDrafts
+      // here is smat's OWN drafts only (RLS: created_by=auth.uid()) -
+      // never an instructor's, matching "smat sees/manages only its own
+      // drafts, no special-case access to anyone else's."
+      const sDraftRows = s.myDrafts.map(d=>({ id:d.id, status:'draft', title: (d.payload&&d.payload.title)||'טיוטה ללא שם',
+        traineeName: (d.payload&&d.payload.traineeName)||'-', instructorName: (d.payload&&d.payload.instructorName)||'-',
+        form_type: d.payload&&d.payload.formType, date: (d.payload&&d.payload.date)||d.updated_at, isDraft:true, draftRef:d }));
+      out.allFeedbacks = [...s.allFeedbacks, ...sDraftRows].filter(f=>s.filterStatus==='all'||f.status===s.filterStatus).sort((a,b)=>a.date<b.date?1:-1).map(f=>{
         const st=statusInfo(f.status);
+        if(f.isDraft) return {title:f.title, traineeName:f.traineeName, instructor:f.instructorName, typeLabel:typeLabel(f.form_type),
+          statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, isDraft:true, onClick:()=>this.openDraftForEdit(f.draftRef),
+          onDeleteDraft:(e)=>{ e.stopPropagation(); this.askDeleteDraft(f.draftRef); }, onTraineeClick:(e)=>{ e.stopPropagation(); }};
         // traineeName is now clickable - iTraineeDetail knows real Supabase
         // uuids (openTrainee/buildDetail), so this no longer needs
         // to stay display-only.
         return {title:f.title, traineeName:f.traineeName, instructor:f.instructorName, typeLabel:typeLabel(f.form_type),
-          statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, onClick:()=>this.viewFeedback(f.id),
+          statusLabel:st.label, statusBg:st.bg, statusFg:st.fg, isDraft:false, onClick:()=>this.viewFeedback(f.id),
           onTraineeClick:(e)=>{ e.stopPropagation(); this.openTrainee(f.trainee_id); }};
       });
 
