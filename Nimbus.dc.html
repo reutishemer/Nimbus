@@ -307,16 +307,21 @@
 
         <sc-if value="{{detail.showSyllabusOverview}}" hint-placeholder-val="{{false}}">
           <div style="font-size:16px; font-weight:700; color:#123A5E; margin-bottom:4px;">מצב סילבוס</div>
-          <div style="font-size:12.5px; color:#8CA3B8; margin-bottom:10px;">{{detail.syllabusSummary}}</div>
-          <div style="background:#ffffff; border-radius:18px; padding:6px 16px; margin-bottom:18px; box-shadow:0 8px 18px rgba(30,90,140,0.06);">
-            <sc-for list="{{detail.syllabusItems}}" as="si" hint-placeholder-count="10">
-              <div style="display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid #F1F6FB;">
-                <div style="{{si.markStyle}}">{{si.mark}}</div>
-                <div style="font-size:13.5px; color:#3A5977; flex:1;">{{si.name}}</div>
-                <div style="font-size:11.5px; color:#8CA3B8;">{{si.statusLabel}}</div>
-              </div>
-            </sc-for>
-          </div>
+          <sc-for list="{{detail.syllabusGroups}}" as="sg" hint-placeholder-count="1">
+            <sc-if value="{{sg.showCourseLabel}}" hint-placeholder-val="{{false}}">
+              <div style="font-size:13px; font-weight:700; color:#2E6FA8; margin-top:10px; margin-bottom:2px;">{{sg.course}}</div>
+            </sc-if>
+            <div style="font-size:12.5px; color:#8CA3B8; margin-bottom:10px;">{{sg.summary}}</div>
+            <div style="background:#ffffff; border-radius:18px; padding:6px 16px; margin-bottom:18px; box-shadow:0 8px 18px rgba(30,90,140,0.06);">
+              <sc-for list="{{sg.items}}" as="si" hint-placeholder-count="10">
+                <div style="display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid #F1F6FB;">
+                  <div style="{{si.markStyle}}">{{si.mark}}</div>
+                  <div style="font-size:13.5px; color:#3A5977; flex:1;">{{si.name}}</div>
+                  <div style="font-size:11.5px; color:#8CA3B8;">{{si.statusLabel}}</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-for>
         </sc-if>
 
         <div style="background:#ffffff; border-radius:18px; padding:16px; margin-bottom:18px; box-shadow:0 8px 18px rgba(30,90,140,0.06);">
@@ -445,6 +450,20 @@
           </sc-if>
         </div>
 
+        <div style="background:#ffffff; border-radius:18px; padding:16px; margin-bottom:16px; box-shadow:0 8px 18px rgba(30,90,140,0.07);">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+            <div style="font-size:16px; font-weight:700; color:#123A5E;">ציון כללי</div>
+            <sc-if value="{{evalForm.overallScoreLabel}}" hint-placeholder-val="{{false}}">
+              <div style="font-size:12.5px; font-weight:700; color:#2E6FA8; background:#F2F8FE; border-radius:10px; padding:5px 10px;">{{evalForm.overallScoreLabel}}</div>
+            </sc-if>
+          </div>
+          <div style="display:flex; gap:6px;">
+            <sc-for list="{{overallScoreOptions}}" as="os" hint-placeholder-count="7">
+              <div onClick="{{os.onClick}}" style="{{os.style}}">{{os.n}}</div>
+            </sc-for>
+          </div>
+        </div>
+
         <sc-if value="{{evalForm.isAirCrew}}" hint-placeholder-val="{{false}}">
           <div style="font-size:16px; font-weight:700; color:#123A5E; margin-bottom:12px;">כללי</div>
           <div style="display:flex; gap:14px; margin-bottom:14px;">
@@ -503,10 +522,47 @@
             </div>
           </div>
           <div style="font-size:16px; font-weight:700; color:#123A5E; margin-bottom:8px;">עמידה ביעדים</div>
-          <textarea value="{{evalForm.objectivesText}}" onChange="{{onObjectivesTextChange}}" placeholder="תיאור היעדים ועמידה בהם" style="width:100%; min-height:78px; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:14.5px; color:#123A5E; outline:none; resize:vertical; margin-bottom:18px;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);"></textarea>
+          <sc-if value="{{evalForm.showLegacyObjectives}}" hint-placeholder-val="{{false}}">
+            <div style="font-size:12px; color:#8CA3B8; margin-bottom:4px;">תוכן קודם (טקסט חופשי, לקריאה בלבד)</div>
+            <div style="font-size:13.5px; color:#4A6479; line-height:1.6; white-space:pre-wrap; background:#F7FBFF; border-radius:12px; padding:10px 12px; margin-bottom:14px;">{{evalForm.objectivesText}}</div>
+          </sc-if>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+            <div style="font-size:14px; color:#3A5977;">יעד 1</div>
+            <div style="display:flex; gap:6px;">
+              <sc-for list="{{target1Options}}" as="tg" hint-placeholder-count="2">
+                <div onClick="{{tg.onClick}}" style="{{tg.style}}">{{tg.label}}</div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+            <div style="font-size:14px; color:#3A5977;">יעד 2</div>
+            <div style="display:flex; gap:6px;">
+              <sc-for list="{{target2Options}}" as="tg" hint-placeholder-count="2">
+                <div onClick="{{tg.onClick}}" style="{{tg.style}}">{{tg.label}}</div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;">
+            <div style="font-size:14px; color:#3A5977;">יעד 3</div>
+            <div style="display:flex; gap:6px;">
+              <sc-for list="{{target3Options}}" as="tg" hint-placeholder-count="2">
+                <div onClick="{{tg.onClick}}" style="{{tg.style}}">{{tg.label}}</div>
+              </sc-for>
+            </div>
+          </div>
 
-          <div style="font-size:16px; font-weight:700; color:#123A5E; margin-bottom:8px;">מה בוצע? (האם הסילבוס בוצע במלואו, אילו השלמות נדרשות)</div>
-          <textarea value="{{evalForm.syllabusCompletion}}" onChange="{{onSyllabusCompletionChange}}" style="width:100%; min-height:70px; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:14.5px; color:#123A5E; outline:none; resize:vertical; margin-bottom:18px;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);"></textarea>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+            <div style="font-size:16px; font-weight:700; color:#123A5E;">השלמת סילבוס</div>
+            <div style="display:flex; gap:6px;">
+              <sc-for list="{{syllabusDoneOptions}}" as="sd" hint-placeholder-count="2">
+                <div onClick="{{sd.onClick}}" style="{{sd.style}}">{{sd.label}}</div>
+              </sc-for>
+            </div>
+          </div>
+          <sc-if value="{{evalForm.showSyllabusExplain}}" hint-placeholder-val="{{false}}">
+            <div style="font-size:12px; color:#8CA3B8; margin-bottom:6px;">אילו השלמות נדרשות</div>
+            <textarea value="{{evalForm.syllabusCompletion}}" onChange="{{onSyllabusCompletionChange}}" style="width:100%; min-height:70px; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:14.5px; color:#123A5E; outline:none; resize:vertical; margin-bottom:18px;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);"></textarea>
+          </sc-if>
 
           <div style="font-size:16px; font-weight:700; color:#123A5E; margin-bottom:8px;">הערות מרכזיות - לשיפור</div>
           <textarea value="{{evalForm.improveNotes}}" onChange="{{onImproveNotesChange}}" placeholder="כתיבה חופשית של הערות לשיפור" style="width:100%; min-height:88px; padding:12px 14px; border-radius:14px; border:1.5px solid #E3EEF8; background:#ffffff; font-size:14.5px; color:#123A5E; outline:none; resize:vertical; margin-bottom:14px;" style-focus="border-color:#4FAEFF; box-shadow:0 0 0 4px rgba(79,174,255,0.15);"></textarea>
@@ -690,10 +746,21 @@
           </div>
 
           <div style="font-size:13px; font-weight:700; color:#3A5977; margin-bottom:4px;">עמידה ביעדים</div>
-          <div style="font-size:13.5px; color:#4A6479; line-height:1.6; margin-bottom:14px; white-space:pre-wrap;">{{viewFb.objectivesText}}</div>
+          <sc-if value="{{viewFb.showLegacyObjectives}}" hint-placeholder-val="{{false}}">
+            <div style="font-size:13.5px; color:#4A6479; line-height:1.6; margin-bottom:14px; white-space:pre-wrap;">{{viewFb.objectivesText}}</div>
+          </sc-if>
+          <sc-if value="{{viewFb.hasTargets}}" hint-placeholder-val="{{false}}">
+            <div style="display:flex; gap:16px; margin-bottom:14px;">
+              <div><div style="font-size:11.5px; color:#8CA3B8;">יעד 1</div><div style="font-size:13.5px; font-weight:700; color:#123A5E;">{{viewFb.target1}}</div></div>
+              <div><div style="font-size:11.5px; color:#8CA3B8;">יעד 2</div><div style="font-size:13.5px; font-weight:700; color:#123A5E;">{{viewFb.target2}}</div></div>
+              <div><div style="font-size:11.5px; color:#8CA3B8;">יעד 3</div><div style="font-size:13.5px; font-weight:700; color:#123A5E;">{{viewFb.target3}}</div></div>
+            </div>
+          </sc-if>
 
-          <div style="font-size:13px; font-weight:700; color:#3A5977; margin-bottom:4px;">מה בוצע? (השלמות נדרשות)</div>
-          <div style="font-size:13.5px; color:#4A6479; line-height:1.6; margin-bottom:14px;">{{viewFb.syllabusCompletion}}</div>
+          <div style="font-size:13px; font-weight:700; color:#3A5977; margin-bottom:4px;">השלמת סילבוס: {{viewFb.syllabusDone}}</div>
+          <sc-if value="{{viewFb.showSyllabusExplain}}" hint-placeholder-val="{{false}}">
+            <div style="font-size:13.5px; color:#4A6479; line-height:1.6; margin-bottom:14px;">{{viewFb.syllabusCompletion}}</div>
+          </sc-if>
 
           <div style="font-size:15px; font-weight:700; color:#123A5E; margin-bottom:6px;">הערות מרכזיות - לשיפור</div>
           <div style="font-size:13.5px; color:#4A6479; line-height:1.6; margin-bottom:14px; white-space:pre-wrap;">{{viewFb.improveNotes}}</div>
@@ -1340,6 +1407,16 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 const AIRCRAFT_TYPES = ['שביט','צים','אודן'];
+// Overall-score scale (ציון כללי), restored at the top of the eval form for
+// all three form types. Historically this exact scale/chip-picker only
+// existed for airCrew (the sole form type with a single 'overall' score
+// key) - controllers/scouts instead had a separate, differently-scaled
+// multi-category breakdown that was removed earlier and is intentionally
+// NOT restored here; only this single top-of-form score is. Values/labels
+// kept verbatim from the original implementation.
+const SCORE_OPTIONS = [4,5,'6/7',7,8,9,10];
+const SCORE_RATING_LABELS = {4:'טעון שיפור',5:'חלש','6/7':'אופייני נמוך / באזור הרף התחתון להישג הנדרש',7:'אופייני לוותק / הישג נדרש',8:'טוב מהאופייני/הנדרש',9:'טוב מאוד',10:'מצטיין'};
+function ratingFromScore(v){ return SCORE_RATING_LABELS[v] || ''; }
 const SYLLABUS_SECTIONS = [
   {n:'1', name:'יסודות'}, {n:'2', name:'טיסת בסיס'}, {n:'3', name:'ניווט בסיסי'}, {n:'4', name:'טיפוס מתקדם'},
   {n:'5', name:'טיסות קבוצתיות'}, {n:'6', name:'נוהלי חירום'}, {n:'7', name:'טיסת לילה'}, {n:'8', name:'משימות מורכבות'},
@@ -1446,6 +1523,27 @@ function syllabusStatusFor(hist, course){
   const target = normalizeCourseName(course);
   hist.filter(f=>f.status==='approved' && normalizeCourseName(courseOf(f))===target).forEach(f=>{ const n = sectionNumberOf(f); if(n) done[n] = true; });
   return segmentsForCourse(course).map(s=>({n:s.n, name:s.name, done: !!done[s.n], label: segmentLabelFor(s.n, course)}));
+}
+// trainee_profiles.course has no write path anywhere in this app (checked
+// every .update/.upsert call and every admin-* edge function) - it is only
+// ever read, so it's NULL for effectively every real trainee today. Used
+// by buildDetail() as a fallback ONLY when that field is empty: derives
+// the course(s) this trainee is actually in directly from their own
+// feedback history instead (every feedbacks.course value IS reliably set
+// per-feedback). Every distinct course is kept separate here - a trainee
+// who has history from more than one course never gets silently reduced
+// to just one of them. Status-independent on purpose: a pending/rejected
+// feedback still tells us which course the trainee is doing, even though
+// syllabusStatusFor above only counts *approved* ones toward completion.
+function distinctCoursesFromHistory(hist){
+  const seen = new Map();
+  hist.forEach(f=>{
+    const c = courseOf(f);
+    if(c==='-') return;
+    const key = normalizeCourseName(c);
+    if(key && !seen.has(key)) seen.set(key, c);
+  });
+  return Array.from(seen.values());
 }
 
 const LOADING_SCREENS = ['iDash','iTrainees','iFeed','tDash','tFeedback','tStats','sDash','sFeedbacks','sAccounts'];
@@ -1715,7 +1813,16 @@ class Component extends DCLogic {
   // in that case.
   restoreDraftIfAny=async(profileId, role)=>{
     const home = role==='instructor'?'iDash':'sDash';
-    const applyRestored=(draftId, evalForm)=>{
+    const applyRestored=(draftId, evalFormIn)=>{
+      // Same controllers-only normalization openDraftForEdit() applies -
+      // a draft saved before target1/2/3/syllabusDone existed still opens
+      // sensibly on refresh-restore, not with chips silently unselected.
+      const evalForm = evalFormIn.formType==='controllers' ? {
+        ...evalFormIn,
+        target1: evalFormIn.target1||'', target2: evalFormIn.target2||'', target3: evalFormIn.target3||'',
+        syllabusDone: evalFormIn.syllabusDone || (evalFormIn.syllabusCompletion? '✗' : '✓'),
+        observations: evalFormIn.observations || []
+      } : evalFormIn;
       this._activeDraftId = draftId;
       this._lastEvalFormRef = evalForm;
       this.setState({screen:'iEval', evalForm, navHistory:[home]});
@@ -1899,11 +2006,22 @@ class Component extends DCLogic {
   // feedback instead - explicitly disallowed.
   openDraftForEdit=async(draft)=>{
     if(!draft || !draft.payload || !draft.payload.formType) return;
-    const sourceId = draft.payload.isEditing ? draft.payload.feedbackId : null;
+    // Normalizes a controllers-shaped draft saved before target1/2/3/
+    // syllabusDone existed - same fallback editFeedback() applies when
+    // loading a real feedbacks row, so a draft saved earlier (locally or
+    // in the cloud) opens exactly as sensibly as an old real feedback
+    // would, never with chips silently stuck unselected for no reason.
+    const payload = draft.payload.formType==='controllers' ? {
+      ...draft.payload,
+      target1: draft.payload.target1||'', target2: draft.payload.target2||'', target3: draft.payload.target3||'',
+      syllabusDone: draft.payload.syllabusDone || (draft.payload.syllabusCompletion? '✗' : '✓'),
+      observations: draft.payload.observations || []
+    } : draft.payload;
+    const sourceId = payload.isEditing ? payload.feedbackId : null;
     if(!sourceId){
       this._activeDraftId = draft.id;
-      this._lastEvalFormRef = draft.payload;
-      this.navigate('iEval', {evalForm: draft.payload});
+      this._lastEvalFormRef = payload;
+      this.navigate('iEval', {evalForm: payload});
       return;
     }
     const { data, error } = await window.nimbusSupabase.from('feedbacks').select('id, instructor_id, status').eq('id', sourceId).maybeSingle();
@@ -1924,11 +2042,11 @@ class Component extends DCLogic {
       return;
     }
     // Permission confirmed live - open with the draft's own payload
-    // exactly as saved, never rebuilt/overwritten from the `data` just
+    // (normalized above), never rebuilt/overwritten from the `data` just
     // fetched (that query was only to verify permission/existence).
     this._activeDraftId = draft.id;
-    this._lastEvalFormRef = draft.payload;
-    this.navigate('iEval', {evalForm: draft.payload});
+    this._lastEvalFormRef = payload;
+    this.navigate('iEval', {evalForm: payload});
   };
   // Deletes one draft the caller owns - RLS (created_by = auth.uid()) is
   // the real gate; this never touches public.feedbacks in any way, only
@@ -2145,8 +2263,25 @@ class Component extends DCLogic {
     // a real course name that was never in that catalogue falls back to the
     // generic SYLLABUS_SECTIONS list instead of that course's actual flight
     // count - never a crash, just a less precise segment list.
-    const syl = syllabusStatusFor(hist, rd.course);
-    const sylDone = syl.filter(x=>x.done).length;
+    //
+    // rd.course (trainee_profiles.course) is kept as the primary source
+    // when it's actually set - unchanged behavior, still a single group.
+    // When it's empty (the real-data norm today - see
+    // distinctCoursesFromHistory above), every distinct course found in
+    // this trainee's own history becomes its own separate group, each
+    // counted against its own segment catalogue - never blended into one
+    // misleading total. showCourseLabel only turns on once there's more
+    // than one group, so the single-course case (profile-set OR uniquely
+    // derived) renders identically to before.
+    const courseList = normalizeCourseName(rd.course) ? [rd.course] : distinctCoursesFromHistory(hist);
+    const syllabusGroups = courseList.map(course=>{
+      const syl = syllabusStatusFor(hist, course);
+      return { course, showCourseLabel: courseList.length>1,
+        summary: syl.filter(x=>x.done).length+' מתוך '+syl.length+' מקטעים הושלמו',
+        items: syl.map(x=>({name:x.label, mark: x.done?'✓':'', statusLabel: x.done?'בוצע':'',
+          markStyle:'width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; flex-shrink:0; '+(x.done?'background:#E4F8ED; color:#1FA86A;':'background:#F4F8FC; color:#F4F8FC;')}))
+      };
+    });
     // Shared by onExportAll/onExportRange below - each raw row already
     // carries instructorFullName (attached in loadTraineeDetail, resolved
     // from profiles there - never instructorById). mapFeedbackRow() turns
@@ -2164,10 +2299,11 @@ class Component extends DCLogic {
       highlights: hist.filter(f=>(f.next_flight_notes||f.recommendations||'').trim()).map(f=>({
         title: f.title, dateLabel: fmtDate(f.date), notes: f.next_flight_notes || f.recommendations, onClick: ()=>this.viewFeedback(f.id)})),
       hasPatterns:false, patterns:[],
-      showSyllabusOverview: role==='smat' || role==='kahad',
-      syllabusSummary: sylDone+' מתוך '+syl.length+' מקטעים הושלמו',
-      syllabusItems: syl.map(x=>({name:x.label, mark: x.done?'✓':'', statusLabel: x.done?'בוצע':'',
-        markStyle:'width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; flex-shrink:0; '+(x.done?'background:#E4F8ED; color:#1FA86A;':'background:#F4F8FC; color:#F4F8FC;')})),
+      // Hidden entirely (rather than showing a meaningless "0 מתוך 0") when
+      // no course can be determined at all - e.g. a brand-new trainee with
+      // no feedback history yet and no profile.course set.
+      showSyllabusOverview: (role==='smat' || role==='kahad') && syllabusGroups.length>0,
+      syllabusGroups,
       // rd.history is already sorted newest-first (loadTraineeDetail) - no
       // extra sort needed for either export.
       onExportAll: ()=>{
@@ -2363,9 +2499,16 @@ class Component extends DCLogic {
         {label:'בסיס המראה > בסיס נחיתה', value:r.takeoffLanding||'-'}, {label:'הערות נוספות', value:r.additional||'-'});
     } else if(f.formType==='controllers'){
       const legacy = (rowsArr)=>(rowsArr||[]).filter(x=>x.topic||x.note).map(x=>(x.topic? x.topic+': ':'')+x.note).join('\n');
+      // Prefers the 3 individual targets whenever any is set (the live
+      // mechanism going forward); only falls back to the legacy free-text
+      // objectivesText for a row that has none of the 3 - matches viewFb's
+      // same priority exactly, never fabricates target values from it.
+      const hasTargets = [f.target1,f.target2,f.target3].some(Boolean);
+      const syllabusDoneVal = f.syllabusDone || (f.syllabusCompletion? '✗' : '✓');
       rows.push({label:'סוג הטיסה', value:f.flightType||'-'},
-        {label:'עמידה ביעדים', value:f.objectivesText || [f.target1,f.target2,f.target3].map((v,i)=>'יעד '+(i+1)+': '+(v||'-')).join(' · ')},
-        {label:'מה בוצע', value:f.syllabusCompletion||'-'},
+        {label:'עמידה ביעדים', value: hasTargets? [f.target1,f.target2,f.target3].map((v,i)=>'יעד '+(i+1)+': '+(v||'-')).join(' · ') : (f.objectivesText||'-')},
+        {label:'השלמת סילבוס', value: syllabusDoneVal},
+        {label:'מה בוצע', value: syllabusDoneVal==='✗' ? (f.syllabusCompletion||'-') : '-'},
         {label:'הערות לשיפור', value:f.improveNotes || legacy(f.remarksImprove) || '-'},
         {label:'הערות לשימור', value:f.keepNotes || legacy(f.remarksKeep) || '-'},
         {label:'תצפית', value:(f.observations||[]).filter(o=>o.time||o.topic||o.description).map(o=>o.time+' - '+o.topic+': '+o.description).join('\n')||'-'});
@@ -2489,8 +2632,18 @@ class Component extends DCLogic {
         remarks:{briefing:'',ground:'',postFlight:'',aircraftHandling:'',missionRoute:'',takeoffLanding:'',additional:''}, nextFlightNotes:'', summaryRecommendations:'', scores:{}}});
     } else if(d.formType==='controllers'){
       this.navigate('iEval', {evalForm:{...base, courseName:'', controllerSyllabus:'', instructorFullName:'', flightType:'מבצעי', flightName:'',
-        objectivesText:'', syllabusCompletion:'', improveNotes:'', keepNotes:'', nextFlightNotes:'', summaryRecommendations:'',
-        observations:[{time:'',topic:'',description:''},{time:'',topic:'',description:''},{time:'',topic:'',description:''},{time:'',topic:'',description:''}],
+        // target1/2/3 replace the old free-text objectivesText as the live
+        // input going forward ('' = unset/neither ✓ nor ✗ chosen yet - never
+        // defaulted to a value, since a brand-new draft has no basis for
+        // either). objectivesText itself is intentionally NOT seeded here -
+        // it only ever gets a value on an old row loaded via editFeedback()
+        // (see below), never on a fresh draft.
+        target1:'', target2:'', target3:'',
+        // ✓ by default for a brand-new draft, as specified.
+        syllabusDone:'✓', syllabusCompletion:'', improveNotes:'', keepNotes:'', nextFlightNotes:'', summaryRecommendations:'',
+        // Empty by default - the existing "+ הוסף שורת תצפית" button is the
+        // only way rows appear, instead of 4 pre-filled blanks.
+        observations:[],
         scores:{}}});
     } else {
       this.navigate('iEval', {evalForm:{...base, nextFlightNotes:'', syllabusSection:'', instructorFullName:'', mission:'', contentNotes:'', prepBriefingTransfer:'', prepStationSetup:'',
@@ -2560,6 +2713,18 @@ class Component extends DCLogic {
   onRemarkAdditionalChange=(e)=>this.setRemark('additional', e.target.value);
   setAircraftType(v){ this.setEvalField('aircraftType', v); }
   setSyllabusFull(v){ this.setEvalField('syllabusFull', v); }
+  // controllers-only. Mirrors setSyllabusFull exactly - never clears
+  // syllabusCompletion's own value, only the ✓/✗ toggle itself (the
+  // template alone decides whether the explanation box is shown), so
+  // switching ✗->✓->✗ again always restores whatever was already typed.
+  setSyllabusDone(v){ this.setEvalField('syllabusDone', v); }
+  setTarget1(v){ this.setEvalField('target1', v); }
+  setTarget2(v){ this.setEvalField('target2', v); }
+  setTarget3(v){ this.setEvalField('target3', v); }
+  // scores is NOT NULL with a {} default (see onSaveEval) - spreading the
+  // existing object (never replacing it outright) keeps that invariant and
+  // leaves room for any other key that might ever live alongside 'overall'.
+  setOverallScore(n){ this.setState(s=>({evalForm:{...s.evalForm, scores:{...(s.evalForm.scores||{}), overall:n}}})); }
   onAircraftTypeChange=(e)=>this.setEvalField('aircraftType', e.target.value);
   onInstructorFullNameChange=(e)=>this.setEvalField('instructorFullName', e.target.value);
   onSaveEval=async()=>{
@@ -2614,10 +2779,12 @@ class Component extends DCLogic {
         date: toSave.date,
         course: toSave.course,
         segment: toSave.segment,
-        // Score removed - scores is NOT NULL with a {} default, so this must
-        // stay {} (never null); overall_rating is legacy (kept, nullable) and
-        // is never written by the app anymore.
-        scores: {},
+        // Restored (see SCORE_OPTIONS/setOverallScore above) - scores is
+        // NOT NULL with a {} default, so this must stay {} (never null)
+        // when no score was chosen yet. overall_rating stays legacy/unused
+        // by explicit decision - the restored score lives only here, in
+        // the scores jsonb column (and details, via buildFeedbackDetails).
+        scores: toSave.scores || {},
         strengths: toSave.strengths || null,
         improvements: toSave.improvements || null,
         summary: toSave.summary || null,
@@ -2699,10 +2866,12 @@ class Component extends DCLogic {
       date: toSave.date,
       course: toSave.course,
       segment: toSave.segment,
-      // Score removed - scores is NOT NULL with a {} default, so this must
-      // stay {} (never null); overall_rating is legacy (kept, nullable) and
-      // is never written by the app anymore.
-      scores: {},
+      // Restored (see SCORE_OPTIONS/setOverallScore above) - scores is NOT
+      // NULL with a {} default, so this must stay {} (never null) when no
+      // score was chosen yet. overall_rating stays legacy/unused by
+      // explicit decision - the restored score lives only here, in the
+      // scores jsonb column (and details, via buildFeedbackDetails).
+      scores: toSave.scores || {},
       strengths: toSave.strengths || null,
       improvements: toSave.improvements || null,
       summary: toSave.summary || null,
@@ -2822,7 +2991,10 @@ class Component extends DCLogic {
     const base = { feedbackId:fb.id, isEditing:true, status:fb.status, traineeId:fb.traineeId, instructorId:fb.instructorId,
       traineeName:fb.traineeName||'', formType:fb.formType, title:fb.title, date:fb.date,
       segment: fb.segment||'', course: fb.course||'', syllabusNumber: fb.syllabusNumber||'', validationMsg:'',
-      scores:{} };
+      // Carries over the existing score (if any) so re-editing a feedback
+      // shows its previously-chosen overall score, rather than always
+      // starting unscored.
+      scores: fb.scores||{} };
     if(fb.formType==='airCrew'){
       this.navigate('iEval', {evalForm:{...base, lessonNumber:fb.lessonNumber||'', aircraftType:fb.aircraftType||'', instructorFullName:fb.instructorFullName||'', syllabusFull:fb.syllabusFull||'כן',
         syllabusContent:fb.syllabusContent||'', completionsNeeded:fb.completionsNeeded||'',
@@ -2831,10 +3003,27 @@ class Component extends DCLogic {
     } else if(fb.formType==='controllers'){
       this.navigate('iEval', {evalForm:{...base, courseName:fb.courseName||'', controllerSyllabus:fb.controllerSyllabus||'', instructorFullName:fb.instructorFullName||'',
         flightType:fb.flightType||'מבצעי', flightName:fb.flightName||'',
-        objectivesText: fb.objectivesText||'', syllabusCompletion:fb.syllabusCompletion||'',
+        // target1/2/3: '' (unset) for a row that never had them - never
+        // fabricated from the old free-text objectivesText, which has no
+        // reliable way to split back into 3 individual ✓/✗ values.
+        target1:fb.target1||'', target2:fb.target2||'', target3:fb.target3||'',
+        // objectivesText itself is still carried through unchanged and
+        // never cleared - an old row that only ever had this free-text
+        // field keeps it, shown read-only in the template alongside the
+        // (initially empty) target1/2/3 - never deleted, never guessed at.
+        objectivesText: fb.objectivesText||'',
+        // ✓/✗ default for a row with no syllabusDone yet: if it already has
+        // explanation text in syllabusCompletion, default to ✗ so that text
+        // stays visible instead of silently hiding behind a collapsed ✓ -
+        // otherwise default to ✓ (nothing to show either way). Never
+        // guesses at a value the data doesn't support.
+        syllabusDone: fb.syllabusDone || (fb.syllabusCompletion ? '✗' : '✓'),
+        syllabusCompletion:fb.syllabusCompletion||'',
         improveNotes: fb.improveNotes||'', keepNotes: fb.keepNotes||'',
         nextFlightNotes: fb.nextFlightNotes||'', summaryRecommendations: fb.summaryRecommendations||'',
-        observations: (fb.observations&&fb.observations.length)? fb.observations.map(o=>({...o})) : [{time:'',topic:'',description:''},{time:'',topic:'',description:''},{time:'',topic:'',description:''},{time:'',topic:'',description:''}]}});
+        // Existing observations are always preserved as-is; only a row that
+        // truly has none starts empty now (was 4 blanks before).
+        observations: (fb.observations&&fb.observations.length)? fb.observations.map(o=>({...o})) : []}});
     } else {
       this.navigate('iEval', {evalForm:{...base, nextFlightNotes:fb.nextFlightNotes||'', syllabusSection:fb.syllabusSection||'', instructorFullName:fb.instructorFullName||'', mission:fb.mission||'', contentNotes:fb.contentNotes||'', prepBriefingTransfer:fb.prepBriefingTransfer||'', prepStationSetup:fb.prepStationSetup||'',
         sysFamiliarity:fb.sysFamiliarity||'', sysIVA:fb.sysIVA||'', sysMSDC:fb.sysMSDC||'', sysLauncher:fb.sysLauncher||'', sysFaults:fb.sysFaults||'',
@@ -3170,6 +3359,15 @@ class Component extends DCLogic {
       isAirCrew: s.evalForm.formType==='airCrew', isControllers: s.evalForm.formType==='controllers', isStandard: s.evalForm.formType==='scouts',
       syllabusLocked: locked,
       onSaveDraft: this.onSaveDraft, draftStatusVisible: !!s.draftCloudStatus, draftStatusLabel: draftStatusLabelFor(s.draftCloudStatus),
+      // controllers-only. '✗' only - never hidden on '' (unset), so a
+      // brand-new/unchosen state still shows the explanation box rather
+      // than silently hiding a field the user hasn't addressed yet.
+      showSyllabusExplain: s.evalForm.syllabusDone==='✗',
+      // Legacy objectivesText (free text) is shown read-only, only when it
+      // actually has content - never fabricated, never deleted (it stays
+      // in evalForm and will still be carried through to `details` on
+      // save, see buildFeedbackDetails).
+      showLegacyObjectives: !!(s.evalForm.objectivesText||'').trim(),
       segmentStyle: 'width:100%; padding:9px 10px; border-radius:10px; border:1.5px solid #E3EEF8; font-size:13.5px; outline:none; '+(locked||!s.evalForm.course? 'background:#F1F5F9; color:#8CA3B8; cursor:not-allowed;' : 'background:white; color:#123A5E;'),
       segmentPlaceholder: s.evalForm.course? 'בחר גיחה' : 'בחר קורס תחילה',
       lockStyle: 'width:100%; padding:9px 10px; border-radius:10px; border:1.5px solid #E3EEF8; font-size:13.5px; outline:none; '+(locked? 'background:#F1F5F9; color:#8CA3B8; cursor:not-allowed;' : 'background:white; color:#123A5E;')};
@@ -3286,6 +3484,25 @@ class Component extends DCLogic {
       return {label:v, onClick:()=>this.setSyllabusFull(v),
         style:`padding:9px 16px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; transition:all 180ms; ${selected?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#F2F8FE; color:#2E6FA8;'}`};
     });
+    // controllers-only - same chip pattern as syllabusFullOptions above,
+    // with ✓/✗ labels instead of כן/לא as specified.
+    const checkChipStyle = (selected)=>`padding:9px 16px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; transition:all 180ms; ${selected?'background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white;':'background:#F2F8FE; color:#2E6FA8;'}`;
+    out.syllabusDoneOptions = ['✓','✗'].map(v=>({label:v, onClick:()=>this.setSyllabusDone(v), style:checkChipStyle(s.evalForm.syllabusDone===v)}));
+    out.target1Options = ['✓','✗'].map(v=>({label:v, onClick:()=>this.setTarget1(v), style:checkChipStyle(s.evalForm.target1===v)}));
+    out.target2Options = ['✓','✗'].map(v=>({label:v, onClick:()=>this.setTarget2(v), style:checkChipStyle(s.evalForm.target2===v)}));
+    out.target3Options = ['✓','✗'].map(v=>({label:v, onClick:()=>this.setTarget3(v), style:checkChipStyle(s.evalForm.target3===v)}));
+    // Overall score chips (ציון כללי) - shown at the top of the form for
+    // all three form types, see SCORE_OPTIONS above for why only this
+    // single top-of-form score is restored (not the old controllers/scouts
+    // per-category breakdown).
+    out.overallScoreOptions = SCORE_OPTIONS.map(n=>{
+      const selected = s.evalForm.scores && s.evalForm.scores.overall===n;
+      return {n, onClick:()=>this.setOverallScore(n),
+        style: selected
+          ? 'flex:1; text-align:center; padding:11px 0; border-radius:12px; font-weight:800; font-size:14px; cursor:pointer; background:linear-gradient(135deg,#4FAEFF,#2E8FE0); color:white; box-shadow:0 6px 14px rgba(46,143,224,0.35); transform:scale(1.04); transition:all 180ms;'
+          : 'flex:1; text-align:center; padding:11px 0; border-radius:12px; font-weight:700; font-size:14px; cursor:pointer; background:#F2F8FE; color:#5C7A96; transition:all 180ms;'};
+    });
+    out.evalForm.overallScoreLabel = ratingFromScore(s.evalForm.scores && s.evalForm.scores.overall);
     out.onSaveEval = this.onSaveEval;
   }
 
@@ -3771,7 +3988,7 @@ class Component extends DCLogic {
       out.detail = s.traineeDetail ? this.buildDetail(s.traineeDetail) : {
         name:'', initial:'', avatarBg:'#4FAEFF', course:'-', class:'-', count:0, empty:true, canAdd:false,
         hasHighlights:false, highlights:[], hasPatterns:false, patterns:[],
-        showSyllabusOverview:false, syllabusSummary:'', syllabusItems:[],
+        showSyllabusOverview:false, syllabusGroups:[],
         onExportAll:()=>{}, onExportRange:()=>{}, history:[]
       };
       out.onNewFeedbackForTrainee = this.onNewFeedbackForTrainee;
@@ -3802,10 +4019,22 @@ class Component extends DCLogic {
         teamExternal:f.teamExternal||'-', teamMC:f.teamMC||'-', teamOSO:f.teamOSO||'-', teamRDO:f.teamRDO||'-', teamMPO:f.teamMPO||'-',
         traitIndependence:f.traitIndependence||'-', traitConfidence:f.traitConfidence||'-', traitPressure:f.traitPressure||'-', traitOrder:f.traitOrder||'-', traitDebrief:f.traitDebrief||'-',
         segment: f.segment || '-', course: f.course || '-',
-        objectivesText: f.objectivesText || [f.target1,f.target2,f.target3].filter(Boolean).map((v,i)=>'יעד '+(i+1)+': '+(v==='v'?'עמד':'לא עמד')).join(' · ') || '-',
+        // Prefers the 3 individual targets whenever any has a value (the
+        // live mechanism going forward); only ever falls back to the old
+        // free-text objectivesText for a row that has none of the 3 set at
+        // all - never fabricates target values from free text.
+        hasTargets: [f.target1,f.target2,f.target3].some(Boolean),
+        showLegacyObjectives: !([f.target1,f.target2,f.target3].some(Boolean)) && !!(f.objectivesText||'').trim(),
+        objectivesText: f.objectivesText||'-',
+        target1:f.target1||'-', target2:f.target2||'-', target3:f.target3||'-',
         improveNotes: f.improveNotes || (f.remarksImprove||[]).filter(r=>r.topic||r.note).map(r=>(r.topic? r.topic+': ':'')+r.note).join('\n') || '-',
         keepNotes: f.keepNotes || (f.remarksKeep||[]).filter(r=>r.topic||r.note).map(r=>(r.topic? r.topic+': ':'')+r.note).join('\n') || '-',
-        target1:f.target1||'', target2:f.target2||'', target3:f.target3||'', syllabusCompletion:f.syllabusCompletion||'-',
+        // Same "explanation text implies ✗" inference editFeedback() uses,
+        // applied here too so a row never shows as ✓ while still carrying
+        // completion-gap notes that were never explicitly re-marked.
+        syllabusDone: f.syllabusDone || (f.syllabusCompletion? '✗' : '✓'),
+        showSyllabusExplain: (f.syllabusDone || (f.syllabusCompletion? '✗' : '✓'))==='✗',
+        syllabusCompletion:f.syllabusCompletion||'-',
         remarksImprove:(f.remarksImprove||[]).filter(r=>r.note||r.topic), remarksKeep:(f.remarksKeep||[]).filter(r=>r.note||r.topic),
         observations:(f.observations||[]).filter(r=>r.time||r.topic||r.description),
         // Mirrors the RLS UPDATE policy exactly: smat may edit any feedback;
